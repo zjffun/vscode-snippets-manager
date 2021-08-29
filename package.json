@@ -1,14 +1,27 @@
 {
   "name": "snippetsmanager",
-  "displayName": "SnippetsManager",
+  "displayName": "Snippets Manager",
   "description": "VSCode snippets manager.",
+  "keywords": [
+    "snippets"
+  ],
   "version": "0.0.1",
+  "publisher": "zjffun",
   "engines": {
     "vscode": "^1.59.0"
   },
   "categories": [
-    "Other"
+    "Programming Languages",
+    "Snippets"
   ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zjffun/vscode-snippets-manager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zjffun/vscode-snippets-manager/issues"
+  },
+  "homepage": "https://github.com/zjffun/vscode-snippets-manager#readme",
   "activationEvents": [
     "onStartupFinished",
     "onView:snippetsmanager-snippetsView-Explorer"

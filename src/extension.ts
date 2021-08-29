@@ -21,6 +21,7 @@ export function activate(context: vscode.ExtensionContext) {
       deleteSnippet(snippet);
     }
   );
+
   const editSnippetCmd = vscode.commands.registerCommand(
     "_snippetsmanager.editSnippet",
     (snippet) => {
