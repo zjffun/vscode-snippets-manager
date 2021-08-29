@@ -1,0 +1,143 @@
+{
+  "name": "snippetsmanager",
+  "displayName": "Snippets Manager",
+  "description": "VSCode snippets manager.",
+  "keywords": [
+    "snippets"
+  ],
+  "version": "0.0.1",
+  "publisher": "zjffun",
+  "engines": {
+    "vscode": "^1.59.0"
+  },
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zjffun/vscode-snippets-manager.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zjffun/vscode-snippets-manager/issues"
+  },
+  "homepage": "https://github.com/zjffun/vscode-snippets-manager#readme",
+  "activationEvents": [
+    "onStartupFinished",
+    "onView:snippetsmanager-snippetsView-Explorer"
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "snippetsmanager-snippetsView",
+          "title": "Snippets",
+          "icon": "resources/logo.svg"
+        }
+      ]
+    },
+    "views": {
+      "snippetsmanager-snippetsView": [
+        {
+          "id": "snippetsmanager-snippetsView-Explorer",
+          "name": "Explorer"
+        },
+        {
+          "id": "snippetsmanager-snippetsView-HelpAndFeedback",
+          "name": "Help And Feedback"
+        }
+      ]
+    },
+    "menus": {
+      "view/title": [
+        {
+          "command": "snippetsmanager.refresh",
+          "when": "view == snippetsmanager-snippetsView-Explorer",
+          "group": "navigation@10"
+        }
+      ],
+      "view/item/context": [
+        {
+          "command": "_snippetsmanager.deleteSnippet",
+          "when": "view == snippetsmanager-snippetsView-Explorer && viewItem == snippetsmanager-snippetsView-Explorer-Item",
+          "group": "inline@2"
+        },
+        {
+          "command": "_snippetsmanager.editSnippet",
+          "when": "view == snippetsmanager-snippetsView-Explorer && viewItem == snippetsmanager-snippetsView-Explorer-Item",
+          "group": "inline@1"
+        }
+      ],
+      "commandPalette": [
+        {
+          "command": "snippetsmanager.createSnippet",
+          "when": "editorHasSelection"
+        },
+        {
+          "command": "_snippetsmanager.deleteSnippet",
+          "when": "false"
+        },
+        {
+          "command": "_snippetsmanager.editSnippet",
+          "when": "false"
+        }
+      ],
+      "editor/context": [
+        {
+          "command": "snippetsmanager.createSnippet",
+          "when": "editorHasSelection",
+          "group": "snippets"
+        }
+      ]
+    },
+    "commands": [
+      {
+        "command": "snippetsmanager.createSnippet",
+        "title": "Create Snippet",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "_snippetsmanager.deleteSnippet",
+        "title": "Delete Snippet",
+        "icon": "$(close)"
+      },
+      {
+        "command": "_snippetsmanager.editSnippet",
+        "title": "Edit Snippet",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "snippetsmanager.refresh",
+        "title": "Refresh",
+        "icon": "$(refresh)",
+        "category": "Snippets Manager"
+      }
+    ]
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "pretest": "yarn run compile && yarn run lint",
+    "lint": "eslint src --ext ts",
+    "test": "node ./out/test/runTest.js"
+  },
+  "devDependencies": {
+    "@types/glob": "^7.1.3",
+    "@types/mocha": "^8.2.2",
+    "@types/node": "14.x",
+    "@types/vscode": "^1.59.0",
+    "@typescript-eslint/eslint-plugin": "^4.26.0",
+    "@typescript-eslint/parser": "^4.26.0",
+    "eslint": "^7.27.0",
+    "glob": "^7.1.7",
+    "mocha": "^8.4.0",
+    "typescript": "^4.3.2",
+    "vscode-test": "^1.5.2"
+  },
+  "dependencies": {
+    "vscode-ext-codicons": "^1.4.0",
+    "vscode-ext-help-and-feedback-view": "^1.0.1"
+  }
+}
