@@ -1473,6 +1473,16 @@ v8-compile-cache@^2.0.3:
   resolved "https://registry.nlark.com/v8-compile-cache/download/v8-compile-cache-2.3.0.tgz#2de19618c66dc247dcfb6f99338035d8245a2cee"
   integrity sha1-LeGWGMZtwkfc+2+ZM4A12CRaLO4=
 
+vscode-ext-codicons@^1.4.0:
+  version "1.4.0"
+  resolved "https://registry.nlark.com/vscode-ext-codicons/download/vscode-ext-codicons-1.4.0.tgz#d2b4e6c0b5bd350c227060081286287e13b674b7"
+  integrity sha1-0rTmwLW9NQwicGAIEoYofhO2dLc=
+
+vscode-ext-help-and-feedback-view@^1.0.1:
+  version "1.0.1"
+  resolved "https://registry.nlark.com/vscode-ext-help-and-feedback-view/download/vscode-ext-help-and-feedback-view-1.0.1.tgz#cd282257c84773abdb2c0706587e3da77207b4e6"
+  integrity sha1-zSgiV8hHc6vbLAcGWH49p3IHtOY=
+
 vscode-test@^1.5.2:
   version "1.6.1"
   resolved "https://registry.nlark.com/vscode-test/download/vscode-test-1.6.1.tgz#44254c67036de92b00fdd72f6ace5f1854e1a563"

@@ -1,20 +1,46 @@
-// The module 'vscode' contains the VS Code extensibility API
-// Import the module and reference it with the alias vscode in your code below
 import * as vscode from "vscode";
 import createSnippet from "./createSnippet";
+import deleteSnippet from "./deleteSnippet";
+import editSnippet from "./editSnippet";
+import { refresh, registerExplorerView } from "./explorerView";
+import { registerHelpAndFeedbackView } from "./helpAndFeedbackView";
 
-// this method is called when your extension is activated
-// your extension is activated the very first time the command is executed
 export function activate(context: vscode.ExtensionContext) {
-  const create = vscode.commands.registerCommand(
-    "snippetsmanager.create",
+  registerExplorerView(context);
+
+  registerHelpAndFeedbackView(context);
+
+  const createSnippetCmd = vscode.commands.registerCommand(
+    "snippetsmanager.createSnippet",
     () => {
       createSnippet();
     }
   );
 
-  context.subscriptions.push(create);
+  const deleteSnippetCmd = vscode.commands.registerCommand(
+    "_snippetsmanager.deleteSnippet",
+    (snippet) => {
+      deleteSnippet(snippet);
+    }
+  );
+  const editSnippetCmd = vscode.commands.registerCommand(
+    "_snippetsmanager.editSnippet",
+    (snippet) => {
+      editSnippet(snippet);
+    }
+  );
+
+  const refreshCmd = vscode.commands.registerCommand(
+    "snippetsmanager.refresh",
+    () => {
+      refresh();
+    }
+  );
+
+  context.subscriptions.push(createSnippetCmd);
+  context.subscriptions.push(deleteSnippetCmd);
+  context.subscriptions.push(editSnippetCmd);
+  context.subscriptions.push(refreshCmd);
 }
 
-// this method is called when your extension is deactivated
 export function deactivate() {}

@@ -1,54 +1,64 @@
 import * as vscode from "vscode";
-import { Position } from "vscode";
-import createSnippetJSON from "./core/createSnippetJSON";
+import createSnippetObject from "./core/createSnippetObject";
+import updateSnippets from "./core/updateSnippets";
 
 export default async () => {
-  if (vscode.window.activeTextEditor) {
-    const activeWorkspaceFolder = vscode.workspace.getWorkspaceFolder(
-      vscode.window.activeTextEditor.document.uri
-    );
-    if (!activeWorkspaceFolder?.uri) {
-      return;
-    }
-    const editor = vscode.window.activeTextEditor;
-    const prefix = "test" + Math.random();
-    const description = prefix;
-    const snippetsBodyText = editor?.document.getText(editor.selection);
-    const snippetsLang = editor?.document.languageId;
-    const newSnippets = createSnippetJSON({
-      bodyText: snippetsBodyText,
-      prefix,
-      description,
-      scope: snippetsLang,
-    });
+  const { activeTextEditor } = vscode.window;
 
-    const workspaceEdit = new vscode.WorkspaceEdit();
-    const snippetsUri = vscode.Uri.joinPath(
-      activeWorkspaceFolder?.uri,
-      ".vscode",
-      "default-snippets-manager.code-snippets"
+  if (!activeTextEditor) {
+    vscode.window.showErrorMessage(
+      "Get `vscode.window.activeTextEditor` failed."
     );
-    const doc = await vscode.workspace.openTextDocument(snippetsUri);
-    const oldSnippet = doc.getText();
-
-    // workspaceEdit.createFile(snippetsUri, { ignoreIfExists: true });
-    workspaceEdit.replace(
-      snippetsUri,
-      new vscode.Range(
-        new Position(0, 0),
-        new Position(Number.MAX_SAFE_INTEGER, Number.MAX_SAFE_INTEGER)
-      ),
-      JSON.stringify(
-        {
-          ...JSON.parse(oldSnippet),
-          [description]: newSnippets,
-        },
-        null,
-        2
-      )
-    );
-    const res = await vscode.workspace.applyEdit(workspaceEdit);
-
-    doc.save();
+    return;
   }
+
+  const activeWorkspaceFolder = vscode.workspace.getWorkspaceFolder(
+    activeTextEditor.document.uri
+  );
+
+  if (!activeWorkspaceFolder?.uri) {
+    vscode.window.showErrorMessage(
+      "Get workspaceFolder by `vscode.window.activeTextEditor.document.uri` failed."
+    );
+    return;
+  }
+
+  const input = vscode.window.createInputBox();
+  input.title = "Create Snippet";
+  input.value = "";
+  input.prompt = "Enter snippet prefix";
+  input.show();
+
+  const prefix = await new Promise<string>((resolve, reject) => {
+    input.onDidAccept(() => {
+      resolve(input.value);
+      input.dispose();
+    });
+  });
+
+  const description = prefix;
+  const bodyText = activeTextEditor?.document.getText(
+    activeTextEditor.selection
+  );
+  const scope = activeTextEditor?.document.languageId;
+  const newSnippet = createSnippetObject({
+    bodyText,
+    prefix,
+    description,
+    scope,
+  });
+
+  const snippetsUri = vscode.Uri.joinPath(
+    activeWorkspaceFolder?.uri,
+    ".vscode",
+    "default-snippets-manager.code-snippets"
+  );
+
+  await updateSnippets({
+    snippetsUri,
+    snippets: {
+      [description]: newSnippet,
+    },
+    createSnippetsFileIfNotExists: true,
+  });
 };

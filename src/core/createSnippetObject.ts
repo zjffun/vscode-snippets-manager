@@ -1,4 +1,6 @@
-export type CreateSnippetJSONType = {
+import { Snippet } from "..";
+
+export type CreateSnippetObjectParam = {
   bodyText: string;
   prefix: string;
   description: string;
@@ -10,7 +12,7 @@ export default ({
   prefix,
   description,
   scope,
-}: CreateSnippetJSONType) => {
+}: CreateSnippetObjectParam): Snippet => {
   const body = bodyText.split("\n");
 
   return {
