@@ -8,8 +8,6 @@ import { registerHelpAndFeedbackView } from "./helpAndFeedbackView";
 export function activate(context: vscode.ExtensionContext) {
   registerExplorerView(context);
 
-  registerHelpAndFeedbackView(context);
-
   const createSnippetCmd = vscode.commands.registerCommand(
     "snippetsmanager.createSnippet",
     () => {
@@ -41,6 +39,8 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(deleteSnippetCmd);
   context.subscriptions.push(editSnippetCmd);
   context.subscriptions.push(refreshCmd);
+
+  registerHelpAndFeedbackView(context);
 }
 
 export function deactivate() {}

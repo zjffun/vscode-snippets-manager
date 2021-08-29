@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import createSnippetObject from "./core/createSnippetObject";
 import updateSnippets from "./core/updateSnippets";
+import { refresh } from "./explorerView";
 
 export default async () => {
   const { activeTextEditor } = vscode.window;
@@ -61,4 +62,6 @@ export default async () => {
     },
     createSnippetsFileIfNotExists: true,
   });
+
+  refresh();
 };

@@ -27,9 +27,13 @@ const getSnippets = async () => {
       );
 
       // get the snippets file content
-      const snippetsTextDoc = await vscode.workspace.openTextDocument(
-        snippetsUri
-      );
+      let snippetsTextDoc;
+
+      try {
+        snippetsTextDoc = await vscode.workspace.openTextDocument(snippetsUri);
+      } catch (error) {
+        continue;
+      }
 
       const snippets = await getSnippetsByTextDoc(snippetsTextDoc);
       if (!snippets) {

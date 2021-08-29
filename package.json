@@ -62,29 +62,36 @@
           "when": "editorHasSelection"
         },
         {
-          "command": "_snippetsmanager.deleteSnippe",
+          "command": "_snippetsmanager.deleteSnippet",
           "when": "false"
         },
         {
           "command": "_snippetsmanager.editSnippet",
           "when": "false"
         }
+      ],
+      "editor/context": [
+        {
+          "command": "snippetsmanager.createSnippet",
+          "when": "editorHasSelection",
+          "group": "snippets"
+        }
       ]
     },
     "commands": [
       {
         "command": "snippetsmanager.createSnippet",
-        "title": "Create",
+        "title": "Create Snippet",
         "category": "Snippets Manager"
       },
       {
         "command": "_snippetsmanager.deleteSnippet",
-        "title": "Delete",
+        "title": "Delete Snippet",
         "icon": "$(close)"
       },
       {
         "command": "_snippetsmanager.editSnippet",
-        "title": "Edit",
+        "title": "Edit Snippet",
         "icon": "$(edit)"
       },
       {

@@ -9,16 +9,13 @@ import {
 
 export function registerHelpAndFeedbackView(context: ExtensionContext) {
   const items = new Array<Link | Command>();
-  const predefinedProvider = new StandardLinksProvider("alefragnani.Bookmarks");
+  const predefinedProvider = new StandardLinksProvider(
+    "zjffun.snippetsmanager"
+  );
   items.push(predefinedProvider.getGetStartedLink());
-  items.push(new ProvideFeedbackLink("bookmarks"));
+  items.push(new ProvideFeedbackLink("snippetsmanager"));
   items.push(predefinedProvider.getReviewIssuesLink());
   items.push(predefinedProvider.getReportIssueLink());
-  items.push({
-    icon: "heart",
-    title: "Support",
-    command: "bookmarks.supportBookmarks",
-  });
   new HelpAndFeedbackView(
     context,
     "snippetsmanager-snippetsView-HelpAndFeedback",
