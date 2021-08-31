@@ -3,7 +3,11 @@
   "displayName": "Snippets Manager",
   "description": "VSCode snippets manager.",
   "keywords": [
-    "snippets"
+    "snippet",
+    "snippet manager",
+    "snippet create",
+    "snippets",
+    "snippets manager"
   ],
   "version": "0.0.2",
   "publisher": "zjffun",
