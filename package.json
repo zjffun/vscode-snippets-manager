@@ -9,7 +9,7 @@
     "snippets",
     "snippets manager"
   ],
-  "version": "0.0.2",
+  "version": "0.0.3",
   "publisher": "zjffun",
   "engines": {
     "vscode": "^1.59.0"
