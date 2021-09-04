@@ -40,10 +40,18 @@ Edit or delete snippets.
 
 ### [Unreleased]
 
-### 0.0.3
+### v0.0.4
 
 - Added features `.code-snippets` file editor.
 
-### 0.0.1
+### v0.0.3
+
+- Changed icon and keywords.
+
+### v0.0.2
+
+- Changed icon.
+
+### v0.0.1
 
 - Added features create, edit and delete snippets.
