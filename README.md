@@ -32,6 +32,18 @@ Edit or delete snippets.
 
 ## Release Notes
 
+### [TODO]
+
+- Show all `.code-snippet` in explorer.
+- Jump to selected snippet when click snippets.
+- Edit selected snippet when click edit snippet.
+
+### [Unreleased]
+
+### 0.0.3
+
+- Added features `.code-snippets` file editor.
+
 ### 0.0.1
 
 - Added features create, edit and delete snippets.
