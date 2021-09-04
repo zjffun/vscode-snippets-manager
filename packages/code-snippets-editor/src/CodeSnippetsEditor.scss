@@ -1,0 +1,12 @@
+.code-snippets-editor {
+  &-snippets {
+    padding: 0;
+    list-style: none;
+
+    &__item {
+      padding-bottom: 1em;
+      border-bottom: 1px solid var(--vscode-foreground);
+      margin-bottom: 1em;
+    }
+  }
+}

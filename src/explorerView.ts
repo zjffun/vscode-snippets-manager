@@ -72,8 +72,15 @@ class ManagerTreeDataProvider
   public getTreeItem(element: Snippet | SnippetWorkpace): vscode.TreeItem {
     const isSnippetWorkpace = (<SnippetWorkpace>element).children;
 
+    const showSnippetCommand = {
+      command: "_snippetsmanager.showSnippet",
+      title: "Show this snippet in editor.",
+      arguments: [element],
+    };
+
     return {
       label: (<SnippetWorkpace>element).name || (<Snippet>element).key,
+      command: !isSnippetWorkpace ? showSnippetCommand : undefined,
       collapsibleState: isSnippetWorkpace
         ? vscode.TreeItemCollapsibleState.Collapsed
         : undefined,

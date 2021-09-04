@@ -14,5 +14,5 @@ export default async (snippet: Snippet) => {
     CodeSnippetsEditor.viewType
   );
 
-  // TODO: open edit
+  // TODO: jump to selected snippet
 };

@@ -1,3 +1,6 @@
+packages
+yarn.lock
+
 .vscode/**
 .vscode-test/**
 out/test/**

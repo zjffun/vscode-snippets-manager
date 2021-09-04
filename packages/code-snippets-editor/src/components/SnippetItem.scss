@@ -1,0 +1,77 @@
+.code-snippets-editor {
+  $operationWidth: 100px;
+
+  &-snippet {
+    $paddingBottom: 0.3em;
+
+    &__top {
+      display: flex;
+      flex-wrap: nowrap;
+      padding-bottom: $paddingBottom;
+    }
+    &__desc {
+      padding-bottom: $paddingBottom;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    &__body {
+      padding-bottom: $paddingBottom;
+      &__content {
+        color: var(--vscode-textPreformat-foreground);
+        overflow: auto;
+      }
+    }
+  }
+
+  &-top-items {
+    display: flex;
+    flex-wrap: wrap;
+    max-width: calc(100% - #{$operationWidth});
+
+    &__item {
+      margin-right: 1em;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+  }
+
+  &-operation {
+    width: $operationWidth;
+    align-self: flex-start;
+    display: flex;
+    justify-content: flex-end;
+    .code-snippets-editor-close-icon {
+      font-size: 13px;
+    }
+  }
+
+  &-button {
+    margin: 0 4px;
+    padding: 2px 14px;
+    cursor: pointer;
+
+    &-ok {
+      color: var(--vscode-button-foreground);
+      background-color: var(--vscode-button-background);
+      &:active,
+      &:hover {
+        color: var(--vscode-button-foreground);
+        background-color: var(--vscode-button-hoverBackground);
+      }
+    }
+    &-cancel {
+      color: var(--vscode-button-secondaryForeground);
+      background-color: var(--vscode-button-secondaryBackground);
+      &:active,
+      &:hover {
+        color: var(--vscode-button-foreground);
+        background-color: var(--vscode-button-secondaryHoverBackground);
+      }
+    }
+  }
+
+  &-label {
+    font-weight: 700;
+  }
+}

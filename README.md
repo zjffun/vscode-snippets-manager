@@ -1,8 +1,14 @@
 # Snippets Manager
 
-VSCode snippets manager.
+Create and edit snippets easily.
 
 ## Features
+
+### Edit snippets
+
+Open `.code-snippets` in Snippets Editor.
+
+![feature edit](images/edit.png)
 
 ### Create snippets
 

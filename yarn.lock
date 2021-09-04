@@ -111,6 +111,25 @@
   resolved "https://registry.nlark.com/@types/node/download/@types/node-14.17.12.tgz?cache=0&sync_timestamp=1630089309604&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fnode%2Fdownload%2F%40types%2Fnode-14.17.12.tgz#7a31f720b85a617e54e42d24c4ace136601656c7"
   integrity sha1-ejH3ILhaYX5U5C0kxKzhNmAWVsc=
 
+"@types/prop-types@*":
+  version "15.7.4"
+  resolved "https://registry.nlark.com/@types/prop-types/download/@types/prop-types-15.7.4.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fprop-types%2Fdownload%2F%40types%2Fprop-types-15.7.4.tgz#fcf7205c25dff795ee79af1e30da2c9790808f11"
+  integrity sha1-/PcgXCXf95Xuea8eMNosl5CAjxE=
+
+"@types/react@^17.0.19":
+  version "17.0.19"
+  resolved "https://registry.nlark.com/@types/react/download/@types/react-17.0.19.tgz?cache=0&sync_timestamp=1629708906853&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Freact%2Fdownload%2F%40types%2Freact-17.0.19.tgz#8f2a85e8180a43b57966b237d26a29481dacc991"
+  integrity sha1-jyqF6BgKQ7V5ZrI30mopSB2syZE=
+  dependencies:
+    "@types/prop-types" "*"
+    "@types/scheduler" "*"
+    csstype "^3.0.2"
+
+"@types/scheduler@*":
+  version "0.16.2"
+  resolved "https://registry.nlark.com/@types/scheduler/download/@types/scheduler-0.16.2.tgz?cache=0&sync_timestamp=1629709260625&other_urls=https%3A%2F%2Fregistry.nlark.com%2F%40types%2Fscheduler%2Fdownload%2F%40types%2Fscheduler-0.16.2.tgz#1a62f89525723dde24ba1b01b092bf5df8ad4d39"
+  integrity sha1-GmL4lSVyPd4kuhsBsJK/XfitTTk=
+
 "@types/vscode@^1.59.0":
   version "1.59.0"
   resolved "https://registry.nlark.com/@types/vscode/download/@types/vscode-1.59.0.tgz#11c93f5016926126bf30b47b9ece3bd617eeef31"
@@ -189,6 +208,11 @@
   version "1.1.2"
   resolved "https://registry.npm.taobao.org/@ungap/promise-all-settled/download/@ungap/promise-all-settled-1.1.2.tgz#aa58042711d6e3275dd37dc597e5d31e8c290a44"
   integrity sha1-qlgEJxHW4ydd033Fl+XTHowpCkQ=
+
+"@vscode/codicons@^0.0.21":
+  version "0.0.21"
+  resolved "https://registry.nlark.com/@vscode/codicons/download/@vscode/codicons-0.0.21.tgz#20ef724b141fdddba3ad86e85f34aaad29e4d3a0"
+  integrity sha1-IO9ySxQf3dujrYboXzSqrSnk06A=
 
 acorn-jsx@^5.3.1:
   version "5.3.2"
@@ -402,6 +426,10 @@ cliui@^7.0.2:
     strip-ansi "^6.0.0"
     wrap-ansi "^7.0.0"
 
+code-snippets-editor@./packages/code-snippets-editor/code-snippets-editor-0.0.1.tgz:
+  version "0.0.1"
+  resolved "./packages/code-snippets-editor/code-snippets-editor-0.0.1.tgz#22c22d08185a87bae019e7e1964ea39d60d7cd16"
+
 color-convert@^1.9.0:
   version "1.9.3"
   resolved "https://registry.nlark.com/color-convert/download/color-convert-1.9.3.tgz#bb71850690e1f136567de629d2d5471deda4c1e8"
@@ -444,6 +472,11 @@ cross-spawn@^7.0.2:
     path-key "^3.1.0"
     shebang-command "^2.0.0"
     which "^2.0.1"
+
+csstype@^3.0.2:
+  version "3.0.8"
+  resolved "https://registry.nlark.com/csstype/download/csstype-3.0.8.tgz#d2266a792729fb227cd216fb572f43728e1ad340"
+  integrity sha1-0iZqeScp+yJ80hb7Vy9Dco4a00A=
 
 debug@4, debug@^4.0.1, debug@^4.1.1, debug@^4.3.1:
   version "4.3.2"

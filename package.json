@@ -1,13 +1,13 @@
 {
   "name": "snippetsmanager",
   "displayName": "Snippets Manager",
-  "description": "VSCode snippets manager.",
+  "description": "Create and edit snippets easily.",
   "keywords": [
-    "snippet",
+    "snippet editor",
+    "edit snippet",
+    "create snippet",
     "snippet manager",
-    "snippet create",
-    "snippets",
-    "snippets manager"
+    "snippets"
   ],
   "version": "0.0.3",
   "publisher": "zjffun",
@@ -37,7 +37,7 @@
         {
           "id": "snippetsmanager-snippetsView",
           "title": "Snippets",
-          "icon": "images/icon.svg"
+          "icon": "$(symbol-snippet)"
         }
       ]
     },
@@ -85,6 +85,10 @@
         {
           "command": "_snippetsmanager.editSnippet",
           "when": "false"
+        },
+        {
+          "command": "_snippetsmanager.showSnippet",
+          "when": "false"
         }
       ],
       "editor/context": [
@@ -112,25 +116,44 @@
         "icon": "$(edit)"
       },
       {
+        "command": "_snippetsmanager.showSnippet",
+        "title": "Show Snippet"
+      },
+      {
         "command": "snippetsmanager.refresh",
         "title": "Refresh",
         "icon": "$(refresh)",
         "category": "Snippets Manager"
       }
+    ],
+    "customEditors": [
+      {
+        "viewType": "snippetsmanager.codeSnippetsEditorView",
+        "displayName": "Code Snippets",
+        "selector": [
+          {
+            "filenamePattern": "*.code-snippets"
+          }
+        ]
+      }
     ]
   },
   "scripts": {
-    "vscode:prepublish": "yarn run compile",
+    "vscode:prepublish": "cd packages/code-snippets-editor && npm pack && cd - && yarn add ./packages/code-snippets-editor/code-snippets-editor-0.0.1.tgz && yarn run compile",
     "compile": "tsc -p ./",
-    "watch": "tsc -watch -p ./",
+    "watch": "cd packages/code-snippets-editor && (yarn run watch &) && cd - && yarn add ./packages/code-snippets-editor && tsc -watch -p ./",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
-    "test": "node ./out/test/runTest.js"
+    "test": "node ./out/test/runTest.js",
+    "_vscode:pack": "vsce package",
+    "_vscode:install": "ls snippetsmanager-*.vsix | xargs code --install-extension",
+    "_vscode:uninstall": "code --uninstall-extension zjffun.snippetsmanager"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",
     "@types/mocha": "^8.2.2",
     "@types/node": "14.x",
+    "@types/react": "^17.0.19",
     "@types/vscode": "^1.59.0",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
@@ -141,6 +164,8 @@
     "vscode-test": "^1.5.2"
   },
   "dependencies": {
+    "@vscode/codicons": "^0.0.21",
+    "code-snippets-editor": "./packages/code-snippets-editor/code-snippets-editor-0.0.1.tgz",
     "vscode-ext-codicons": "^1.4.0",
     "vscode-ext-help-and-feedback-view": "^1.0.1"
   },
