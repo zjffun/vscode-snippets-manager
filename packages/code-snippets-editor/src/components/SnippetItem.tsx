@@ -1,4 +1,5 @@
 import React, { useRef, useState } from "react";
+import { EDIT, NEWITEM } from "../symbols";
 import { Snippet } from "../typings";
 import "./SnippetItem.scss";
 
@@ -6,11 +7,12 @@ interface Props {
   name: string;
   snippet: Snippet;
   vscode: any;
+  setEdit(edit: boolean): void;
 }
 
-const CodeSnippetsEditor = ({ name, snippet, vscode }: Props) => {
+const CodeSnippetsEditor = ({ name, snippet, vscode, setEdit }: Props) => {
   const formRef = useRef<HTMLFormElement | null>(null);
-  const [edit, setEdit] = useState(false);
+  const edit = snippet[EDIT];
 
   return (
     <section className="code-snippets-editor-snippet">
@@ -56,7 +58,7 @@ const CodeSnippetsEditor = ({ name, snippet, vscode }: Props) => {
                     onClick={() => {
                       vscode.postMessage({
                         type: "delete",
-                        payload: { key: name },
+                        payload: { name },
                       });
                     }}
                   ></a>
@@ -116,9 +118,9 @@ const CodeSnippetsEditor = ({ name, snippet, vscode }: Props) => {
 
                   const data = new FormData(formRef.current);
                   vscode.postMessage({
-                    type: "update",
+                    type: snippet[NEWITEM] ? "insert" : "update",
                     payload: {
-                      key: name,
+                      name,
                       data: Object.fromEntries(data.entries()),
                     },
                   });

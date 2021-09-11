@@ -1,6 +1,4 @@
 .code-snippets-editor {
-  $operationWidth: 100px;
-
   &-snippet {
     $paddingBottom: 0.3em;
 
@@ -26,7 +24,6 @@
   &-top-items {
     display: flex;
     flex-wrap: wrap;
-    max-width: calc(100% - #{$operationWidth});
 
     &__item {
       margin-right: 1em;
@@ -37,7 +34,6 @@
   }
 
   &-operation {
-    width: $operationWidth;
     align-self: flex-start;
     display: flex;
     justify-content: flex-end;
@@ -47,10 +43,6 @@
   }
 
   &-button {
-    margin: 0 4px;
-    padding: 2px 14px;
-    cursor: pointer;
-
     &-ok {
       color: var(--vscode-button-foreground);
       background-color: var(--vscode-button-background);

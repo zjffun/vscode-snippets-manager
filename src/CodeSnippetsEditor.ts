@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { Snippet } from ".";
+import { CodeSnippetsService } from "./CodeSnippetsService";
 import { getNonce } from "./util";
 
 /**
@@ -36,6 +36,8 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     webviewPanel: vscode.WebviewPanel,
     _token: vscode.CancellationToken
   ): Promise<void> {
+    const codeSnippetsService = new CodeSnippetsService(document);
+
     // Setup initial content for the webview
     webviewPanel.webview.options = {
       enableScripts: true,
@@ -43,9 +45,11 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
     function updateWebview() {
+      const [errors, text] = codeSnippetsService.getEntriesString();
+
       webviewPanel.webview.postMessage({
         type: "update",
-        text: document.getText(),
+        text,
       });
     }
 
@@ -73,12 +77,16 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     // Receive message from the webview.
     webviewPanel.webview.onDidReceiveMessage(({ type, payload }) => {
       switch (type) {
+        case "insert":
+          codeSnippetsService.insert(payload.data);
+          return;
+
         case "update":
-          this.updateSnippet(document, payload);
+          codeSnippetsService.update(payload.data, payload.name);
           return;
 
         case "delete":
-          this.deleteSnippet(document, payload.key);
+          codeSnippetsService.delete(payload.name);
           return;
       }
     });
@@ -160,76 +168,5 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;
-  }
-
-  /**
-   * Add a new scratch to the current document.
-   */
-  private updateSnippet(document: vscode.TextDocument, payload: any) {
-    let snippetEntries = this.getDocumentAsSnippetEntries(document);
-
-    snippetEntries = snippetEntries.map(([key, snippet]) => {
-      if (key === payload.key) {
-        snippet.prefix = payload.data.prefix;
-        snippet.description = payload.data.description;
-        snippet.scope = payload.data.scope;
-        snippet.body = payload.data.body.split("\n");
-        return [payload.data.name, snippet];
-      }
-      return [key, snippet];
-    });
-
-    return this.updateTextDocument(document, snippetEntries);
-  }
-
-  /**
-   * Delete an existing scratch from a document.
-   */
-  private deleteSnippet(document: vscode.TextDocument, key: string) {
-    let snippetEntries = this.getDocumentAsSnippetEntries(document);
-
-    snippetEntries = snippetEntries.filter(([_key]) => _key !== key);
-
-    return this.updateTextDocument(document, snippetEntries);
-  }
-
-  /**
-   * Try to get a current document as object entries.
-   */
-  private getDocumentAsSnippetEntries(
-    document: vscode.TextDocument
-  ): [string, Snippet][] {
-    const text = document.getText();
-    if (text.trim().length === 0) {
-      return Object.entries({});
-    }
-
-    try {
-      return Object.entries(JSON.parse(text));
-    } catch {
-      throw new Error(
-        "Could not get document as json. Content is not valid json"
-      );
-    }
-  }
-
-  /**
-   * Write out the snippet entries to a given document.
-   */
-  private updateTextDocument(
-    document: vscode.TextDocument,
-    snippetEntries: any
-  ) {
-    const edit = new vscode.WorkspaceEdit();
-
-    // Just replace the entire document every time for this example extension.
-    // A more complete extension should compute minimal edits instead.
-    edit.replace(
-      document.uri,
-      new vscode.Range(0, 0, document.lineCount, 0),
-      JSON.stringify(Object.fromEntries(snippetEntries), null, 2)
-    );
-
-    return vscode.workspace.applyEdit(edit);
   }
 }

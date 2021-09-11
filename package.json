@@ -141,7 +141,8 @@
   "scripts": {
     "vscode:prepublish": "cd packages/code-snippets-editor && npm pack && cd - && yarn add ./packages/code-snippets-editor/code-snippets-editor-0.0.1.tgz && yarn run compile",
     "compile": "tsc -p ./",
-    "watch": "cd packages/code-snippets-editor && (yarn run watch &) && cd - && yarn add ./packages/code-snippets-editor && tsc -watch -p ./",
+    "watch": "npm run watch:editor && yarn link code-snippets-editor && tsc -watch -p ./",
+    "watch:editor": "cd packages/code-snippets-editor && yarn link && yarn run watch &",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",

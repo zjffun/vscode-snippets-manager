@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
-import createSnippetObject from "./core/createSnippetObject";
-import updateSnippets from "./core/updateSnippets";
+import { CodeSnippetsService } from "./CodeSnippetsService";
+import getSnippetTextDocument from "./core/getSnippetTextDocument";
 import { refresh } from "./explorerView";
 
 export default async () => {
@@ -37,17 +37,10 @@ export default async () => {
     });
   });
 
-  const description = prefix;
   const bodyText = activeTextEditor?.document.getText(
     activeTextEditor.selection
   );
   const scope = activeTextEditor?.document.languageId;
-  const newSnippet = createSnippetObject({
-    bodyText,
-    prefix,
-    description,
-    scope,
-  });
 
   const snippetsUri = vscode.Uri.joinPath(
     activeWorkspaceFolder?.uri,
@@ -55,12 +48,19 @@ export default async () => {
     "default-snippets-manager.code-snippets"
   );
 
-  await updateSnippets({
+  const textDocument = await getSnippetTextDocument({
     snippetsUri,
-    snippets: {
-      [description]: newSnippet,
-    },
     createSnippetsFileIfNotExists: true,
+  });
+
+  const codeSnippetsService = new CodeSnippetsService(textDocument);
+
+  await codeSnippetsService.insert({
+    name: prefix,
+    prefix,
+    description: prefix,
+    scope,
+    body: bodyText,
   });
 
   refresh();

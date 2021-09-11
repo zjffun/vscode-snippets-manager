@@ -1,19 +1,23 @@
-import { Snippet } from ".";
-import updateSnippets from "./core/updateSnippets";
+import { ISnippet } from ".";
+import { CodeSnippetsService } from "./CodeSnippetsService";
+import getSnippetTextDocument from "./core/getSnippetTextDocument";
 import { refresh } from "./explorerView";
 
-export default async (snippet: Snippet) => {
+export default async (snippet: ISnippet) => {
   if (!snippet.uri) {
     return;
   }
-  if (!snippet.key) {
+  if (!snippet.name) {
     return;
   }
 
-  await updateSnippets({
+  const textDocument = await getSnippetTextDocument({
     snippetsUri: snippet.uri,
-    snippets: { [snippet.key]: undefined },
   });
+
+  const codeSnippetsService = new CodeSnippetsService(textDocument);
+
+  await codeSnippetsService.delete(snippet.name);
 
   refresh();
 };

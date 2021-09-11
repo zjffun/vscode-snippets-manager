@@ -1,11 +1,12 @@
 import * as vscode from "vscode";
-import { Snippet, SnippetWorkpace } from ".";
-import getSnippetsByTextDoc from "./core/getSnippetsByTextDoc";
+import { ISnippet, ISnippetWorkpace } from ".";
+import { CodeSnippetsService } from "./CodeSnippetsService";
+import getSnippetTextDocument from "./core/getSnippetTextDocument";
 
 let managerTreeDataProvider: ManagerTreeDataProvider;
 
-const getTreeElement = (element?: SnippetWorkpace | Snippet) => {
-  const _element = <SnippetWorkpace | undefined>element;
+const getTreeElement = (element?: ISnippetWorkpace | ISnippet) => {
+  const _element = <ISnippetWorkpace | undefined>element;
 
   if (!_element?.children) {
     return [];
@@ -16,7 +17,7 @@ const getTreeElement = (element?: SnippetWorkpace | Snippet) => {
 
 const getSnippets = async () => {
   const workspaceFolders = vscode.workspace.workspaceFolders;
-  const workpaces: SnippetWorkpace[] = [];
+  const workpaces: ISnippetWorkpace[] = [];
 
   if (workspaceFolders) {
     for (const workspaceFolder of workspaceFolders) {
@@ -35,19 +36,20 @@ const getSnippets = async () => {
         continue;
       }
 
-      const snippets = await getSnippetsByTextDoc(snippetsTextDoc);
+      const codeSnippetsService = new CodeSnippetsService(snippetsTextDoc);
+
+      const [_, snippets] = await codeSnippetsService.getMap();
       if (!snippets) {
         continue;
       }
 
       workpaces.push({
         name: workspaceFolder.name,
-        children: Object.entries(snippets).map(([key, snippet]) => {
-          return {
-            ...snippet,
-            key,
+        children: Array.from(snippets).map(([name, snippet]) => {
+          return codeSnippetsService.getSnippet(snippet, {
+            name,
             uri: snippetsUri,
-          };
+          });
         }),
       });
     }
@@ -57,7 +59,7 @@ const getSnippets = async () => {
 };
 
 class ManagerTreeDataProvider
-  implements vscode.TreeDataProvider<Snippet | SnippetWorkpace>
+  implements vscode.TreeDataProvider<ISnippet | ISnippetWorkpace>
 {
   private _onDidChangeTreeData: vscode.EventEmitter<any> =
     new vscode.EventEmitter<any>();
@@ -69,8 +71,8 @@ class ManagerTreeDataProvider
   public refresh(): any {
     this._onDidChangeTreeData.fire(null);
   }
-  public getTreeItem(element: Snippet | SnippetWorkpace): vscode.TreeItem {
-    const isSnippetWorkpace = (<SnippetWorkpace>element).children;
+  public getTreeItem(element: ISnippet | ISnippetWorkpace): vscode.TreeItem {
+    const isSnippetWorkpace = (<ISnippetWorkpace>element).children;
 
     const showSnippetCommand = {
       command: "_snippetsmanager.showSnippet",
@@ -79,7 +81,7 @@ class ManagerTreeDataProvider
     };
 
     return {
-      label: (<SnippetWorkpace>element).name || (<Snippet>element).key,
+      label: element.name,
       command: !isSnippetWorkpace ? showSnippetCommand : undefined,
       collapsibleState: isSnippetWorkpace
         ? vscode.TreeItemCollapsibleState.Collapsed
@@ -91,12 +93,12 @@ class ManagerTreeDataProvider
   }
 
   public getChildren(
-    element?: Snippet | SnippetWorkpace
+    element?: ISnippet | ISnippetWorkpace
   ):
-    | Snippet[]
-    | Thenable<Snippet[]>
-    | SnippetWorkpace[]
-    | Thenable<SnippetWorkpace[]> {
+    | ISnippet[]
+    | Thenable<ISnippet[]>
+    | ISnippetWorkpace[]
+    | Thenable<ISnippetWorkpace[]> {
     return element ? getTreeElement(element) : getSnippets();
   }
 }

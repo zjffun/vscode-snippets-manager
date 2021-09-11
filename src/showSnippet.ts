@@ -1,12 +1,12 @@
 import * as vscode from "vscode";
-import { Snippet } from ".";
+import { ISnippet } from ".";
 import { CodeSnippetsEditor } from "./CodeSnippetsEditor";
 
-export default async (snippet: Snippet) => {
+export default async (snippet: ISnippet) => {
   if (!snippet.uri) {
     return;
   }
-  const snippetUri = snippet?.uri;
+  const snippetUri = snippet.uri;
 
   vscode.commands.executeCommand(
     "vscode.openWith",

@@ -1,19 +1,29 @@
 import * as vscode from "vscode";
 
-export interface Snippet {
-  body: any;
-  description: string;
-  prefix: string;
-  scope: string;
-  key?: string;
+export interface ISnippetExtra {
+  name?: string;
   uri?: vscode.Uri;
 }
 
-export interface Snippets {
-  [key: string]: Snippet;
+export interface ISnippet extends ISnippetExtra {
+  body: string;
+  description: string;
+  prefix: string;
+  scope: string;
 }
 
-export interface SnippetWorkpace {
+export interface IVSCodeSnippet {
+  body: string[];
+  description: string;
+  prefix: string;
+  scope: string;
+}
+
+export interface ISnippets {
+  [key: string]: ISnippet;
+}
+
+export interface ISnippetWorkpace {
   name: string;
-  children: Snippet[];
+  children: ISnippet[];
 }

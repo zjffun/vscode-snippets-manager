@@ -3,6 +3,8 @@ import SnippetItem from "./components/SnippetItem";
 import { SnippetEntries } from "./typings";
 
 import "./CodeSnippetsEditor.scss";
+import ToolbarComponent from "./components/ToolbarComponent";
+import { EDIT, NEWITEM } from "./symbols";
 
 declare global {
   const acquireVsCodeApi: any;
@@ -12,7 +14,9 @@ const vscode = acquireVsCodeApi();
 
 function getSnippetEntries(text: string): SnippetEntries {
   try {
-    return Object.entries(JSON.parse(text));
+    return JSON.parse(text).map(([k, v]: [string, any]) => {
+      return [k, { ...v, [EDIT]: false }];
+    });
   } catch {
     return Object.entries({});
   }
@@ -42,8 +46,28 @@ const CodeSnippetsEditor = () => {
     });
   }, []);
 
+  const handleAddSnippetClick = () => {
+    setSnippetEntries((snippetEntries) => [
+      [
+        "",
+        {
+          body: [],
+          description: "",
+          prefix: "",
+          scope: "",
+          [EDIT]: true,
+          [NEWITEM]: true,
+        },
+      ],
+      ...snippetEntries,
+    ]);
+  };
+
   return (
     <main className="code-snippets-editor">
+      <ToolbarComponent
+        onAddSnippetClick={handleAddSnippetClick}
+      ></ToolbarComponent>
       <ul className="code-snippets-editor-snippets">
         {snippetEntries.map(([key, snippet]) => {
           return (
@@ -52,6 +76,18 @@ const CodeSnippetsEditor = () => {
                 name={key}
                 snippet={snippet}
                 vscode={vscode}
+                setEdit={(edit) => {
+                  setSnippetEntries((snippetEntries) =>
+                    snippetEntries.map(([k, v]) => {
+                      let _v = v;
+                      if (k === key) {
+                        _v = { ...v, [EDIT]: edit };
+                      }
+
+                      return [k, _v];
+                    })
+                  );
+                }}
               ></SnippetItem>
             </li>
           );
