@@ -23,7 +23,12 @@ export interface ISnippets {
   [key: string]: ISnippet;
 }
 
-export interface ISnippetWorkpace {
+export interface ISnippetWorkpaceFile {
   name: string;
   children: ISnippet[];
+}
+
+export interface ISnippetWorkpace {
+  name: string;
+  children: ISnippetWorkpaceFile[];
 }

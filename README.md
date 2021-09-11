@@ -34,11 +34,12 @@ Edit or delete snippets.
 
 ### [TODO]
 
-- Show all `.code-snippet` in explorer.
 - Jump to selected snippet when click snippets.
 - Edit selected snippet when click edit snippet.
 
 ### [Unreleased]
+
+- Show all `.code-snippet` in explorer.
 
 ### v0.0.5
 

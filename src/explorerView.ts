@@ -1,12 +1,13 @@
 import * as vscode from "vscode";
-import { ISnippet, ISnippetWorkpace } from ".";
+import { ISnippet, ISnippetWorkpace, ISnippetWorkpaceFile } from ".";
 import { CodeSnippetsService } from "./CodeSnippetsService";
-import getSnippetTextDocument from "./core/getSnippetTextDocument";
 
 let managerTreeDataProvider: ManagerTreeDataProvider;
 
-const getTreeElement = (element?: ISnippetWorkpace | ISnippet) => {
-  const _element = <ISnippetWorkpace | undefined>element;
+const getTreeElement = (
+  element: ISnippet | ISnippetWorkpaceFile | ISnippetWorkpace
+) => {
+  const _element = <ISnippetWorkpaceFile | ISnippetWorkpace>element;
 
   if (!_element?.children) {
     return [];
@@ -15,42 +16,64 @@ const getTreeElement = (element?: ISnippetWorkpace | ISnippet) => {
   return _element.children;
 };
 
-const getSnippets = async () => {
-  const workspaceFolders = vscode.workspace.workspaceFolders;
+const getSnippets = async (context: vscode.ExtensionContext) => {
   const workpaces: ISnippetWorkpace[] = [];
 
+  // TODO: read extensions snippets
+  // Believe this extension will be installed with other extensions
+  // context.extensionPath;
+
+  const workspaceFolders = vscode.workspace.workspaceFolders;
   if (workspaceFolders) {
     for (const workspaceFolder of workspaceFolders) {
-      const snippetsUri = vscode.Uri.joinPath(
+      const dotVSCodeFolderUri = vscode.Uri.joinPath(
         workspaceFolder.uri,
-        ".vscode",
-        "default-snippets-manager.code-snippets"
+        ".vscode"
+      );
+      const workspaceDotVSCodeFiles = await vscode.workspace.fs.readDirectory(
+        dotVSCodeFolderUri
       );
 
-      // get the snippets file content
-      let snippetsTextDoc;
+      const workspaceSnippetFiles = [];
+      for (const [fileName, fileType] of workspaceDotVSCodeFiles) {
+        if (
+          fileType === vscode.FileType.File &&
+          fileName.endsWith(".code-snippets")
+        ) {
+          const snippetsUri = vscode.Uri.joinPath(dotVSCodeFolderUri, fileName);
 
-      try {
-        snippetsTextDoc = await vscode.workspace.openTextDocument(snippetsUri);
-      } catch (error) {
-        continue;
-      }
+          // get the snippets file content
+          let snippetsTextDoc;
 
-      const codeSnippetsService = new CodeSnippetsService(snippetsTextDoc);
+          try {
+            snippetsTextDoc = await vscode.workspace.openTextDocument(
+              snippetsUri
+            );
+          } catch (error) {
+            continue;
+          }
 
-      const [_, snippets] = await codeSnippetsService.getMap();
-      if (!snippets) {
-        continue;
+          const codeSnippetsService = new CodeSnippetsService(snippetsTextDoc);
+
+          const [_, snippets] = await codeSnippetsService.getMap();
+          if (!snippets) {
+            continue;
+          }
+          workspaceSnippetFiles.push({
+            name: fileName,
+            children: Array.from(snippets).map(([name, snippet]) => {
+              return codeSnippetsService.getSnippet(snippet, {
+                name,
+                uri: snippetsUri,
+              });
+            }),
+          });
+        }
       }
 
       workpaces.push({
         name: workspaceFolder.name,
-        children: Array.from(snippets).map(([name, snippet]) => {
-          return codeSnippetsService.getSnippet(snippet, {
-            name,
-            uri: snippetsUri,
-          });
-        }),
+        children: workspaceSnippetFiles,
       });
     }
   }
@@ -59,18 +82,24 @@ const getSnippets = async () => {
 };
 
 class ManagerTreeDataProvider
-  implements vscode.TreeDataProvider<ISnippet | ISnippetWorkpace>
+  implements
+    vscode.TreeDataProvider<ISnippet | ISnippetWorkpaceFile | ISnippetWorkpace>
 {
   private _onDidChangeTreeData: vscode.EventEmitter<any> =
     new vscode.EventEmitter<any>();
   readonly onDidChangeTreeData: vscode.Event<any> =
     this._onDidChangeTreeData.event;
 
-  constructor() {}
+  private context: vscode.ExtensionContext;
+
+  constructor(context: vscode.ExtensionContext) {
+    this.context = context;
+  }
 
   public refresh(): any {
     this._onDidChangeTreeData.fire(null);
   }
+
   public getTreeItem(element: ISnippet | ISnippetWorkpace): vscode.TreeItem {
     const isSnippetWorkpace = (<ISnippetWorkpace>element).children;
 
@@ -93,13 +122,15 @@ class ManagerTreeDataProvider
   }
 
   public getChildren(
-    element?: ISnippet | ISnippetWorkpace
+    element?: ISnippet | ISnippetWorkpaceFile | ISnippetWorkpace
   ):
     | ISnippet[]
     | Thenable<ISnippet[]>
+    | ISnippetWorkpaceFile[]
+    | Thenable<ISnippetWorkpaceFile[]>
     | ISnippetWorkpace[]
     | Thenable<ISnippetWorkpace[]> {
-    return element ? getTreeElement(element) : getSnippets();
+    return element ? getTreeElement(element) : getSnippets(this.context);
   }
 }
 
@@ -108,7 +139,7 @@ export function refresh() {
 }
 
 export function registerExplorerView(context: vscode.ExtensionContext) {
-  managerTreeDataProvider = new ManagerTreeDataProvider();
+  managerTreeDataProvider = new ManagerTreeDataProvider(context);
 
   vscode.window.createTreeView("snippetsmanager-snippetsView-Explorer", {
     treeDataProvider: managerTreeDataProvider,
