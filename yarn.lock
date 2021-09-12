@@ -476,9 +476,9 @@ cliui@^7.0.2:
     strip-ansi "^6.0.0"
     wrap-ansi "^7.0.0"
 
-code-snippets-editor@./packages/code-snippets-editor/code-snippets-editor-0.0.1.tgz:
+"code-snippets-editor@file:./packages/code-snippets-editor/code-snippets-editor-v0.0.1.tgz":
   version "0.0.1"
-  resolved "./packages/code-snippets-editor/code-snippets-editor-0.0.1.tgz#22c22d08185a87bae019e7e1964ea39d60d7cd16"
+  resolved "file:./packages/code-snippets-editor/code-snippets-editor-v0.0.1.tgz"
 
 color-convert@^1.9.0:
   version "1.9.3"

@@ -205,7 +205,7 @@
   },
   "dependencies": {
     "@vscode/codicons": "^0.0.21",
-    "code-snippets-editor": "./packages/code-snippets-editor/code-snippets-editor-0.0.1.tgz",
+    "code-snippets-editor": "file:./packages/code-snippets-editor/code-snippets-editor-v0.0.1.tgz",
     "vscode-ext-codicons": "^1.4.0",
     "vscode-ext-help-and-feedback-view": "^1.0.1"
   },
