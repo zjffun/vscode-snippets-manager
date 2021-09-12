@@ -4,7 +4,7 @@
   "description": "",
   "name": "code-snippets-editor",
   "scripts": {
-    "prepack": "npm run build",
+    "prepack": "yarn run build",
     "build": "webpack --mode=production --node-env=production",
     "build:dev": "webpack --mode=development",
     "watch": "webpack --watch"
