@@ -172,14 +172,18 @@
     ]
   },
   "scripts": {
+    "preinstall": "npm run pkgs:install && npm run pkgs:pack",
+    "// need to reinstall code-snippets-editor when publish without ci": "",
     "vscode:prepublish": "yarn run compile",
-    "compile": "cd packages/code-snippets-editor && npm pack && cd - && yarn add ./packages/code-snippets-editor/code-snippets-editor-0.0.1.tgz && tsc -p ./",
+    "compile": "tsc -p ./",
     "watch": "npm run watch:editor & yarn link code-snippets-editor && tsc -watch -p ./",
     "watch:editor": "cd packages/code-snippets-editor && yarn link && yarn run watch",
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
     "deploy": "vsce publish --yarn",
+    "pkgs:install": "cd packages/code-snippets-editor && npm install",
+    "pkgs:pack": "cd packages/code-snippets-editor && npm pack",
     "_vscode:pack": "vsce package",
     "_vscode:install": "ls snippetsmanager-*.vsix | xargs code --install-extension",
     "_vscode:uninstall": "code --uninstall-extension zjffun.snippetsmanager"
