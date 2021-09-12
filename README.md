@@ -39,6 +39,10 @@ Edit or delete snippets.
 
 ### [Unreleased]
 
+### v0.0.8
+
+- Fix bug when have no `.vscode` folder.
+
 ### v0.0.6
 
 - Added features show all `.code-snippets` in explorer.
