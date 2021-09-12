@@ -179,6 +179,7 @@
     "pretest": "yarn run compile && yarn run lint",
     "lint": "eslint src --ext ts",
     "test": "node ./out/test/runTest.js",
+    "deploy": "vsce publish --yarn",
     "_vscode:pack": "vsce package",
     "_vscode:install": "ls snippetsmanager-*.vsix | xargs code --install-extension",
     "_vscode:uninstall": "code --uninstall-extension zjffun.snippetsmanager"
@@ -195,6 +196,7 @@
     "glob": "^7.1.7",
     "mocha": "^8.4.0",
     "typescript": "^4.3.2",
+    "vsce": "^1.99.0",
     "vscode-test": "^1.5.2"
   },
   "dependencies": {
