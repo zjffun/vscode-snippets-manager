@@ -39,7 +39,8 @@ Edit or delete snippets.
 
 ### [Unreleased]
 
-- Show all `.code-snippet` in explorer.
+- Show all `.code-snippets` in explorer.
+- Toggle source and editor.
 
 ### v0.0.5
 

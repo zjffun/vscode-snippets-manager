@@ -54,6 +54,18 @@
       ]
     },
     "menus": {
+      "editor/title": [
+        {
+          "command": "snippetsmanager.showSource",
+          "when": "snippetsmanagerCodeSnippetsEditorFocus",
+          "group": "navigation"
+        },
+        {
+          "command": "snippetsmanager.showEditor",
+          "when": "resourceExtname == '.code-snippets' && !snippetsmanagerCodeSnippetsEditorFocus",
+          "group": "navigation"
+        }
+      ],
       "view/title": [
         {
           "command": "snippetsmanager.refresh",
@@ -77,6 +89,15 @@
         {
           "command": "snippetsmanager.createSnippet",
           "when": "editorHasSelection"
+        },
+        {
+          "command": "snippetsmanager.showSource",
+          "when": "false && snippetsmanagerCodeSnippetsEditorFocus",
+          "// command": "Don't know how to get the URI"
+        },
+        {
+          "command": "snippetsmanager.showEditor",
+          "when": "resourceExtname == '.code-snippets' && !snippetsmanagerCodeSnippetsEditorFocus"
         },
         {
           "command": "_snippetsmanager.deleteSnippet",
@@ -124,6 +145,18 @@
         "title": "Refresh",
         "icon": "$(refresh)",
         "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.showSource",
+        "title": "Show Source",
+        "category": "Snippets Manager",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "snippetsmanager.showEditor",
+        "title": "Show Editor",
+        "category": "Snippets Manager",
+        "icon": "$(go-to-file)"
       }
     ],
     "customEditors": [

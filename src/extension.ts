@@ -6,6 +6,8 @@ import { CodeSnippetsEditor } from "./CodeSnippetsEditor";
 import { refresh, registerExplorerView } from "./explorerView";
 import { registerHelpAndFeedbackView } from "./helpAndFeedbackView";
 import showSnippet from "./showSnippet";
+import showSource from "./showSource";
+import showEditor from "./showEditor";
 
 export function activate(context: vscode.ExtensionContext) {
   registerExplorerView(context);
@@ -46,6 +48,18 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand("snippetsmanager.refresh", () => {
       refresh();
+    })
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("snippetsmanager.showSource", (uri) => {
+      showSource(uri);
+    })
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("snippetsmanager.showEditor", () => {
+      showEditor();
     })
   );
 

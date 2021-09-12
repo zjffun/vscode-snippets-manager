@@ -24,6 +24,9 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     return providerRegistration;
   }
 
+  private static readonly activeContextKey =
+    "snippetsmanagerCodeSnippetsEditorFocus";
+
   public static readonly viewType = "snippetsmanager.codeSnippetsEditorView";
 
   constructor(private readonly context: vscode.ExtensionContext) {}
@@ -36,6 +39,12 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     webviewPanel: vscode.WebviewPanel,
     _token: vscode.CancellationToken
   ): Promise<void> {
+    this.setActiveContext(true);
+
+    webviewPanel.onDidChangeViewState(({ webviewPanel }) => {
+      this.setActiveContext(webviewPanel.visible);
+    });
+
     const codeSnippetsService = new CodeSnippetsService(document);
 
     // Setup initial content for the webview
@@ -71,6 +80,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 
     // Make sure we get rid of the listener when our editor is closed.
     webviewPanel.onDidDispose(() => {
+      this.setActiveContext(false);
       changeDocumentSubscription.dispose();
     });
 
@@ -168,5 +178,13 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;
+  }
+
+  private setActiveContext(value: boolean) {
+    vscode.commands.executeCommand(
+      "setContext",
+      CodeSnippetsEditor.activeContextKey,
+      value
+    );
   }
 }
