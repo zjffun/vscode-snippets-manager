@@ -266,9 +266,7 @@ export class CodeSnippetsService {
     };
   }
 
-  private onDidChangeCodeSnippets(): void {}
-
-  private getObj(): any {
-    return parse(this.textDocument.getText());
+  private getObj(): { [key: string]: IVSCodeSnippet } {
+    return parse(this.textDocument.getText()) || {};
   }
 }

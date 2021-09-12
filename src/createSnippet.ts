@@ -3,7 +3,7 @@ import { CodeSnippetsService } from "./CodeSnippetsService";
 import getSnippetTextDocument from "./core/getSnippetTextDocument";
 import { refresh } from "./explorerView";
 
-export default async () => {
+export default async (prefix?: string) => {
   const { activeTextEditor } = vscode.window;
 
   if (!activeTextEditor) {
@@ -24,18 +24,21 @@ export default async () => {
     return;
   }
 
-  const input = vscode.window.createInputBox();
-  input.title = "Create Snippet";
-  input.value = "";
-  input.prompt = "Enter snippet prefix";
-  input.show();
+  let _prefix = prefix;
+  if (_prefix === undefined) {
+    const input = vscode.window.createInputBox();
+    input.title = "Create Snippet";
+    input.value = "";
+    input.prompt = "Enter snippet prefix";
+    input.show();
 
-  const prefix = await new Promise<string>((resolve, reject) => {
-    input.onDidAccept(() => {
-      resolve(input.value);
-      input.dispose();
+    _prefix = await new Promise<string>((resolve, reject) => {
+      input.onDidAccept(() => {
+        resolve(input.value);
+        input.dispose();
+      });
     });
-  });
+  }
 
   const bodyText = activeTextEditor?.document.getText(
     activeTextEditor.selection
@@ -56,12 +59,14 @@ export default async () => {
   const codeSnippetsService = new CodeSnippetsService(textDocument);
 
   await codeSnippetsService.insert({
-    name: prefix,
-    prefix,
-    description: prefix,
+    name: _prefix,
+    prefix: _prefix,
+    description: _prefix,
     scope,
     body: bodyText,
   });
 
   refresh();
+
+  return true;
 };

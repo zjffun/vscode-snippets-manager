@@ -13,9 +13,12 @@ export function activate(context: vscode.ExtensionContext) {
   registerExplorerView(context);
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("snippetsmanager.createSnippet", () => {
-      createSnippet();
-    })
+    vscode.commands.registerCommand(
+      "snippetsmanager.createSnippet",
+      async (prefix?: string) => {
+        return createSnippet(prefix);
+      }
+    )
   );
 
   context.subscriptions.push(
