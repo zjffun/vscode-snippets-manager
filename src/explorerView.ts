@@ -30,9 +30,15 @@ const getSnippets = async (context: vscode.ExtensionContext) => {
         workspaceFolder.uri,
         ".vscode"
       );
-      const workspaceDotVSCodeFiles = await vscode.workspace.fs.readDirectory(
-        dotVSCodeFolderUri
-      );
+
+      let workspaceDotVSCodeFiles: [string, vscode.FileType][] = [];
+      try {
+        workspaceDotVSCodeFiles = await vscode.workspace.fs.readDirectory(
+          dotVSCodeFolderUri
+        );
+      } catch (error) {
+        // havn no .vscode folder, do noting
+      }
 
       const workspaceSnippetFiles = [];
       for (const [fileName, fileType] of workspaceDotVSCodeFiles) {

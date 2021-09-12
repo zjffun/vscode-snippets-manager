@@ -87,6 +87,12 @@ suite("Extension", () => {
     assert.ok(res);
   });
 
+  test("Explorer should work", async () => {
+    await vscode.commands.executeCommand(
+      "workbench.view.extension.snippetsmanager-snippetsView"
+    );
+  });
+
   test("Snippet editor should work", async () => {
     const testfileUri = vscode.Uri.joinPath(
       testWorkspaceRoot,
