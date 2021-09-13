@@ -6,7 +6,7 @@ import editSnippet from "./commands/editSnippet";
 import showEditor from "./commands/showEditor";
 import showSnippet from "./commands/showSnippet";
 import showSource from "./commands/showSource";
-import ExtensionSnippetsExplorerView from "./views/extensionSnippetsExplorerView";
+import ExtensionSnippetsExplorerView from "./views/ExtensionSnippetsExplorerView";
 import { registerHelpAndFeedbackView } from "./views/helpAndFeedbackView";
 import WorkspaceSnippetsExplorerView, {
   refresh,
