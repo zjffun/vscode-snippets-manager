@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { IVSCodeSnippet, ISnippet, ISnippets, ISnippetExtra } from ".";
 import getKey from "./core/getKey";
-import { refresh } from "./explorerView";
+import { refresh } from "./views/explorerView";
 
 import {
   JSONVisitor,

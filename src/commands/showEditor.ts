@@ -1,5 +1,5 @@
 import * as vscode from "vscode";
-import { CodeSnippetsEditor } from "./CodeSnippetsEditor";
+import { CodeSnippetsEditor } from "../CodeSnippetsEditor";
 
 export default async () => {
   const { activeTextEditor } = vscode.window;

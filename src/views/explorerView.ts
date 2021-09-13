@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
-import { ISnippet, ISnippetWorkpace, ISnippetWorkpaceFile } from ".";
-import { CodeSnippetsService } from "./CodeSnippetsService";
+import { ISnippet, ISnippetWorkpace, ISnippetWorkpaceFile } from "..";
+import { CodeSnippetsService } from "../CodeSnippetsService";
 
 let managerTreeDataProvider: ManagerTreeDataProvider;
 

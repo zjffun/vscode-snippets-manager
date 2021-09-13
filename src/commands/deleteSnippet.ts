@@ -1,7 +1,7 @@
-import { ISnippet } from ".";
-import { CodeSnippetsService } from "./CodeSnippetsService";
-import getSnippetTextDocument from "./core/getSnippetTextDocument";
-import { refresh } from "./explorerView";
+import { ISnippet } from "..";
+import { CodeSnippetsService } from "../CodeSnippetsService";
+import getSnippetTextDocument from "../core/getSnippetTextDocument";
+import { refresh } from "../views/explorerView";
 
 export default async (snippet: ISnippet) => {
   if (!snippet.uri) {

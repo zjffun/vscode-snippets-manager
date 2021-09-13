@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
-import { ISnippet } from ".";
-import { CodeSnippetsEditor } from "./CodeSnippetsEditor";
+import { ISnippet } from "..";
+import { CodeSnippetsEditor } from "../CodeSnippetsEditor";
 
 export default async (snippet: ISnippet) => {
   if (!snippet.uri) {
