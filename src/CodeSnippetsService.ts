@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { IVSCodeSnippet, ISnippet, ISnippets, ISnippetExtra } from ".";
 import getKey from "./core/getKey";
-import { refresh } from "./views/explorerView";
+import { refresh } from "./views/WorkspaceSnippetsExplorerView";
 
 import {
   JSONVisitor,
@@ -74,6 +74,14 @@ export class CodeSnippetsService {
       },
     };
     visit(this.textDocument.getText(), visitor);
+
+    if (currentParent[0]) {
+      for (const [_, snippet] of currentParent[0]) {
+        if (typeof snippet.body === "string") {
+          snippet.body = [snippet.body];
+        }
+      }
+    }
 
     return [errors, currentParent[0] || new Map()];
   }
@@ -256,13 +264,18 @@ export class CodeSnippetsService {
     vscodeSnippet: IVSCodeSnippet,
     { name, uri }: ISnippetExtra = {}
   ): ISnippet {
+    let body: any = vscodeSnippet.body;
+    if (Array.isArray(body)) {
+      body = body.join("\n");
+    }
+
     return {
       name,
       uri,
       prefix: vscodeSnippet.prefix,
       description: vscodeSnippet.description,
       scope: vscodeSnippet.scope,
-      body: vscodeSnippet.body.join("\n"),
+      body,
     };
   }
 

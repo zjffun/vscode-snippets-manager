@@ -28,7 +28,7 @@
   "homepage": "https://github.com/zjffun/vscode-snippets-manager#readme",
   "activationEvents": [
     "onStartupFinished",
-    "onView:snippetsmanager-snippetsView-Explorer"
+    "onView:snippetsmanager-snippetsView"
   ],
   "main": "./out/extension.js",
   "contributes": {
@@ -44,8 +44,12 @@
     "views": {
       "snippetsmanager-snippetsView": [
         {
-          "id": "snippetsmanager-snippetsView-Explorer",
-          "name": "Explorer"
+          "id": "snippetsmanager-snippetsView-WorkspaceSnippetsExplorerView",
+          "name": "Workspace Snippets"
+        },
+        {
+          "id": "snippetsmanager-snippetsView-ExtensionSnippetsExplorerView",
+          "name": "Extension Snippets"
         },
         {
           "id": "snippetsmanager-snippetsView-HelpAndFeedback",
@@ -69,19 +73,19 @@
       "view/title": [
         {
           "command": "snippetsmanager.refresh",
-          "when": "view == snippetsmanager-snippetsView-Explorer",
+          "when": "view == snippetsmanager-snippetsView-WorkspaceSnippetsExplorerView",
           "group": "navigation@10"
         }
       ],
       "view/item/context": [
         {
           "command": "_snippetsmanager.deleteSnippet",
-          "when": "view == snippetsmanager-snippetsView-Explorer && viewItem == snippetsmanager-snippetsView-Explorer-Item",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
           "group": "inline@2"
         },
         {
           "command": "_snippetsmanager.editSnippet",
-          "when": "view == snippetsmanager-snippetsView-Explorer && viewItem == snippetsmanager-snippetsView-Explorer-Item",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
           "group": "inline@1"
         }
       ],

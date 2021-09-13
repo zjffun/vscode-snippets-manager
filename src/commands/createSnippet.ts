@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { CodeSnippetsService } from "../CodeSnippetsService";
 import getSnippetTextDocument from "../core/getSnippetTextDocument";
-import { refresh } from "../views/explorerView";
+import { refresh } from "../views/WorkspaceSnippetsExplorerView";
 
 export default async (prefix?: string) => {
   const { activeTextEditor } = vscode.window;

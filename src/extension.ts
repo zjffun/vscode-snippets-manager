@@ -1,16 +1,21 @@
 import * as vscode from "vscode";
+import { CodeSnippetsEditor } from "./CodeSnippetsEditor";
 import createSnippet from "./commands/createSnippet";
 import deleteSnippet from "./commands/deleteSnippet";
 import editSnippet from "./commands/editSnippet";
-import { CodeSnippetsEditor } from "./CodeSnippetsEditor";
-import { refresh, registerExplorerView } from "./views/explorerView";
-import { registerHelpAndFeedbackView } from "./views/helpAndFeedbackView";
+import showEditor from "./commands/showEditor";
 import showSnippet from "./commands/showSnippet";
 import showSource from "./commands/showSource";
-import showEditor from "./commands/showEditor";
+import ExtensionSnippetsExplorerView from "./views/extensionSnippetsExplorerView";
+import { registerHelpAndFeedbackView } from "./views/helpAndFeedbackView";
+import WorkspaceSnippetsExplorerView, {
+  refresh,
+} from "./views/WorkspaceSnippetsExplorerView";
 
 export function activate(context: vscode.ExtensionContext) {
-  registerExplorerView(context);
+  new WorkspaceSnippetsExplorerView(context);
+
+  new ExtensionSnippetsExplorerView(context);
 
   context.subscriptions.push(
     vscode.commands.registerCommand(
