@@ -175,6 +175,7 @@ suite("Extension", () => {
     );
 
     await vscode.commands.executeCommand("vscode.open", testfileUri);
+    await vscode.commands.executeCommand("snippetsmanager.showEditor");
     assert.ok(currentWebviewPanel);
   });
 });
