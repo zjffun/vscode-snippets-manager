@@ -25,12 +25,12 @@ export class CodeSnippetsService {
     this.textDocument = textDocument;
   }
 
-  getMap(): [ParseError[], IVSCodeSnippetMap] {
+  getMap(): [Error | undefined, IVSCodeSnippetMap | undefined] {
     let currentProperty: string | null = null;
     let currentParent: any = [];
     const initCurrentParent = currentParent;
     const previousParents: any[] = [];
-    const errors: ParseError[] = [];
+    let error: Error | undefined = undefined;
 
     function onValue(value: any) {
       if (Array.isArray(currentParent)) {
@@ -69,27 +69,38 @@ export class CodeSnippetsService {
         currentParent = previousParents.pop();
       },
       onLiteralValue: onValue,
-      onError: (error: ParseErrorCode, offset: number, length: number) => {
-        errors.push({ error, offset, length });
+      onError: (e: ParseErrorCode, offset: number, length: number) => {
+        error = new Error("Parse error");
       },
     };
     visit(this.textDocument.getText(), visitor);
 
-    if (currentParent[0]) {
+    if (error) {
+      return [error, undefined];
+    }
+
+    if (currentParent[0] instanceof Map) {
       for (const [_, snippet] of currentParent[0]) {
         if (typeof snippet.body === "string") {
           snippet.body = [snippet.body];
         }
       }
+    } else {
+      return [new Error("Not the correct format"), undefined];
     }
 
-    return [errors, currentParent[0] || new Map()];
+    return [error, currentParent[0]];
   }
 
-  getEntriesString(): [ParseError[], string] {
-    const [errors, map] = this.getMap();
+  getEntriesString(): [Error | undefined, string | undefined] {
+    const [error, map] = this.getMap();
 
-    return [errors, JSON.stringify(Array.from(map.entries()))];
+    return [
+      error,
+      error
+        ? undefined
+        : JSON.stringify(Array.from((<IVSCodeSnippetMap>map).entries())),
+    ];
   }
 
   async insert(snippet: ISnippet) {
@@ -108,10 +119,15 @@ export class CodeSnippetsService {
       return;
     }
 
-    const [errors, snippetsMap] = this.getMap();
+    const [error, snippetsMap] = this.getMap();
+
+    if (error) {
+      return false;
+    }
+
     let oldSnippet: ISnippet;
     let oldSnippetIndex = 0;
-    for (const [k, v] of snippetsMap) {
+    for (const [k, v] of <IVSCodeSnippetMap>snippetsMap) {
       if (k === name) {
         oldSnippet = this.getSnippet(v, { name: k });
         break;

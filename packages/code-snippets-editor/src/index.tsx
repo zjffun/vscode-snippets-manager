@@ -1,5 +1,11 @@
 import React from "react";
 import ReactDOM from "react-dom";
 import CodeSnippetsEditor from "./CodeSnippetsEditor";
+import { ErrorBoundary } from "./components/ErrorBoundry";
 
-ReactDOM.render(<CodeSnippetsEditor />, document.getElementById("root"));
+ReactDOM.render(
+  <ErrorBoundary>
+    <CodeSnippetsEditor />
+  </ErrorBoundary>,
+  document.getElementById("root")
+);

@@ -1,11 +1,8 @@
 import * as vscode from "vscode";
-import { ISnippet, ISnippetContainer, ISnippetContainerFile } from "..";
+import { ISnippet, ISnippetContainer } from "..";
 
 export default abstract class BasicSnippetsExplorerView
-  implements
-    vscode.TreeDataProvider<
-      ISnippet | ISnippetContainerFile | ISnippetContainer
-    >
+  implements vscode.TreeDataProvider<ISnippet | ISnippetContainer>
 {
   public static viewId = "";
 
@@ -17,12 +14,13 @@ export default abstract class BasicSnippetsExplorerView
     context: vscode.ExtensionContext
   ): Promise<ISnippetContainer[]>;
 
-  private context: vscode.ExtensionContext;
+  protected context: vscode.ExtensionContext;
 
   constructor(context: vscode.ExtensionContext) {
     this.context = context;
     vscode.window.createTreeView((this.constructor as any).viewId, {
       treeDataProvider: this,
+      showCollapseAll: true,
     });
   }
 
@@ -52,12 +50,10 @@ export default abstract class BasicSnippetsExplorerView
   }
 
   public getChildren(
-    element?: ISnippet | ISnippetContainerFile | ISnippetContainer
+    element?: ISnippet | ISnippetContainer
   ):
     | ISnippet[]
     | Thenable<ISnippet[]>
-    | ISnippetContainerFile[]
-    | Thenable<ISnippetContainerFile[]>
     | ISnippetContainer[]
     | Thenable<ISnippetContainer[]> {
     return element
@@ -65,10 +61,8 @@ export default abstract class BasicSnippetsExplorerView
       : this.getSnippets(this.context);
   }
 
-  protected getTreeElement = (
-    element: ISnippet | ISnippetContainerFile | ISnippetContainer
-  ) => {
-    const _element = <ISnippetContainerFile | ISnippetContainer>element;
+  protected getTreeElement = (element: ISnippet | ISnippetContainer) => {
+    const _element = <ISnippetContainer>element;
 
     if (!_element?.children) {
       return [];

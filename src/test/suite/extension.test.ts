@@ -105,17 +105,31 @@ suite("Extension", () => {
 
     await vscode.commands.executeCommand("vscode.open", testfileUri);
     await vscode.commands.executeCommand("snippetsmanager.showEditor");
-    assert.ok(CodeSnippetsEditor.currentWebviewPanel);
+    assert.ok(CodeSnippetsEditor.currentEditor);
 
     await vscode.commands.executeCommand("workbench.action.splitEditorRight");
     await vscode.commands.executeCommand(
       "workbench.action.files.newUntitledFile"
     );
-    assert.strictEqual(CodeSnippetsEditor.currentWebviewPanel, null);
+    assert.strictEqual(CodeSnippetsEditor.currentEditor, null);
 
     await vscode.commands.executeCommand("vscode.open", testfileUri);
     await vscode.commands.executeCommand("snippetsmanager.showEditor");
-    assert.ok(CodeSnippetsEditor.currentWebviewPanel);
+    assert.ok(CodeSnippetsEditor.currentEditor);
+  });
+
+  test.only("Snippet editor open array json file should work", async () => {
+    const testfileUri = vscode.Uri.joinPath(
+      testWorkspaceRoot,
+      "test.code-snippets"
+    );
+    await vscode.workspace.fs.writeFile(
+      testfileUri,
+      Uint8Array.from(Buffer.from(`[{"test": {}}]`))
+    );
+
+    await vscode.commands.executeCommand("vscode.open", testfileUri);
+    assert.ok(CodeSnippetsEditor.currentEditor);
   });
 });
 

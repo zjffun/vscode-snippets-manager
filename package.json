@@ -48,6 +48,10 @@
           "name": "Workspace Snippets"
         },
         {
+          "id": "snippetsmanager-snippetsView-UserSnippetsExplorerView",
+          "name": "User Snippets"
+        },
+        {
           "id": "snippetsmanager-snippetsView-ExtensionSnippetsExplorerView",
           "name": "Extension Snippets"
         },
@@ -66,7 +70,7 @@
         },
         {
           "command": "snippetsmanager.showEditor",
-          "when": "resourceExtname == '.code-snippets' && !snippetsmanagerCodeSnippetsEditorFocus",
+          "when": "resourceExtname == '.code-snippets' && resourceExtname == '.json' && !snippetsmanagerCodeSnippetsEditorFocus",
           "group": "navigation"
         }
       ],
@@ -74,6 +78,16 @@
         {
           "command": "snippetsmanager.refresh",
           "when": "view == snippetsmanager-snippetsView-WorkspaceSnippetsExplorerView",
+          "group": "navigation@10"
+        },
+        {
+          "command": "snippetsmanager.refresh",
+          "when": "view == snippetsmanager-snippetsView-UserSnippetsExplorerView",
+          "group": "navigation@10"
+        },
+        {
+          "command": "snippetsmanager.refresh",
+          "when": "view == snippetsmanager-snippetsView-ExtensionSnippetsExplorerView",
           "group": "navigation@10"
         }
       ],
@@ -96,8 +110,7 @@
         },
         {
           "command": "snippetsmanager.showSource",
-          "when": "false && snippetsmanagerCodeSnippetsEditorFocus",
-          "// command": "Don't know how to get the URI"
+          "when": "snippetsmanagerCodeSnippetsEditorFocus"
         },
         {
           "command": "snippetsmanager.showEditor",

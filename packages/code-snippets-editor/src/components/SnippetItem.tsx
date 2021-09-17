@@ -15,7 +15,7 @@ const CodeSnippetsEditor = ({ name, snippet, vscode, setEdit }: Props) => {
   const edit = snippet[EDIT];
 
   return (
-    <section className="code-snippets-editor-snippet">
+    <section id={name} className="code-snippets-editor-snippet">
       <div hidden={edit}>
         <div className="code-snippets-editor-snippet__top">
           <div className="code-snippets-editor-top-items">

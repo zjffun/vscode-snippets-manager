@@ -3,7 +3,7 @@ import { ISnippetContainer } from "..";
 import { CodeSnippetsService } from "../CodeSnippetsService";
 import BasicSnippetsExplorerView from "./BasicSnippetsExplorerView";
 
-let workspaceSnippetsExplorerView: WorkspaceSnippetsExplorerView;
+let snippetsExplorerView: WorkspaceSnippetsExplorerView;
 
 export default class WorkspaceSnippetsExplorerView extends BasicSnippetsExplorerView {
   protected _onDidChangeTreeData: vscode.EventEmitter<any> =
@@ -17,10 +17,10 @@ export default class WorkspaceSnippetsExplorerView extends BasicSnippetsExplorer
   constructor(context: vscode.ExtensionContext) {
     super(context);
 
-    workspaceSnippetsExplorerView = this;
+    snippetsExplorerView = this;
   }
 
-  protected async getSnippets(context: vscode.ExtensionContext) {
+  protected async getSnippets() {
     const workpaces: ISnippetContainer[] = [];
 
     const workspaceFolders = vscode.workspace.workspaceFolders;
@@ -94,5 +94,5 @@ export default class WorkspaceSnippetsExplorerView extends BasicSnippetsExplorer
 }
 
 export function refresh() {
-  workspaceSnippetsExplorerView.refresh();
+  snippetsExplorerView.refresh();
 }

@@ -23,12 +23,7 @@ export interface ISnippets {
   [key: string]: ISnippet;
 }
 
-export interface ISnippetContainerFile {
-  name: string;
-  children: ISnippet[];
-}
-
 export interface ISnippetContainer {
   name: string;
-  children: ISnippetContainerFile[];
+  children: ISnippetContainer[] | ISnippet[];
 }

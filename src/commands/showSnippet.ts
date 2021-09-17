@@ -1,18 +1,21 @@
 import * as vscode from "vscode";
-import { ISnippet } from "..";
+import { ISnippetExtra } from "..";
 import { CodeSnippetsEditor } from "../CodeSnippetsEditor";
 
-export default async (snippet: ISnippet) => {
+export default async (snippet: ISnippetExtra) => {
   if (!snippet.uri) {
     return;
   }
   const snippetUri = snippet.uri;
 
-  vscode.commands.executeCommand(
+  await vscode.commands.executeCommand(
     "vscode.openWith",
     snippetUri,
     CodeSnippetsEditor.viewType
   );
 
-  // TODO: jump to selected snippet
+  await CodeSnippetsEditor.currentEditor?.webviewPanel?.webview?.postMessage?.({
+    type: "show",
+    name: snippet.name,
+  });
 };

@@ -14,5 +14,12 @@ export default async (snippet: ISnippet) => {
     CodeSnippetsEditor.viewType
   );
 
-  // TODO: open edit
+  await CodeSnippetsEditor.currentEditor?.webviewPanel?.webview?.postMessage?.({
+    type: "show",
+    name: snippet.name,
+  });
+  await CodeSnippetsEditor.currentEditor?.webviewPanel?.webview?.postMessage?.({
+    type: "edit",
+    name: snippet.name,
+  });
 };

@@ -8,12 +8,14 @@ import showSnippet from "./commands/showSnippet";
 import showSource from "./commands/showSource";
 import ExtensionSnippetsExplorerView from "./views/ExtensionSnippetsExplorerView";
 import { registerHelpAndFeedbackView } from "./views/helpAndFeedbackView";
-import WorkspaceSnippetsExplorerView, {
-  refresh,
-} from "./views/WorkspaceSnippetsExplorerView";
+import refreshAllView from "./views/refreshAllView";
+import UserSnippetsExplorerView from "./views/UserSnippetsExplorerView";
+import WorkspaceSnippetsExplorerView from "./views/WorkspaceSnippetsExplorerView";
 
 export function activate(context: vscode.ExtensionContext) {
   new WorkspaceSnippetsExplorerView(context);
+
+  new UserSnippetsExplorerView(context);
 
   new ExtensionSnippetsExplorerView(context);
 
@@ -55,13 +57,13 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand("snippetsmanager.refresh", () => {
-      refresh();
+      refreshAllView();
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("snippetsmanager.showSource", (uri) => {
-      showSource(uri);
+    vscode.commands.registerCommand("snippetsmanager.showSource", () => {
+      showSource();
     })
   );
 

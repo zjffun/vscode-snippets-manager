@@ -6,11 +6,9 @@ import "./CodeSnippetsEditor.scss";
 import ToolbarComponent from "./components/ToolbarComponent";
 import { EDIT, NEWITEM } from "./symbols";
 
-declare global {
-  const acquireVsCodeApi: any;
-}
+import getVsCode from "./getVsCode";
 
-const vscode = acquireVsCodeApi();
+const vscode = getVsCode();
 
 function getSnippetEntries(text: string): SnippetEntries {
   try {
@@ -29,6 +27,8 @@ const CodeSnippetsEditor = () => {
     getSnippetEntries(vscode.getState()?.text)
   );
 
+  const [error, setError] = useState<string>("");
+
   useEffect(() => {
     // Handle messages sent from the extension to the webview
     window.addEventListener("message", (event) => {
@@ -41,6 +41,25 @@ const CodeSnippetsEditor = () => {
           // Then persist state information.
           // This state is returned in the call to `vscode.getState` below when a webview is reloaded.
           vscode.setState({ text });
+          return;
+
+        case "show":
+          document.getElementById(message.name)?.scrollIntoView();
+          return;
+
+        case "edit":
+          setSnippetEntries((snippetEntries) => {
+            return snippetEntries.map(([name, snippet]) => {
+              if (name === message.name) {
+                snippet[EDIT] = true;
+              }
+              return [name, snippet];
+            });
+          });
+          return;
+
+        case "error":
+          setError(message.error);
           return;
       }
     });
@@ -63,8 +82,13 @@ const CodeSnippetsEditor = () => {
     ]);
   };
 
+  const throwError = () => {
+    throw Error(error);
+  };
+
   return (
     <main className="code-snippets-editor">
+      {error ? throwError() : null}
       <ToolbarComponent
         onAddSnippetClick={handleAddSnippetClick}
       ></ToolbarComponent>

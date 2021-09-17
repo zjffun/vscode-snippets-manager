@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { CodeSnippetsService } from "./CodeSnippetsService";
+import showSource from "./commands/showSource";
 import { getNonce } from "./util";
 
 /**
@@ -29,7 +30,10 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 
   public static readonly viewType = "snippetsmanager.codeSnippetsEditorView";
 
-  public static currentWebviewPanel: vscode.WebviewPanel | null = null;
+  public static currentEditor: CodeSnippetsEditor | null = null;
+
+  public document: vscode.TextDocument | null = null;
+  public webviewPanel: vscode.WebviewPanel | null = null;
 
   constructor(private readonly context: vscode.ExtensionContext) {}
 
@@ -41,13 +45,13 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     webviewPanel: vscode.WebviewPanel,
     _token: vscode.CancellationToken
   ): Promise<void> {
-    CodeSnippetsEditor.currentWebviewPanel = webviewPanel;
+    this.document = document;
+    this.webviewPanel = webviewPanel;
+    CodeSnippetsEditor.currentEditor = this;
     this.setActiveContext(true);
 
     webviewPanel.onDidChangeViewState(() => {
-      CodeSnippetsEditor.currentWebviewPanel = webviewPanel.visible
-        ? webviewPanel
-        : null;
+      CodeSnippetsEditor.currentEditor = webviewPanel.visible ? this : null;
       this.setActiveContext(webviewPanel.visible);
     });
 
@@ -60,7 +64,15 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
     function updateWebview() {
-      const [errors, text] = codeSnippetsService.getEntriesString();
+      const [error, text] = codeSnippetsService.getEntriesString();
+
+      if (error) {
+        webviewPanel.webview.postMessage({
+          type: "error",
+          error: error.message,
+        });
+        return;
+      }
 
       webviewPanel.webview.postMessage({
         type: "update",
@@ -86,7 +98,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 
     // Make sure we get rid of the listener when our editor is closed.
     webviewPanel.onDidDispose(() => {
-      CodeSnippetsEditor.currentWebviewPanel = null;
+      CodeSnippetsEditor.currentEditor = null;
       this.setActiveContext(false);
       changeDocumentSubscription.dispose();
     });
@@ -104,6 +116,10 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 
         case "delete":
           codeSnippetsService.delete(payload.name);
+          return;
+
+        case "openInDefaultEditor":
+          showSource();
           return;
       }
     });
