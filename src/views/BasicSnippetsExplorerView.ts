@@ -29,7 +29,7 @@ export default abstract class BasicSnippetsExplorerView
   }
 
   public getTreeItem(element: ISnippet | ISnippetContainer): vscode.TreeItem {
-    const isSnippetContainer = (<ISnippetContainer>element).children;
+    const { children: isSnippetContainer, isFile } = <ISnippetContainer>element;
 
     const showSnippetCommand = {
       command: "_snippetsmanager.showSnippet",
@@ -37,15 +37,20 @@ export default abstract class BasicSnippetsExplorerView
       arguments: [element],
     };
 
+    let contextValue = "";
+    if (isFile) {
+      contextValue = "snippetsmanager-snippetsView-Explorer-FileItem";
+    } else if (!isSnippetContainer) {
+      contextValue = "snippetsmanager-snippetsView-Explorer-Item";
+    }
+
     return {
       label: element.name,
       command: !isSnippetContainer ? showSnippetCommand : undefined,
       collapsibleState: isSnippetContainer
         ? vscode.TreeItemCollapsibleState.Collapsed
         : undefined,
-      contextValue: !isSnippetContainer
-        ? "snippetsmanager-snippetsView-Explorer-Item"
-        : "",
+      contextValue: contextValue,
     };
   }
 

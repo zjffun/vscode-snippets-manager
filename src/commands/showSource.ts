@@ -1,17 +1,15 @@
 import * as vscode from "vscode";
-import { CodeSnippetsEditor } from "../CodeSnippetsEditor";
+import { currentDocument } from "../CodeSnippetsEditor";
 
 export default async () => {
-  const uri = CodeSnippetsEditor.currentEditor?.document?.uri;
+  const uri = currentDocument?.uri;
 
   if (!uri) {
-    vscode.window.showErrorMessage(
-      "Get `CodeSnippetsEditor.currentEditor.document.uri` failed."
-    );
+    vscode.window.showErrorMessage("Get `currentDocument.uri` failed.");
     return false;
   }
 
   return vscode.workspace.openTextDocument(uri).then((document) => {
-    vscode.window.showTextDocument(document);
+    return vscode.window.showTextDocument(document);
   });
 };

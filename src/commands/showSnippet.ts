@@ -1,6 +1,6 @@
 import * as vscode from "vscode";
 import { ISnippetExtra } from "..";
-import { CodeSnippetsEditor } from "../CodeSnippetsEditor";
+import { CodeSnippetsEditor, currentWebviewPanel } from "../CodeSnippetsEditor";
 
 export default async (snippet: ISnippetExtra) => {
   if (!snippet.uri) {
@@ -14,7 +14,7 @@ export default async (snippet: ISnippetExtra) => {
     CodeSnippetsEditor.viewType
   );
 
-  await CodeSnippetsEditor.currentEditor?.webviewPanel?.webview?.postMessage?.({
+  await currentWebviewPanel?.webview?.postMessage?.({
     type: "show",
     name: snippet.name,
   });

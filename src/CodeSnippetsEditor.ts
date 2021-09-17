@@ -3,6 +3,10 @@ import { CodeSnippetsService } from "./CodeSnippetsService";
 import showSource from "./commands/showSource";
 import { getNonce } from "./util";
 
+export let currentDocument: vscode.TextDocument | null = null;
+
+export let currentWebviewPanel: vscode.WebviewPanel | null = null;
+
 /**
  * Provider for Code Snippets editor.
  *
@@ -28,12 +32,9 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
   private static readonly activeContextKey =
     "snippetsmanagerCodeSnippetsEditorFocus";
 
+  public static isActive: boolean = false;
+
   public static readonly viewType = "snippetsmanager.codeSnippetsEditorView";
-
-  public static currentEditor: CodeSnippetsEditor | null = null;
-
-  public document: vscode.TextDocument | null = null;
-  public webviewPanel: vscode.WebviewPanel | null = null;
 
   constructor(private readonly context: vscode.ExtensionContext) {}
 
@@ -45,14 +46,21 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     webviewPanel: vscode.WebviewPanel,
     _token: vscode.CancellationToken
   ): Promise<void> {
-    this.document = document;
-    this.webviewPanel = webviewPanel;
-    CodeSnippetsEditor.currentEditor = this;
+    this.setCurrent({ document, webviewPanel });
     this.setActiveContext(true);
 
     webviewPanel.onDidChangeViewState(() => {
-      CodeSnippetsEditor.currentEditor = webviewPanel.visible ? this : null;
-      this.setActiveContext(webviewPanel.visible);
+      if (
+        currentWebviewPanel === null ||
+        currentWebviewPanel === webviewPanel
+      ) {
+        if (webviewPanel.visible) {
+          this.setCurrent({ document, webviewPanel });
+        } else {
+          this.setCurrent();
+        }
+        this.setActiveContext(webviewPanel.visible);
+      }
     });
 
     const codeSnippetsService = new CodeSnippetsService(document);
@@ -98,8 +106,10 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 
     // Make sure we get rid of the listener when our editor is closed.
     webviewPanel.onDidDispose(() => {
-      CodeSnippetsEditor.currentEditor = null;
-      this.setActiveContext(false);
+      if (currentWebviewPanel === webviewPanel) {
+        this.setCurrent();
+        this.setActiveContext(false);
+      }
       changeDocumentSubscription.dispose();
     });
 
@@ -209,5 +219,17 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
       CodeSnippetsEditor.activeContextKey,
       value
     );
+    CodeSnippetsEditor.isActive = value;
+  }
+
+  private setCurrent({
+    document = null,
+    webviewPanel = null,
+  }: {
+    document?: vscode.TextDocument | null;
+    webviewPanel?: vscode.WebviewPanel | null;
+  } = {}) {
+    currentDocument = document;
+    currentWebviewPanel = webviewPanel;
   }
 }

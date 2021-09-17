@@ -54,6 +54,8 @@ export default class ExtensionSnippetsExplorerView extends BasicSnippetsExplorer
           }
           snippetFiles.push({
             name: snippet.path,
+            isFile: true,
+            uri: snippetsUri,
             children: Array.from(snippets).map(([name, snippet]) => {
               return codeSnippetsService.getSnippet(snippet, {
                 name,

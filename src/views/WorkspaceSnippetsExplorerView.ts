@@ -72,6 +72,8 @@ export default class WorkspaceSnippetsExplorerView extends BasicSnippetsExplorer
             }
             workspaceSnippetFiles.push({
               name: fileName,
+              isFile: true,
+              uri: snippetsUri,
               children: Array.from(snippets).map(([name, snippet]) => {
                 return codeSnippetsService.getSnippet(snippet, {
                   name,

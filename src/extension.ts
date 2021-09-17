@@ -62,14 +62,14 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("snippetsmanager.showSource", () => {
-      showSource();
+    vscode.commands.registerCommand("snippetsmanager.showSource", async () => {
+      return showSource();
     })
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("snippetsmanager.showEditor", () => {
-      showEditor();
+    vscode.commands.registerCommand("snippetsmanager.showEditor", async () => {
+      return showEditor();
     })
   );
 

@@ -101,6 +101,11 @@
           "command": "_snippetsmanager.editSnippet",
           "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
           "group": "inline@1"
+        },
+        {
+          "command": "_snippetsmanager.showSnippet",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-FileItem",
+          "group": "inline@1"
         }
       ],
       "commandPalette": [
@@ -155,7 +160,8 @@
       },
       {
         "command": "_snippetsmanager.showSnippet",
-        "title": "Show Snippet"
+        "title": "Show Snippet",
+        "icon": "$(book)"
       },
       {
         "command": "snippetsmanager.refresh",
@@ -173,7 +179,7 @@
         "command": "snippetsmanager.showEditor",
         "title": "Show Editor",
         "category": "Snippets Manager",
-        "icon": "$(go-to-file)"
+        "icon": "$(book)"
       }
     ],
     "customEditors": [
