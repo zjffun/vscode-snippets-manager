@@ -70,7 +70,7 @@
         },
         {
           "command": "snippetsmanager.showEditor",
-          "when": "resourceExtname == '.code-snippets' && resourceExtname == '.json' && !snippetsmanagerCodeSnippetsEditorFocus",
+          "when": "resourceExtname == '.code-snippets'&& !snippetsmanagerCodeSnippetsEditorFocus",
           "group": "navigation"
         }
       ],
@@ -184,7 +184,8 @@
           {
             "filenamePattern": "*.code-snippets"
           }
-        ]
+        ],
+        "priority": "option"
       }
     ]
   },
