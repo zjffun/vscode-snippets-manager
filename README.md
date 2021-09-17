@@ -34,10 +34,15 @@ Edit or delete snippets.
 
 ### [TODO]
 
-- Jump to selected snippet when click snippets.
-- Edit selected snippet when click edit snippet.
-
 ### [Unreleased]
+
+### v0.0.9
+
+- Added features jump to selected snippet when click snippets.
+- Added features edit selected snippet when click edit snippet.
+- Added features explorer file open editor.
+
+- Fix bug when parse snippets file error.
 
 ### v0.0.8
 
