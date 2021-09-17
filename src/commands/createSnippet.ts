@@ -25,7 +25,7 @@ export default async (prefix?: string) => {
   }
 
   let _prefix = prefix;
-  if (_prefix === undefined) {
+  if (_prefix === undefined || typeof _prefix !== "string") {
     const input = vscode.window.createInputBox();
     input.title = "Create Snippet";
     input.value = "";
