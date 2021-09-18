@@ -70,7 +70,15 @@ export class CodeSnippetsService {
       },
       onLiteralValue: onValue,
       onError: (e: ParseErrorCode, offset: number, length: number) => {
-        error = new Error("Parse error");
+        if (
+          currentParent === initCurrentParent &&
+          e === ParseErrorCode.ValueExpected
+        ) {
+          error = new Error(`Parse error: empty content`);
+          return;
+        }
+
+        error = new Error(`Parse error`);
       },
     };
     visit(this.textDocument.getText(), visitor);
@@ -81,8 +89,19 @@ export class CodeSnippetsService {
 
     if (currentParent[0] instanceof Map) {
       for (const [_, snippet] of currentParent[0]) {
-        if (typeof snippet.body === "string") {
+        if (typeof snippet !== "object") {
+          return [new Error("Not the correct format"), undefined];
+        }
+
+        // handle body
+        if (snippet.body === undefined) {
+          snippet.body = [];
+        } else if (typeof snippet.body === "string") {
           snippet.body = [snippet.body];
+        } else if (Array.isArray(snippet.body)) {
+          // do nothing
+        } else {
+          return [new Error("Not the correct format"), undefined];
         }
       }
     } else {

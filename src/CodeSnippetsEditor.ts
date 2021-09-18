@@ -71,15 +71,37 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     };
     webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
-    function updateWebview() {
-      const [error, text] = codeSnippetsService.getEntriesString();
+    async function updateWebview() {
+      let [error, text] = codeSnippetsService.getEntriesString();
 
       if (error) {
-        webviewPanel.webview.postMessage({
-          type: "error",
-          error: error.message,
+        if (error?.message !== "Parse error: empty content") {
+          webviewPanel.webview.postMessage({
+            type: "error",
+            error: error.message,
+          });
+          return;
+        }
+
+        vscode.workspace.fs.writeFile(
+          document.uri,
+          Uint8Array.from(Buffer.from("{}"))
+        );
+
+        // wait for take effect
+        await new Promise((resolve, reject) => {
+          setTimeout(resolve, 100);
         });
-        return;
+
+        [error, text] = codeSnippetsService.getEntriesString();
+
+        if (error) {
+          webviewPanel.webview.postMessage({
+            type: "error",
+            error: error.message,
+          });
+          return;
+        }
       }
 
       webviewPanel.webview.postMessage({
@@ -134,7 +156,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
       }
     });
 
-    updateWebview();
+    await updateWebview();
   }
 
   /**

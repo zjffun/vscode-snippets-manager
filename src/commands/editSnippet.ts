@@ -8,7 +8,7 @@ export default async (snippet: ISnippet) => {
   }
   const snippetUri = snippet.uri;
 
-  vscode.commands.executeCommand(
+  await vscode.commands.executeCommand(
     "vscode.openWith",
     snippetUri,
     CodeSnippetsEditor.viewType

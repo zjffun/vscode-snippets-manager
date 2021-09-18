@@ -6,16 +6,16 @@ import {
   CodeSnippetsEditor,
   currentWebviewPanel,
 } from "../../CodeSnippetsEditor";
+import {
+  closeAllEditors,
+  createTestFile,
+  resetTestWorkspace,
+  testWorkspaceFolder,
+} from "../util";
 
 // import * as myExtension from '../../extension';
 
-const testWorkspaceRoot = <vscode.Uri>(
-  vscode.workspace.workspaceFolders?.[0]?.uri
-);
-
-assert.ok(testWorkspaceRoot);
-
-const testWorkspaceFolder = vscode.Uri.joinPath(testWorkspaceRoot, "test");
+assert.ok(testWorkspaceFolder);
 
 suite("Extension", () => {
   const extensionID = "zjffun.snippetsmanager";
@@ -68,17 +68,10 @@ suite("Extension", () => {
   });
 
   test("Create snippet command should work when has selection", async () => {
-    const testfileUri = vscode.Uri.joinPath(testWorkspaceRoot, "testfile");
-    await vscode.workspace.fs.writeFile(
-      testfileUri,
-      Uint8Array.from(Buffer.from("test content"))
-    );
+    const uri = await createTestFile("test content");
 
-    await vscode.commands.executeCommand("vscode.open", testfileUri);
-    await vscode.commands.executeCommand(
-      "editor.action.selectAll",
-      testfileUri
-    );
+    await vscode.commands.executeCommand("vscode.open", uri);
+    await vscode.commands.executeCommand("editor.action.selectAll", uri);
 
     const res = await vscode.commands.executeCommand(
       "snippetsmanager.createSnippet",
@@ -95,16 +88,9 @@ suite("Extension", () => {
   });
 
   test("Snippet editor should work", async () => {
-    const testfileUri = vscode.Uri.joinPath(
-      testWorkspaceRoot,
-      "test.code-snippets"
-    );
-    await vscode.workspace.fs.writeFile(
-      testfileUri,
-      Uint8Array.from(Buffer.from(""))
-    );
+    const uri = await createTestFile("");
 
-    await vscode.commands.executeCommand("vscode.open", testfileUri);
+    await vscode.commands.executeCommand("vscode.open", uri);
     await vscode.commands.executeCommand("snippetsmanager.showEditor");
     assert.ok(currentWebviewPanel);
 
@@ -114,46 +100,28 @@ suite("Extension", () => {
     );
     assert.strictEqual(currentWebviewPanel, null);
 
-    await vscode.commands.executeCommand("vscode.open", testfileUri);
+    await vscode.commands.executeCommand("vscode.open", uri);
     await vscode.commands.executeCommand("snippetsmanager.showEditor");
     assert.ok(currentWebviewPanel);
   });
 
   test("Snippet editor context should currect", async () => {
-    const testfileUri = vscode.Uri.joinPath(
-      testWorkspaceRoot,
-      "test.code-snippets"
-    );
-    const testfileUri2 = vscode.Uri.joinPath(
-      testWorkspaceRoot,
-      "test2.code-snippets"
-    );
-    const testfileUri3 = vscode.Uri.joinPath(testWorkspaceRoot, "test3.json");
-    await vscode.workspace.fs.writeFile(
-      testfileUri,
-      Uint8Array.from(Buffer.from(""))
-    );
-    await vscode.workspace.fs.writeFile(
-      testfileUri2,
-      Uint8Array.from(Buffer.from(""))
-    );
-    await vscode.workspace.fs.writeFile(
-      testfileUri3,
-      Uint8Array.from(Buffer.from(""))
-    );
+    const uri = await createTestFile("");
+    const uri2 = await createTestFile("");
+    const uri3 = await createTestFile("");
 
-    await vscode.commands.executeCommand("vscode.open", testfileUri);
+    await vscode.commands.executeCommand("vscode.open", uri);
     await vscode.commands.executeCommand("snippetsmanager.showEditor");
     assert.ok(CodeSnippetsEditor.isActive);
 
-    await vscode.commands.executeCommand("vscode.open", testfileUri2);
+    await vscode.commands.executeCommand("vscode.open", uri2);
     await vscode.commands.executeCommand("snippetsmanager.showEditor");
     assert.ok(CodeSnippetsEditor.isActive);
 
-    await vscode.commands.executeCommand("vscode.open", testfileUri3);
+    await vscode.commands.executeCommand("vscode.open", uri3);
     assert.ok(!CodeSnippetsEditor.isActive);
 
-    await vscode.commands.executeCommand("vscode.open", testfileUri2);
+    await vscode.commands.executeCommand("vscode.open", uri2);
     await vscode.commands.executeCommand("snippetsmanager.showEditor");
     assert.ok(CodeSnippetsEditor.isActive);
 
@@ -165,30 +133,10 @@ suite("Extension", () => {
   });
 
   test("Snippet editor open array json file should work", async () => {
-    const testfileUri = vscode.Uri.joinPath(
-      testWorkspaceRoot,
-      "test.code-snippets"
-    );
-    await vscode.workspace.fs.writeFile(
-      testfileUri,
-      Uint8Array.from(Buffer.from(`[{"test": {}}]`))
-    );
+    const uri = await createTestFile(`[{"test": {}}]`);
 
-    await vscode.commands.executeCommand("vscode.open", testfileUri);
+    await vscode.commands.executeCommand("vscode.open", uri);
     await vscode.commands.executeCommand("snippetsmanager.showEditor");
     assert.ok(currentWebviewPanel);
   });
 });
-
-export async function closeAllEditors() {
-  return vscode.commands.executeCommand("workbench.action.closeAllEditors");
-}
-
-async function resetTestWorkspace() {
-  try {
-    await vscode.workspace.fs.delete(testWorkspaceFolder, { recursive: true });
-  } catch {
-    // ok if file doesn't exist
-  }
-  await vscode.workspace.fs.createDirectory(testWorkspaceFolder);
-}

@@ -18,9 +18,14 @@ export default abstract class BasicSnippetsExplorerView
 
   constructor(context: vscode.ExtensionContext) {
     this.context = context;
-    vscode.window.createTreeView((this.constructor as any).viewId, {
-      treeDataProvider: this,
-      showCollapseAll: true,
+    const that = this;
+
+    // wait for onDidChangeTreeData and _onDidChangeTreeData added
+    setImmediate(() => {
+      vscode.window.createTreeView((that.constructor as any).viewId, {
+        treeDataProvider: that,
+        showCollapseAll: true,
+      });
     });
   }
 
