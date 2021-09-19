@@ -15,7 +15,7 @@ export async function createTestFile(
   { filename }: { filename?: string } = {}
 ) {
   const uri = vscode.Uri.joinPath(
-    testWorkspaceFolder,
+    testWorkspaceRoot,
     filename === undefined ? `${fileIndex++}.temp` : filename
   );
   await writeFile(uri, content);
@@ -27,7 +27,7 @@ export async function writeFile(uri: vscode.Uri, content: string) {
     uri,
     Uint8Array.from(Buffer.from(content))
   );
-  await new Promise((resolve, reject) => setTimeout(resolve, 1000));
+  await new Promise((resolve, reject) => setTimeout(resolve, 100));
 }
 
 export async function closeAllEditors() {
