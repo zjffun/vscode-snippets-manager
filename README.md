@@ -4,31 +4,27 @@ Create and edit snippets easily.
 
 ## Features
 
-### Edit snippets
+### Manage snippets
 
-Open `.code-snippets` in Snippets Editor.
+Create, edit or delete snippets.
 
-![feature edit](images/edit.png)
+![feature create](images/manager.png)
 
 ### Create snippets
 
 Select range to create a snippet.
 
-![feature create](images/create1.png)
+![feature create](images/create1.gif)
 
 Or create snippets by running command.
 
-![feature create](images/create2.png)
+![feature create](images/create2.gif)
 
-### Manage snippets
+### Edit snippets
 
-Edit or delete snippets.
+Open `.code-snippets` in Snippets Editor.
 
-![feature create](images/manager.png)
-
-### Use snippets
-
-![usage](images/usage.png)
+![feature edit](images/edit.gif)
 
 ## Release Notes
 
