@@ -27,7 +27,7 @@ export async function writeFile(uri: vscode.Uri, content: string) {
     uri,
     Uint8Array.from(Buffer.from(content))
   );
-  await new Promise((resolve, reject) => setTimeout(resolve, 100));
+  await new Promise((resolve, reject) => setTimeout(resolve, 1000));
 }
 
 export async function closeAllEditors() {
