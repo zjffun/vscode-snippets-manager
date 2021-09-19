@@ -40,15 +40,19 @@ suite("CodeSnippetsService", () => {
     let textDocument = await vscode.workspace.openTextDocument(uri);
     const codeSnippetsService = new CodeSnippetsService(textDocument);
     await writeFile(uri, "[]");
+    assert.ok(textDocument.getText() === "[]");
     assert.ok(codeSnippetsService.getMap()[0] instanceof Error);
 
     await writeFile(uri, "");
+    assert.ok(textDocument.getText() === "");
     assert.ok(codeSnippetsService.getMap()[0] instanceof Error);
 
     await writeFile(uri, "{");
+    assert.ok(textDocument.getText() === "{");
     assert.ok(codeSnippetsService.getMap()[0] instanceof Error);
 
     await writeFile(uri, `{"a":1}`);
+    assert.ok(textDocument.getText() === `{"a":1}`);
     assert.ok(codeSnippetsService.getMap()[0] instanceof Error);
   });
 
@@ -58,9 +62,11 @@ suite("CodeSnippetsService", () => {
     const codeSnippetsService = new CodeSnippetsService(textDocument);
 
     await writeFile(uri, "{}");
+    assert.ok(textDocument.getText() === "{}");
     assert.ok(codeSnippetsService.getMap()[1] instanceof Map);
 
     await writeFile(uri, `{"a":{}}`);
+    assert.ok(textDocument.getText() === `{"a":{}}`);
     assert.ok(codeSnippetsService.getMap()[1] instanceof Map);
   });
 });
