@@ -9,13 +9,14 @@ export const testWorkspaceFolder = vscode.Uri.joinPath(
   "test"
 );
 
+let fileIndex = 0;
 export async function createTestFile(
   content: string = "",
   { filename }: { filename?: string } = {}
 ) {
   const uri = vscode.Uri.joinPath(
     testWorkspaceRoot,
-    filename === undefined ? "" + Math.random() : filename
+    filename === undefined ? `${fileIndex++}.temp` : filename
   );
   await vscode.workspace.fs.writeFile(
     uri,
