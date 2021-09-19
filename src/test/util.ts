@@ -15,7 +15,7 @@ export async function createTestFile(
   { filename }: { filename?: string } = {}
 ) {
   const uri = vscode.Uri.joinPath(
-    testWorkspaceRoot,
+    testWorkspaceFolder,
     filename === undefined ? `${fileIndex++}.temp` : filename
   );
   await vscode.workspace.fs.writeFile(
