@@ -32,6 +32,12 @@ Open `.code-snippets` in Snippets Editor.
 
 ### [Unreleased]
 
+### v0.0.10
+
+- Fix bug when editor open with a malformed file.
+- Fix bug editor state incorrect.
+- Fix bug click edit snippet not work.
+
 ### v0.0.9
 
 - Added features jump to selected snippet when click snippets.
