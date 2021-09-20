@@ -8,7 +8,7 @@ import {
   createTestFile,
   resetTestWorkspace,
   testWorkspaceFolder,
-  writeFile,
+  writeTextDocument,
 } from "../util";
 
 // import * as myExtension from '../../extension';
@@ -27,8 +27,7 @@ suite("CodeSnippetsService", () => {
   });
 
   test("constructor should work", async () => {
-    const uri = await createTestFile();
-    await writeFile(uri, "{}");
+    const uri = await createTestFile("{}");
 
     const textDocument = await vscode.workspace.openTextDocument(uri);
     const codeSnippetsService = new CodeSnippetsService(textDocument);
@@ -39,19 +38,20 @@ suite("CodeSnippetsService", () => {
     const uri = await createTestFile();
     let textDocument = await vscode.workspace.openTextDocument(uri);
     const codeSnippetsService = new CodeSnippetsService(textDocument);
-    await writeFile(uri, "[]");
+    await writeTextDocument(textDocument, "[]");
+
     assert.deepStrictEqual(textDocument.getText(), "[]");
     assert.ok(codeSnippetsService.getMap()[0] instanceof Error);
 
-    await writeFile(uri, "");
+    await writeTextDocument(textDocument, "");
     assert.deepStrictEqual(textDocument.getText(), "");
     assert.ok(codeSnippetsService.getMap()[0] instanceof Error);
 
-    await writeFile(uri, "{");
+    await writeTextDocument(textDocument, "{");
     assert.deepStrictEqual(textDocument.getText(), "{");
     assert.ok(codeSnippetsService.getMap()[0] instanceof Error);
 
-    await writeFile(uri, `{"a":1}`);
+    await writeTextDocument(textDocument, `{"a":1}`);
     assert.deepStrictEqual(textDocument.getText(), `{"a":1}`);
     assert.ok(codeSnippetsService.getMap()[0] instanceof Error);
   });
@@ -61,11 +61,11 @@ suite("CodeSnippetsService", () => {
     const textDocument = await vscode.workspace.openTextDocument(uri);
     const codeSnippetsService = new CodeSnippetsService(textDocument);
 
-    await writeFile(uri, "{}");
+    await writeTextDocument(textDocument, "{}");
     assert.deepStrictEqual(textDocument.getText(), "{}");
     assert.ok(codeSnippetsService.getMap()[1] instanceof Map);
 
-    await writeFile(uri, `{"a":{}}`);
+    await writeTextDocument(textDocument, `{"a":{}}`);
     assert.deepStrictEqual(textDocument.getText(), `{"a":{}}`);
     assert.ok(codeSnippetsService.getMap()[1] instanceof Map);
   });

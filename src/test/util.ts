@@ -27,7 +27,27 @@ export async function writeFile(uri: vscode.Uri, content: string) {
     uri,
     Uint8Array.from(Buffer.from(content))
   );
-  await new Promise((resolve, reject) => setTimeout(resolve, 100));
+}
+
+export async function writeTextDocument(
+  textDocument: vscode.TextDocument,
+  content: string
+) {
+  const workspaceEdit = new vscode.WorkspaceEdit();
+
+  workspaceEdit.replace(
+    textDocument.uri,
+    new vscode.Range(0, 0, textDocument.lineCount, 0),
+    content
+  );
+
+  const res = await vscode.workspace.applyEdit(workspaceEdit);
+
+  if (!res) {
+    throw Error("applyEdit failed");
+  }
+
+  await textDocument.save();
 }
 
 export async function closeAllEditors() {
