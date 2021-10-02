@@ -10,8 +10,7 @@ type Items = Item[];
 export default async (prefix?: string, uri?: Uri) => {
   // for test only
   if (uri) {
-    createSnippet(prefix, uri);
-    return;
+    return createSnippet(prefix, uri);
   }
 
   const userSnippetsFilesInfo = await getUserSnippetsFilesInfo();
@@ -47,5 +46,5 @@ export default async (prefix?: string, uri?: Uri) => {
     return;
   }
 
-  createSnippet(prefix, snippetsFile.uri);
+  return createSnippet(prefix, snippetsFile.uri);
 };
