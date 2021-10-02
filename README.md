@@ -32,6 +32,11 @@ Open `.code-snippets` in Snippets Editor.
 
 ### [Unreleased]
 
+### v0.0.11
+
+- Added features create snippet to specified file.
+- Added features ask save to user snippets when can't find `activeWorkspaceFolder`.
+
 ### v0.0.10
 
 - Fix bug when editor open with a malformed file.
