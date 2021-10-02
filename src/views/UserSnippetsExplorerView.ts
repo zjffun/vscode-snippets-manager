@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { ISnippetContainer } from "..";
 import { CodeSnippetsService } from "../CodeSnippetsService";
+import { getUserFolderUri } from "../share";
 import BasicSnippetsExplorerView from "./BasicSnippetsExplorerView";
 
 let snippetsExplorerView: UserSnippetsExplorerView;
@@ -23,10 +24,7 @@ export default class UserSnippetsExplorerView extends BasicSnippetsExplorerView 
   protected async getSnippets() {
     const userSnippets: ISnippetContainer[] = [];
 
-    const userFolderUri = vscode.Uri.joinPath(
-      this.context.globalStorageUri,
-      "../../../User/snippets"
-    );
+    const userFolderUri = getUserFolderUri();
 
     let userSnippetFiles: [string, vscode.FileType][] = [];
     try {

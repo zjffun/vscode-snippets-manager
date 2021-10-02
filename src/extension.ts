@@ -6,6 +6,7 @@ import editSnippet from "./commands/editSnippet";
 import showEditor from "./commands/showEditor";
 import showSnippet from "./commands/showSnippet";
 import showSource from "./commands/showSource";
+import { setContext } from "./share";
 import ExtensionSnippetsExplorerView from "./views/ExtensionSnippetsExplorerView";
 import { registerHelpAndFeedbackView } from "./views/helpAndFeedbackView";
 import refreshAllView from "./views/refreshAllView";
@@ -13,6 +14,8 @@ import UserSnippetsExplorerView from "./views/UserSnippetsExplorerView";
 import WorkspaceSnippetsExplorerView from "./views/WorkspaceSnippetsExplorerView";
 
 export function activate(context: vscode.ExtensionContext) {
+  setContext(context);
+
   new WorkspaceSnippetsExplorerView(context);
 
   new UserSnippetsExplorerView(context);

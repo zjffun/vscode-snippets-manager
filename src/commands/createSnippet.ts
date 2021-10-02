@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { CodeSnippetsService } from "../CodeSnippetsService";
 import getSnippetTextDocument from "../core/getSnippetTextDocument";
+import { getUserFolderUri, context } from "../share";
 import { refresh } from "../views/WorkspaceSnippetsExplorerView";
 
 export default async (prefix?: string) => {
@@ -17,11 +18,38 @@ export default async (prefix?: string) => {
     activeTextEditor.document.uri
   );
 
+  let snippetsUri;
+
   if (!activeWorkspaceFolder?.uri) {
-    vscode.window.showErrorMessage(
-      "Get workspaceFolder by `vscode.window.activeTextEditor.document.uri` failed."
+    const askAddUserSnippets = context.globalState.get(
+      "askAddUserSnippets",
+      true
     );
-    return;
+    if (askAddUserSnippets) {
+      const answer = await vscode.window.showInformationMessage(
+        "Can't find `activeWorkspaceFolder`, do you want to add the snippet to user snippets?",
+        ...["Yes, and don't ask me again", "Yes", "No"]
+      );
+
+      if (answer === "No") {
+        return;
+      }
+
+      if (answer === "Yes, and don't ask me again") {
+        context.globalState.update("askAddUserSnippets", false);
+      }
+    }
+
+    snippetsUri = vscode.Uri.joinPath(
+      getUserFolderUri(),
+      "default-snippets-manager.code-snippets"
+    );
+  } else {
+    snippetsUri = vscode.Uri.joinPath(
+      activeWorkspaceFolder?.uri,
+      ".vscode",
+      "default-snippets-manager.code-snippets"
+    );
   }
 
   let _prefix = prefix;
@@ -44,12 +72,6 @@ export default async (prefix?: string) => {
     activeTextEditor.selection
   );
   const scope = activeTextEditor?.document.languageId;
-
-  const snippetsUri = vscode.Uri.joinPath(
-    activeWorkspaceFolder?.uri,
-    ".vscode",
-    "default-snippets-manager.code-snippets"
-  );
 
   const textDocument = await getSnippetTextDocument({
     snippetsUri,
