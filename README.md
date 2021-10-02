@@ -26,6 +26,12 @@ Open `.code-snippets` in Snippets Editor.
 
 ![feature edit](images/edit.gif)
 
+## Install via CLI
+
+```bash
+code --install-extension zjffun.snippetsmanager
+```
+
 ## Release Notes
 
 ### [TODO]
