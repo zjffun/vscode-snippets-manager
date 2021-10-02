@@ -55,7 +55,7 @@ Open `.code-snippets` in Snippets Editor.
 - Added features show all `.code-snippets` in explorer.
 - Added features toggle source and editor.
 
-- Fix bug when open empty snippet file.
+- Fix bug when open empty snippets file.
 
 ### v0.0.5
 

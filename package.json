@@ -110,6 +110,9 @@
       ],
       "commandPalette": [
         {
+          "command": "snippetsmanager.createSnippetTo"
+        },
+        {
           "command": "snippetsmanager.createSnippet",
           "when": "editorHasSelection"
         },
@@ -139,6 +142,11 @@
           "command": "snippetsmanager.createSnippet",
           "when": "editorHasSelection",
           "group": "snippets"
+        },
+        {
+          "command": "snippetsmanager.createSnippetTo",
+          "when": "editorHasSelection",
+          "group": "snippets"
         }
       ]
     },
@@ -146,6 +154,11 @@
       {
         "command": "snippetsmanager.createSnippet",
         "title": "Create Snippet",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.createSnippetTo",
+        "title": "Create Snippet To...",
         "category": "Snippets Manager"
       },
       {

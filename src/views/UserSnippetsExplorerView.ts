@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 import { ISnippetContainer } from "..";
 import { CodeSnippetsService } from "../CodeSnippetsService";
-import { getUserFolderUri } from "../share";
+import userSnippetsFilesInfo from "../core/getUserSnippetsFilesInfo";
 import BasicSnippetsExplorerView from "./BasicSnippetsExplorerView";
 
 let snippetsExplorerView: UserSnippetsExplorerView;
@@ -24,51 +24,34 @@ export default class UserSnippetsExplorerView extends BasicSnippetsExplorerView 
   protected async getSnippets() {
     const userSnippets: ISnippetContainer[] = [];
 
-    const userFolderUri = getUserFolderUri();
+    const userSnippetInfo = await userSnippetsFilesInfo();
 
-    let userSnippetFiles: [string, vscode.FileType][] = [];
-    try {
-      userSnippetFiles = await vscode.workspace.fs.readDirectory(userFolderUri);
-    } catch (error) {
-      // havn no .vscode folder, do noting
-    }
+    for (const { uri, fileName } of userSnippetInfo) {
+      let snippetsTextDoc;
 
-    for (const [fileName, fileType] of userSnippetFiles) {
-      if (
-        fileType === vscode.FileType.File &&
-        (fileName.endsWith(".code-snippets") || fileName.endsWith(".json"))
-      ) {
-        const snippetsUri = vscode.Uri.joinPath(userFolderUri, fileName);
-
-        // get the snippets file content
-        let snippetsTextDoc;
-
-        try {
-          snippetsTextDoc = await vscode.workspace.openTextDocument(
-            snippetsUri
-          );
-        } catch (error) {
-          continue;
-        }
-
-        const codeSnippetsService = new CodeSnippetsService(snippetsTextDoc);
-
-        const [_, snippets] = await codeSnippetsService.getMap();
-        if (!snippets) {
-          continue;
-        }
-        userSnippets.push({
-          name: fileName,
-          isFile: true,
-          uri: snippetsUri,
-          children: Array.from(snippets).map(([name, snippet]) => {
-            return codeSnippetsService.getSnippet(snippet, {
-              name,
-              uri: snippetsUri,
-            });
-          }),
-        });
+      try {
+        snippetsTextDoc = await vscode.workspace.openTextDocument(uri);
+      } catch (error) {
+        continue;
       }
+
+      const codeSnippetsService = new CodeSnippetsService(snippetsTextDoc);
+
+      const [_, snippets] = await codeSnippetsService.getMap();
+      if (!snippets) {
+        continue;
+      }
+      userSnippets.push({
+        name: fileName,
+        isFile: true,
+        uri,
+        children: Array.from(snippets).map(([name, snippet]) => {
+          return codeSnippetsService.getSnippet(snippet, {
+            name,
+            uri,
+          });
+        }),
+      });
     }
 
     return userSnippets;

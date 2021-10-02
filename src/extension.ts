@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { CodeSnippetsEditor } from "./CodeSnippetsEditor";
 import createSnippet from "./commands/createSnippet";
+import createSnippetTo from "./commands/createSnippetTo";
 import deleteSnippet from "./commands/deleteSnippet";
 import editSnippet from "./commands/editSnippet";
 import showEditor from "./commands/showEditor";
@@ -27,6 +28,15 @@ export function activate(context: vscode.ExtensionContext) {
       "snippetsmanager.createSnippet",
       async (prefix?: string) => {
         return createSnippet(prefix);
+      }
+    )
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "snippetsmanager.createSnippetTo",
+      async (prefix?: string) => {
+        return createSnippetTo(prefix);
       }
     )
   );

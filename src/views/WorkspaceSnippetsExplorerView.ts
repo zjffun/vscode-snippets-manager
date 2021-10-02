@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { ISnippetContainer } from "..";
 import { CodeSnippetsService } from "../CodeSnippetsService";
+import workspaceSnippetsFilesInfo from "../core/getWorkspaceSnippetsFilesInfo";
 import BasicSnippetsExplorerView from "./BasicSnippetsExplorerView";
 
 let snippetsExplorerView: WorkspaceSnippetsExplorerView;
@@ -21,74 +22,43 @@ export default class WorkspaceSnippetsExplorerView extends BasicSnippetsExplorer
   }
 
   protected async getSnippets() {
+    const workspaceSnippetsFileInfo = await workspaceSnippetsFilesInfo();
     const workpaces: ISnippetContainer[] = [];
 
-    const workspaceFolders = vscode.workspace.workspaceFolders;
-    if (workspaceFolders) {
-      for (const workspaceFolder of workspaceFolders) {
-        const dotVSCodeFolderUri = vscode.Uri.joinPath(
-          workspaceFolder.uri,
-          ".vscode"
-        );
+    for (const { folder, snippetsFiles } of workspaceSnippetsFileInfo) {
+      const workspaceSnippetFiles = [];
+      for (const { name, uri } of snippetsFiles) {
+        let snippetsTextDoc;
 
-        let workspaceDotVSCodeFiles: [string, vscode.FileType][] = [];
         try {
-          workspaceDotVSCodeFiles = await vscode.workspace.fs.readDirectory(
-            dotVSCodeFolderUri
-          );
+          snippetsTextDoc = await vscode.workspace.openTextDocument(uri);
         } catch (error) {
-          // havn no .vscode folder, do noting
+          continue;
         }
 
-        const workspaceSnippetFiles = [];
-        for (const [fileName, fileType] of workspaceDotVSCodeFiles) {
-          if (
-            fileType === vscode.FileType.File &&
-            fileName.endsWith(".code-snippets")
-          ) {
-            const snippetsUri = vscode.Uri.joinPath(
-              dotVSCodeFolderUri,
-              fileName
-            );
+        const codeSnippetsService = new CodeSnippetsService(snippetsTextDoc);
 
-            // get the snippets file content
-            let snippetsTextDoc;
-
-            try {
-              snippetsTextDoc = await vscode.workspace.openTextDocument(
-                snippetsUri
-              );
-            } catch (error) {
-              continue;
-            }
-
-            const codeSnippetsService = new CodeSnippetsService(
-              snippetsTextDoc
-            );
-
-            const [_, snippets] = await codeSnippetsService.getMap();
-            if (!snippets) {
-              continue;
-            }
-            workspaceSnippetFiles.push({
-              name: fileName,
-              isFile: true,
-              uri: snippetsUri,
-              children: Array.from(snippets).map(([name, snippet]) => {
-                return codeSnippetsService.getSnippet(snippet, {
-                  name,
-                  uri: snippetsUri,
-                });
-              }),
+        const [_, snippets] = await codeSnippetsService.getMap();
+        if (!snippets) {
+          continue;
+        }
+        workspaceSnippetFiles.push({
+          name,
+          isFile: true,
+          uri,
+          children: Array.from(snippets).map(([name, snippet]) => {
+            return codeSnippetsService.getSnippet(snippet, {
+              name,
+              uri,
             });
-          }
-        }
-
-        workpaces.push({
-          name: workspaceFolder.name,
-          children: workspaceSnippetFiles,
+          }),
         });
       }
+
+      workpaces.push({
+        name: folder.name,
+        children: workspaceSnippetFiles,
+      });
     }
 
     return workpaces;
