@@ -65,7 +65,7 @@ export default async (prefix?: string, snippetUri?: vscode.Uri) => {
   }
 
   const bodyText =
-    activeTextEditor?.document?.getText?.(activeTextEditor.selection) || "";
+    activeTextEditor?.document?.getText?.(activeTextEditor?.selection) || "";
   const scope = activeTextEditor?.document?.languageId || "";
 
   const textDocument = await getSnippetTextDocument({

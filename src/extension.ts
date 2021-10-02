@@ -35,8 +35,8 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(
       "snippetsmanager.createSnippetTo",
-      async (prefix?: string) => {
-        return createSnippetTo(prefix);
+      async (prefix?: string, uri?: vscode.Uri) => {
+        return createSnippetTo(prefix, uri);
       }
     )
   );

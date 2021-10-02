@@ -59,14 +59,6 @@ suite("Extension", () => {
     });
   });
 
-  test("Create snippet command shouldn't work when has no selection", async () => {
-    const res = await vscode.commands.executeCommand(
-      "snippetsmanager.createSnippet"
-    );
-
-    assert.strictEqual(res, undefined);
-  });
-
   test("Create snippet command should work when has selection", async () => {
     const uri = await createTestFile("test content");
 
@@ -76,6 +68,18 @@ suite("Extension", () => {
     const res = await vscode.commands.executeCommand(
       "snippetsmanager.createSnippet",
       "test"
+    );
+
+    assert.ok(res);
+  });
+
+  test("Create snippet to command should work when has no selection", async () => {
+    const uri = await createTestFile("{}");
+
+    const res = await vscode.commands.executeCommand(
+      "snippetsmanager.createSnippetTo",
+      "test",
+      uri
     );
 
     assert.ok(res);
