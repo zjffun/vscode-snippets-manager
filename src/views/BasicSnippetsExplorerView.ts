@@ -10,9 +10,7 @@ export default abstract class BasicSnippetsExplorerView
 
   public abstract readonly onDidChangeTreeData: vscode.Event<any>;
 
-  protected abstract getSnippets(
-    context: vscode.ExtensionContext
-  ): Promise<ISnippetContainer[]>;
+  protected abstract getSnippets(): Promise<ISnippetContainer[]>;
 
   protected context: vscode.ExtensionContext;
 
@@ -66,9 +64,7 @@ export default abstract class BasicSnippetsExplorerView
     | Thenable<ISnippet[]>
     | ISnippetContainer[]
     | Thenable<ISnippetContainer[]> {
-    return element
-      ? this.getTreeElement(element)
-      : this.getSnippets(this.context);
+    return element ? this.getTreeElement(element) : this.getSnippets();
   }
 
   protected getTreeElement = (element: ISnippet | ISnippetContainer) => {
