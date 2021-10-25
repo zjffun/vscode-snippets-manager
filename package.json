@@ -211,7 +211,8 @@
   "scripts": {
     "vscode:prepublish": "yarn run compile",
     "compile": "yarn run editor-view:build && tsc -p ./",
-    "watch": "yarn run editor-view:watch & tsc -watch -p ./",
+    "// use `--raw` to match $tsc-watch problemMatcher": "",
+    "watch": "concurrently --raw \"yarn run editor-view:watch\" \"tsc -watch -p ./\"",
     "pretest": "yarn run compile && yarn run lint",
     "test": "node ./out/test/runTest.js",
     "lint": "eslint src --ext ts",
@@ -231,6 +232,7 @@
     "@types/vscode": "^1.59.0",
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
+    "concurrently": "^6.3.0",
     "css-loader": "^6.4.0",
     "eslint": "^7.27.0",
     "glob": "^7.1.7",
