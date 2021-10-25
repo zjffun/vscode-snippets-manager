@@ -3,7 +3,7 @@
  *  Licensed under the MIT License. See License.txt in the project root for license information.
  *--------------------------------------------------------------------------------------------*/
 
-import { findNodeAtLocation, JSONPath, Node, ParseError, parseTree, Segment } from './json';
+import { findNodeAtLocation, JSONPath, Node, ParseError, parseTree, Segment } from 'jsonc-parser';
 import { Edit, format, FormattingOptions, isEOL } from './jsonFormatter';
 
 
@@ -20,7 +20,7 @@ export function setProperty(text: string, originalPath: JSONPath, value: any, fo
 	let lastSegment: Segment | undefined = undefined;
 	while (path.length > 0) {
 		lastSegment = path.pop();
-		parent = findNodeAtLocation(root, path);
+		parent = findNodeAtLocation((root as any), path);
 		if (parent === undefined && value !== undefined) {
 			if (typeof lastSegment === 'string') {
 				value = { [lastSegment]: value };

@@ -165,23 +165,11 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
   private getHtmlForWebview(webview: vscode.Webview): string {
     // Local path to script and css for the webview
     const scriptUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(
-        this.context.extensionUri,
-        "node_modules",
-        "code-snippets-editor",
-        "dist",
-        "main.js"
-      )
+      vscode.Uri.joinPath(this.context.extensionUri, "out-view", "main.js")
     );
 
     const styleUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(
-        this.context.extensionUri,
-        "node_modules",
-        "code-snippets-editor",
-        "dist",
-        "main.css"
-      )
+      vscode.Uri.joinPath(this.context.extensionUri, "out-view", "main.css")
     );
 
     const codiconsUri = webview.asWebviewUri(

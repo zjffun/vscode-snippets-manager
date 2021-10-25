@@ -4,7 +4,7 @@ const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const webpack = require("webpack");
 
-const pkg = require("./package.json");
+const pkg = require("../../package.json");
 
 const banner = () => {
   return `
@@ -21,9 +21,9 @@ const banner = () => {
 const isProduction = process.env.NODE_ENV === "production";
 
 const config = {
-  entry: "./src/index.tsx",
+  entry: path.resolve(__dirname, "./src/index.tsx"),
   output: {
-    path: path.resolve(__dirname, "dist"),
+    path: path.resolve(__dirname, "../../out-view"),
     clean: true,
   },
   plugins: [

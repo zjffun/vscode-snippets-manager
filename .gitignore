@@ -3,6 +3,7 @@ test.temp
 .DS_Store
 
 out
+out-view
 dist
 node_modules
 .vscode-test/

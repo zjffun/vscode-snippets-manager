@@ -6,7 +6,7 @@
 /**
  * Extracted from json.ts to keep json nls free.
  */
-import { ParseErrorCode } from './json';
+import { ParseErrorCode } from 'jsonc-parser';
 
 function localize(key: string, message: string){
 	return message;

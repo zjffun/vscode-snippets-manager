@@ -3,13 +3,7 @@ import { IVSCodeSnippet, ISnippet, ISnippets, ISnippetExtra } from ".";
 import getKey from "./core/getKey";
 import { refresh } from "./views/WorkspaceSnippetsExplorerView";
 
-import {
-  JSONVisitor,
-  parse,
-  ParseError,
-  ParseErrorCode,
-  visit,
-} from "./vscode/src/vs/base/common/json";
+import { JSONVisitor, parse, ParseErrorCode, visit } from "jsonc-parser";
 import {
   applyEdit,
   removeProperty,
