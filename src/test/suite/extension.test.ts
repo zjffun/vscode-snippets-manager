@@ -91,7 +91,7 @@ suite("Extension", () => {
     );
   });
 
-  test("Snippet editor should work", async () => {
+  test("Code snippets editor should work", async () => {
     const uri = await createTestFile("");
 
     await vscode.commands.executeCommand("vscode.open", uri);
@@ -109,7 +109,7 @@ suite("Extension", () => {
     assert.ok(currentWebviewPanel);
   });
 
-  test("Snippet editor context should currect", async () => {
+  test("Code snippets editor context should currect", async () => {
     const uri = await createTestFile("");
     const uri2 = await createTestFile("");
     const uri3 = await createTestFile("");
@@ -136,7 +136,7 @@ suite("Extension", () => {
     assert.ok(CodeSnippetsEditor.isActive);
   });
 
-  test("Snippet editor open array json file should work", async () => {
+  test("Code snippets editor open array json file should work", async () => {
     const uri = await createTestFile(`[{"test": {}}]`);
 
     await vscode.commands.executeCommand("vscode.open", uri);

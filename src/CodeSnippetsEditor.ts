@@ -153,10 +153,26 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
         case "openInDefaultEditor":
           showSource();
           return;
+        case "error":
+          this.showErrorMessage(payload.data);
+          return;
       }
     });
 
     await updateWebview();
+  }
+
+  private async showErrorMessage(ErrMsg: string) {
+    const answer = await vscode.window.showErrorMessage(
+      `It seems an error occurred in the code snippets editor, do you want to open in default editor? (Error Message: ${ErrMsg})`,
+      "Yes",
+      "No"
+    );
+
+    if (answer === "Yes") {
+      showSource();
+      return;
+    }
   }
 
   /**
@@ -190,6 +206,25 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
       vscode.Uri.joinPath(this.context.extensionUri, "media", "vscode.css")
     );
 
+    const globalErrorHandlerUri = webview.asWebviewUri(
+      vscode.Uri.joinPath(
+        this.context.extensionUri,
+        "media",
+        "globalErrorHandler.js"
+      )
+    );
+
+    const toolkitUri = webview.asWebviewUri(
+      vscode.Uri.joinPath(
+        this.context.extensionUri,
+        "node_modules",
+        "@vscode",
+        "webview-ui-toolkit",
+        "dist",
+        "toolkit.js"
+      )
+    );
+
     // Use a nonce to whitelist which scripts can be run
     const nonce = getNonce();
 
@@ -203,21 +238,25 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 				Use a content security policy to only allow loading images from https or from our extension directory,
 				and only allow scripts that have a specific nonce.
 				-->
-				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource}; style-src ${webview.cspSource}; font-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
-
+				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource}; style-src ${webview.cspSource} 'nonce-${nonce}'; font-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
+        <meta property="csp-nonce" content="${nonce}" />
+       
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
         
 				<link href="${codiconsUri}" rel="stylesheet" />
 				<link href="${styleResetUri}" rel="stylesheet" />
 				<link href="${styleVSCodeUri}" rel="stylesheet" />
 				<link href="${styleUri}" rel="stylesheet" />
 
+        <script nonce="${nonce}" src="${globalErrorHandlerUri}"></script>
+        <script type="module" nonce="${nonce}" src="${toolkitUri}"></script>
+
 				<title>Code Snippets Editor</title>
 			</head>
 			<body>
-				<div id="root"></div>
-				
+				<div id="root">
+          <vscode-progress-ring></vscode-progress-ring>
+        </div>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;

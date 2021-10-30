@@ -24,7 +24,7 @@ export class ErrorBoundary extends React.Component<{}, { hasError: boolean }> {
     if (this.state.hasError) {
       return (
         <main style={{ display: "flex", justifyContent: "center" }}>
-          Failed to open snippet editor.{" "}
+          Failed to open code snippets editor.{" "}
           <a onClick={this.openInDefaultEditor} style={{ cursor: "pointer" }}>
             Open in default editor
           </a>
