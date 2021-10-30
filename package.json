@@ -198,13 +198,13 @@
     "customEditors": [
       {
         "viewType": "snippetsmanager.codeSnippetsEditorView",
-        "displayName": "Code Snippets",
+        "displayName": "Code Snippets Editor",
         "selector": [
           {
             "filenamePattern": "*.code-snippets"
           }
         ],
-        "priority": "option"
+        "priority": "default"
       }
     ]
   },

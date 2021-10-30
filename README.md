@@ -22,7 +22,9 @@ Or create snippets by running command.
 
 ### Edit snippets
 
-Open `.code-snippets` in Snippets Editor.
+Open `*.code-snippets` in Snippets Editor.
+
+You can right-click `*.code-snippets` file then left-click the `Open Whit...` option to select other editors to open `*.code-snippets` file or set the default editor to open `*.code-snippets` file.
 
 ![feature edit](images/edit.gif)
 
@@ -63,7 +65,7 @@ code --install-extension zjffun.snippetsmanager
 
 ### v0.0.6
 
-- Added features show all `.code-snippets` in explorer.
+- Added features show all `*.code-snippets` in explorer.
 - Added features toggle source and editor.
 
 - Fix bug when open empty snippets file.
@@ -74,7 +76,7 @@ code --install-extension zjffun.snippetsmanager
 
 ### v0.0.4
 
-- Added features `.code-snippets` file editor.
+- Added features `*.code-snippets` file editor.
 
 ### v0.0.3
 

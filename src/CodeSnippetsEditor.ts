@@ -213,7 +213,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 				<link href="${styleVSCodeUri}" rel="stylesheet" />
 				<link href="${styleUri}" rel="stylesheet" />
 
-				<title>Code Snippets</title>
+				<title>Code Snippets Editor</title>
 			</head>
 			<body>
 				<div id="root"></div>
