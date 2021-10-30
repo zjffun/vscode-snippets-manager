@@ -40,6 +40,10 @@ code --install-extension zjffun.snippetsmanager
 
 ### [Unreleased]
 
+### v0.0.12
+
+- Added features set code snippets editor to default editor.
+
 ### v0.0.11
 
 - Added features create snippet to specified file.
