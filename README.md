@@ -40,6 +40,8 @@ code --install-extension zjffun.snippetsmanager
 
 ### [Unreleased]
 
+- Added features show error massage when an error occurred in the code snippets editor.
+
 ### v0.0.12
 
 - Added features set code snippets editor to default editor.
