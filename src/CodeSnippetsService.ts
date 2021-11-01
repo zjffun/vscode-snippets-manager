@@ -9,6 +9,7 @@ import {
   removeProperty,
   setProperty,
 } from "./vscode/src/vs/base/common/jsonEdit";
+import { log } from "./extension";
 
 type IVSCodeSnippetMap = Map<string, IVSCodeSnippet>;
 
@@ -19,12 +20,11 @@ export class CodeSnippetsService {
     this.textDocument = textDocument;
   }
 
-  getMap(): [Error | undefined, IVSCodeSnippetMap | undefined] {
+  getMap(): IVSCodeSnippetMap {
     let currentProperty: string | null = null;
     let currentParent: any = [];
     const initCurrentParent = currentParent;
     const previousParents: any[] = [];
-    let error: Error | undefined = undefined;
 
     function onValue(value: any) {
       if (Array.isArray(currentParent)) {
@@ -68,23 +68,18 @@ export class CodeSnippetsService {
           currentParent === initCurrentParent &&
           e === ParseErrorCode.ValueExpected
         ) {
-          error = new Error(`Parse error: empty content`);
-          return;
+          throw Error(`Parse error: empty content`);
         }
 
-        error = new Error(`Parse error`);
+        throw Error(`Parse error`);
       },
     };
     visit(this.textDocument.getText(), visitor);
 
-    if (error) {
-      return [error, undefined];
-    }
-
     if (currentParent[0] instanceof Map) {
       for (const [_, snippet] of currentParent[0]) {
         if (typeof snippet !== "object") {
-          return [new Error("Not the correct format"), undefined];
+          throw Error("Not the correct format");
         }
 
         // handle body
@@ -95,25 +90,20 @@ export class CodeSnippetsService {
         } else if (Array.isArray(snippet.body)) {
           // do nothing
         } else {
-          return [new Error("Not the correct format"), undefined];
+          throw Error("Not the correct format");
         }
       }
     } else {
-      return [new Error("Not the correct format"), undefined];
+      throw Error("Not the correct format");
     }
 
-    return [error, currentParent[0]];
+    return currentParent[0];
   }
 
-  getEntriesString(): [Error | undefined, string | undefined] {
-    const [error, map] = this.getMap();
+  getEntriesString(): string {
+    const map = this.getMap();
 
-    return [
-      error,
-      error
-        ? undefined
-        : JSON.stringify(Array.from((<IVSCodeSnippetMap>map).entries())),
-    ];
+    return JSON.stringify(Array.from(map.entries()));
   }
 
   async insert(snippet: ISnippet) {
@@ -132,15 +122,17 @@ export class CodeSnippetsService {
       return;
     }
 
-    const [error, snippetsMap] = this.getMap();
-
-    if (error) {
+    let snippetsMap;
+    try {
+      snippetsMap = this.getMap();
+    } catch (error: any) {
+      log.appendLine(error?.message);
       return false;
     }
 
     let oldSnippet: ISnippet;
     let oldSnippetIndex = 0;
-    for (const [k, v] of <IVSCodeSnippetMap>snippetsMap) {
+    for (const [k, v] of snippetsMap) {
       if (k === name) {
         oldSnippet = this.getSnippet(v, { name: k });
         break;
@@ -150,7 +142,7 @@ export class CodeSnippetsService {
 
     // @ts-ignore
     if (!oldSnippet) {
-      return "";
+      return false;
     }
 
     let content = this.textDocument.getText();

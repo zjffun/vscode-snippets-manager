@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { ISnippetContainer } from "..";
 import { CodeSnippetsService } from "../CodeSnippetsService";
 import userSnippetsFilesInfo from "../core/getUserSnippetsFilesInfo";
+import { log } from "../extension";
 import BasicSnippetsExplorerView from "./BasicSnippetsExplorerView";
 
 let snippetsExplorerView: UserSnippetsExplorerView;
@@ -37,10 +38,13 @@ export default class UserSnippetsExplorerView extends BasicSnippetsExplorerView 
 
       const codeSnippetsService = new CodeSnippetsService(snippetsTextDoc);
 
-      const [_, snippets] = await codeSnippetsService.getMap();
-      if (!snippets) {
-        continue;
+      let snippets = new Map();
+      try {
+        snippets = await codeSnippetsService.getMap();
+      } catch (error: any) {
+        log.appendLine(error?.message);
       }
+
       userSnippets.push({
         name: fileName,
         isFile: true,

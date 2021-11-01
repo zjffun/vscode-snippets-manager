@@ -41,19 +41,19 @@ suite("CodeSnippetsService", () => {
     await writeTextDocument(textDocument, "[]");
 
     assert.deepStrictEqual(textDocument.getText(), "[]");
-    assert.ok(codeSnippetsService.getMap()[0] instanceof Error);
+    assert.throws(codeSnippetsService.getMap);
 
     await writeTextDocument(textDocument, "");
     assert.deepStrictEqual(textDocument.getText(), "");
-    assert.ok(codeSnippetsService.getMap()[0] instanceof Error);
+    assert.throws(codeSnippetsService.getMap);
 
     await writeTextDocument(textDocument, "{");
     assert.deepStrictEqual(textDocument.getText(), "{");
-    assert.ok(codeSnippetsService.getMap()[0] instanceof Error);
+    assert.throws(codeSnippetsService.getMap);
 
     await writeTextDocument(textDocument, `{"a":1}`);
     assert.deepStrictEqual(textDocument.getText(), `{"a":1}`);
-    assert.ok(codeSnippetsService.getMap()[0] instanceof Error);
+    assert.throws(codeSnippetsService.getMap);
   });
 
   test("getMap should return map when paser success", async () => {
@@ -63,10 +63,10 @@ suite("CodeSnippetsService", () => {
 
     await writeTextDocument(textDocument, "{}");
     assert.deepStrictEqual(textDocument.getText(), "{}");
-    assert.ok(codeSnippetsService.getMap()[1] instanceof Map);
+    assert.ok(codeSnippetsService.getMap() instanceof Map);
 
     await writeTextDocument(textDocument, `{"a":{}}`);
     assert.deepStrictEqual(textDocument.getText(), `{"a":{}}`);
-    assert.ok(codeSnippetsService.getMap()[1] instanceof Map);
+    assert.ok(codeSnippetsService.getMap() instanceof Map);
   });
 });

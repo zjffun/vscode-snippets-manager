@@ -72,9 +72,10 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
     async function updateWebview() {
-      let [error, text] = codeSnippetsService.getEntriesString();
-
-      if (error) {
+      let text;
+      try {
+        text = codeSnippetsService.getEntriesString();
+      } catch (error: any) {
         if (error?.message !== "Parse error: empty content") {
           webviewPanel.webview.postMessage({
             type: "error",
@@ -93,12 +94,12 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
           setTimeout(resolve, 100);
         });
 
-        [error, text] = codeSnippetsService.getEntriesString();
-
-        if (error) {
+        try {
+          text = codeSnippetsService.getEntriesString();
+        } catch (error: any) {
           webviewPanel.webview.postMessage({
             type: "error",
-            error: error.message,
+            error: error?.message,
           });
           return;
         }

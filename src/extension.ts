@@ -14,6 +14,8 @@ import refreshAllView from "./views/refreshAllView";
 import UserSnippetsExplorerView from "./views/UserSnippetsExplorerView";
 import WorkspaceSnippetsExplorerView from "./views/WorkspaceSnippetsExplorerView";
 
+export const log = vscode.window.createOutputChannel("Snippets Manager");
+
 export function activate(context: vscode.ExtensionContext) {
   setContext(context);
 
