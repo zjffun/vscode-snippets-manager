@@ -76,6 +76,16 @@
       ],
       "view/title": [
         {
+          "command": "_snippetsmanager.workbenchActionOpenSnippets",
+          "when": "view == snippetsmanager-snippetsView-WorkspaceSnippetsExplorerView",
+          "group": "navigation@9"
+        },
+        {
+          "command": "_snippetsmanager.workbenchActionOpenSnippets",
+          "when": "view == snippetsmanager-snippetsView-UserSnippetsExplorerView",
+          "group": "navigation@9"
+        },
+        {
           "command": "snippetsmanager.refresh",
           "when": "view == snippetsmanager-snippetsView-WorkspaceSnippetsExplorerView",
           "group": "navigation@10"
@@ -160,6 +170,11 @@
         "command": "snippetsmanager.createSnippetTo",
         "title": "Create Snippet To...",
         "category": "Snippets Manager"
+      },
+      {
+        "command": "_snippetsmanager.workbenchActionOpenSnippets",
+        "title": "Create Snippet File",
+        "icon": "$(add)"
       },
       {
         "command": "_snippetsmanager.deleteSnippet",

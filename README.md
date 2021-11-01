@@ -38,9 +38,14 @@ code --install-extension zjffun.snippetsmanager
 
 ### [TODO]
 
+- update editor UI
+- snippets delete confirm
+- snippets name validation (undetermined)
+
 ### [Unreleased]
 
 - Added features show error massage when an error occurred in the code snippets editor.
+- Added features create snippets file.
 
 - Fix bug unparseable snippets disappear in trees.
 
