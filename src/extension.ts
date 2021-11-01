@@ -7,6 +7,9 @@ import editSnippet from "./commands/editSnippet";
 import showEditor from "./commands/showEditor";
 import showSnippet from "./commands/showSnippet";
 import showSource from "./commands/showSource";
+import workbenchActionOpenSnippets, {
+  workbenchActionOpenSnippetsId,
+} from "./commands/workbenchActionOpenSnippets";
 import { setContext } from "./share";
 import ExtensionSnippetsExplorerView from "./views/ExtensionSnippetsExplorerView";
 import { registerHelpAndFeedbackView } from "./views/helpAndFeedbackView";
@@ -40,6 +43,13 @@ export function activate(context: vscode.ExtensionContext) {
       async (prefix?: string, uri?: vscode.Uri) => {
         return createSnippetTo(prefix, uri);
       }
+    )
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      workbenchActionOpenSnippetsId,
+      workbenchActionOpenSnippets
     )
   );
 
