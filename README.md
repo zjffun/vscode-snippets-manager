@@ -105,3 +105,11 @@ code --install-extension zjffun.snippetsmanager
 ### v0.0.1
 
 - Added features create, edit and delete snippets.
+
+## Contribute
+
+To contribute to this VSCode extension. Open the root folder of this repo, then run
+
+1. `yarn install`
+2. `yarn compile`
+3. Use VSCode debugging function (in menu `run`-`Start Debugging[F5]`)
