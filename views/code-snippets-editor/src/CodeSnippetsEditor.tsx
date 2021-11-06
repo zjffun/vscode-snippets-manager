@@ -92,31 +92,35 @@ const CodeSnippetsEditor = () => {
       <ToolbarComponent
         onAddSnippetClick={handleAddSnippetClick}
       ></ToolbarComponent>
-      <ul className="code-snippets-editor-snippets">
-        {snippetEntries.map(([key, snippet]) => {
-          return (
-            <li className="code-snippets-editor-snippets__item" key={key}>
-              <SnippetItem
-                name={key}
-                snippet={snippet}
-                vscode={vscode}
-                setEdit={(edit) => {
-                  setSnippetEntries((snippetEntries) =>
-                    snippetEntries.map(([k, v]) => {
-                      let _v = v;
-                      if (k === key) {
-                        _v = { ...v, [EDIT]: edit };
-                      }
+      {snippetEntries.length ? (
+        <ul className="code-snippets-editor-snippets">
+          {snippetEntries.map(([key, snippet]) => {
+            return (
+              <li className="code-snippets-editor-snippets__item" key={key}>
+                <SnippetItem
+                  name={key}
+                  snippet={snippet}
+                  vscode={vscode}
+                  setEdit={(edit) => {
+                    setSnippetEntries((snippetEntries) =>
+                      snippetEntries.map(([k, v]) => {
+                        let _v = v;
+                        if (k === key) {
+                          _v = { ...v, [EDIT]: edit };
+                        }
 
-                      return [k, _v];
-                    })
-                  );
-                }}
-              ></SnippetItem>
-            </li>
-          );
-        })}
-      </ul>
+                        return [k, _v];
+                      })
+                    );
+                  }}
+                ></SnippetItem>
+              </li>
+            );
+          })}
+        </ul>
+      ) : (
+        <div>No snippets.</div>
+      )}
     </main>
   );
 };
