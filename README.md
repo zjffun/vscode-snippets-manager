@@ -14,19 +14,15 @@ Create, edit or delete snippets.
 
 Select range to create a snippet.
 
-![feature create](images/create1.gif)
-
-Or create snippets by running command.
-
-![feature create](images/create2.gif)
+<img src="images/create1.webp" width="500px">
 
 ### Edit snippets
 
-Open `*.code-snippets` in Snippets Editor.
+Open `*.code-snippets` in Snippets Editor and edit it.
+
+![feature edit](images/edit.webp)
 
 You can right-click `*.code-snippets` file then left-click the `Open Whit...` option to select other editors to open `*.code-snippets` file or set the default editor to open `*.code-snippets` file.
-
-![feature edit](images/edit.gif)
 
 ## Install via CLI
 
