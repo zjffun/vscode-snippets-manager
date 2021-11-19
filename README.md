@@ -42,6 +42,10 @@ code --install-extension zjffun.snippetsmanager
 
 ### v0.0.13
 
+- Changed the GIF in document to WebP.
+
+### v0.0.13
+
 - Added features show error massage when an error occurred in the code snippets editor.
 - Added features create snippets file.
 - Added features show 'No snippets' when no snippets.
