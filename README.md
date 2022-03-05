@@ -42,7 +42,7 @@ code --install-extension zjffun.snippetsmanager
 
 ### [Unreleased]
 
-### v0.0.15
+### v0.1.0
 
 - Added features update UI to webview-ui-toolkit.
 
