@@ -34,10 +34,6 @@ code --install-extension zjffun.snippetsmanager
 
 ### [TODO]
 
-- update editor UI
-- snippets delete confirm (undetermined)
-- snippets name validation (undetermined)
-
 ### [Unreleased]
 
 ### v0.0.13

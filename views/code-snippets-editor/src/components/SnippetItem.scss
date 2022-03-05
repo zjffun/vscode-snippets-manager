@@ -11,6 +11,10 @@
       padding-bottom: $paddingBottom;
       overflow: hidden;
       text-overflow: ellipsis;
+      min-height: 24px;
+      vscode-text-field {
+        width: 100%;
+      }
     }
     &__body {
       padding-bottom: $paddingBottom;
@@ -18,12 +22,19 @@
         color: var(--vscode-textPreformat-foreground);
         overflow: auto;
       }
+      pre {
+        margin: 8px 0 0;
+      }
+      vscode-text-area {
+        width: 100%;
+      }
     }
   }
 
   &-top-items {
     display: flex;
     flex-wrap: wrap;
+    gap: 0.5em;
 
     &__item {
       margin-right: 1em;
@@ -37,30 +48,7 @@
     align-self: flex-start;
     display: flex;
     justify-content: flex-end;
-    .code-snippets-editor-close-icon {
-      font-size: 13px;
-    }
-  }
-
-  &-button {
-    &-ok {
-      color: var(--vscode-button-foreground);
-      background-color: var(--vscode-button-background);
-      &:active,
-      &:hover {
-        color: var(--vscode-button-foreground);
-        background-color: var(--vscode-button-hoverBackground);
-      }
-    }
-    &-cancel {
-      color: var(--vscode-button-secondaryForeground);
-      background-color: var(--vscode-button-secondaryBackground);
-      &:active,
-      &:hover {
-        color: var(--vscode-button-foreground);
-        background-color: var(--vscode-button-secondaryHoverBackground);
-      }
-    }
+    gap: 0.5em;
   }
 
   &-label {

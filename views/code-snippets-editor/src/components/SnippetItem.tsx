@@ -34,37 +34,29 @@ const CodeSnippetsEditor = ({ name, snippet, vscode, setEdit }: Props) => {
           </div>
           <div style={{ flex: "1 1 0" }}></div>
           <div className="code-snippets-editor-operation">
-            <div className="monaco-action-bar animated">
-              <ul className="actions-container" role="toolbar">
-                <li className="action-item" role="presentation">
-                  <a
-                    className="action-label codicon codicon-edit"
-                    role="button"
-                    title="Edit Item"
-                    tabIndex={-1}
-                    data-focusable="true"
-                    onClick={() => {
-                      setEdit(true);
-                    }}
-                  ></a>
-                </li>
-                <li className="action-item" role="presentation">
-                  <a
-                    className="action-label codicon codicon-close code-snippets-editor-close-icon"
-                    role="button"
-                    title="Remove Item"
-                    tabIndex={-1}
-                    data-focusable="true"
-                    onClick={() => {
-                      vscode.postMessage({
-                        type: "delete",
-                        payload: { name },
-                      });
-                    }}
-                  ></a>
-                </li>
-              </ul>
-            </div>
+            <vscode-button
+              appearance="icon"
+              aria-label="Edit Item"
+              title="Edit Item"
+              onClick={() => {
+                setEdit(true);
+              }}
+            >
+              <span className="codicon codicon-edit"></span>
+            </vscode-button>
+            <vscode-button
+              appearance="icon"
+              aria-label="Remove Item"
+              title="Remove Item"
+              onClick={() => {
+                vscode.postMessage({
+                  type: "delete",
+                  payload: { name },
+                });
+              }}
+            >
+              <span className="codicon codicon-close"></span>
+            </vscode-button>
           </div>
         </div>
         <div className="code-snippets-editor-snippet__desc">
@@ -84,33 +76,19 @@ const CodeSnippetsEditor = ({ name, snippet, vscode, setEdit }: Props) => {
         <form ref={formRef}>
           <div className="code-snippets-editor-snippet__top">
             <div className="code-snippets-editor-top-items">
-              <div className="code-snippets-editor-top-items__item">
-                <span className="code-snippets-editor-label">Name: </span>
-                <input name="name" type="text" defaultValue={name} />{" "}
-              </div>
-              <div className="code-snippets-editor-top-items__item">
-                <span className="code-snippets-editor-label">Prefix: </span>
-                <input
-                  name="prefix"
-                  type="text"
-                  defaultValue={snippet.prefix}
-                />{" "}
-              </div>
-              <div className="code-snippets-editor-top-items__item">
-                <span className="code-snippets-editor-label">Scope: </span>
-                <input
-                  name="scope"
-                  type="text"
-                  defaultValue={snippet.scope}
-                />{" "}
-              </div>
+              <vscode-text-field name="name" value={name}>
+                Name
+              </vscode-text-field>
+              <vscode-text-field name="prefix" value={snippet.prefix}>
+                Prefix
+              </vscode-text-field>
+              <vscode-text-field name="scope" value={snippet.scope}>
+                Scope
+              </vscode-text-field>
             </div>
             <div style={{ flex: "1 1 0" }}></div>
             <div className="code-snippets-editor-operation">
-              <a
-                className="monaco-button monaco-text-button code-snippets-editor-button code-snippets-editor-button-ok"
-                tabIndex={0}
-                role="button"
+              <vscode-button
                 onClick={() => {
                   if (!formRef.current) {
                     return;
@@ -129,38 +107,31 @@ const CodeSnippetsEditor = ({ name, snippet, vscode, setEdit }: Props) => {
                 }}
               >
                 OK
-              </a>
-              <a
-                className="monaco-button monaco-text-button code-snippets-editor-button code-snippets-editor-button-cancel"
-                tabIndex={0}
-                role="button"
+              </vscode-button>
+              <vscode-button
+                appearance="secondary"
                 onClick={() => {
                   setEdit(false);
                 }}
               >
                 Cancel
-              </a>
+              </vscode-button>
             </div>
           </div>
           <div className="code-snippets-editor-snippet__desc">
-            <span className="code-snippets-editor-label">Description: </span>
-            <input
-              name="description"
-              type="text"
-              defaultValue={snippet.description}
-            />
+            <vscode-text-field name="description" value={snippet.description}>
+              Description
+            </vscode-text-field>
           </div>
           <div className="code-snippets-editor-snippet__body">
-            <div>
-              <span className="code-snippets-editor-label">Body:</span>
-            </div>
-            <div className="code-snippets-editor-snippet__body__content">
-              <textarea
-                name="body"
-                rows={10}
-                defaultValue={snippet.body.join("\n")}
-              ></textarea>
-            </div>
+            <vscode-text-area
+              resize="vertical"
+              name="body"
+              rows={10}
+              value={snippet.body.join("\n")}
+            >
+              Body
+            </vscode-text-area>
           </div>
         </form>
       )}

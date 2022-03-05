@@ -9,12 +9,7 @@ interface Props {
 const ToolbarComponent = ({ onAddSnippetClick }: Props) => {
   return (
     <section className="code-snippets-editor-toolbar">
-      <button
-        className="code-snippets-editor-button code-snippets-editor-button-add"
-        onClick={onAddSnippetClick}
-      >
-        Add Snippet
-      </button>
+      <vscode-button onClick={onAddSnippetClick}>Add Snippet</vscode-button>
     </section>
   );
 };
