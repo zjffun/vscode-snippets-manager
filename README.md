@@ -2,6 +2,8 @@
 
 Create and edit snippets easily.
 
+This extension is built over the default VS Code snippets system, wrapping it into a nice and intuitive UI, improving usability, and making snippets easy to create and edit. It supports user-custom snippets, global snippets and snippets from installed extensions.
+
 ## Features
 
 ### Manage snippets
@@ -24,6 +26,10 @@ Open `*.code-snippets` in Snippets Editor and edit it.
 
 You can right-click `*.code-snippets` file then left-click the `Open Whit...` option to select other editors to open `*.code-snippets` file or set the default editor to open `*.code-snippets` file.
 
+### Undo/Redo
+
+This extension provides a custom VS Code editor, so you can use VS Code shortcuts to undo/redo. By default, in Windows undo is `Ctrl+Z` redo is `Ctrl+Shift+Z`, in macOS undo is `⌘Z` redo is `⇧⌘Z`.
+
 ## Install via CLI
 
 ```bash
@@ -36,7 +42,13 @@ code --install-extension zjffun.snippetsmanager
 
 ### [Unreleased]
 
-### v0.0.13
+### v0.0.15
+
+- Added features update UI to webview-ui-toolkit.
+
+- Improve documentation.
+
+### v0.0.14
 
 - Changed the GIF in document to WebP.
 
