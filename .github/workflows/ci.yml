@@ -18,7 +18,7 @@ jobs:
       - name: Install Node.js
         uses: actions/setup-node@v1
         with:
-          node-version: 10.x
+          node-version: 16.x
       - run: yarn install
       - run: xvfb-run -a yarn test
         if: runner.os == 'Linux'
