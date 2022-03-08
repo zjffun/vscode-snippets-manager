@@ -42,6 +42,10 @@ code --install-extension zjffun.snippetsmanager
 
 ### [Unreleased]
 
+### v0.1.1
+
+- Added features duplicate snippet.
+
 ### v0.1.0
 
 - Added features update UI to webview-ui-toolkit.
