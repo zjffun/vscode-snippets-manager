@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { EDIT, NEWITEM } from "../symbols";
+import { DUPLICATE_INDEX, EDIT, NEWITEM } from "../symbols";
 import { Snippet } from "../typings";
 import "./SnippetItem.scss";
 
@@ -8,9 +8,10 @@ interface Props {
   snippet: Snippet;
   vscode: any;
   setEdit(edit: boolean): void;
+  duplicate(): void;
 }
 
-const CodeSnippetsEditor = ({ name, snippet, vscode, setEdit }: Props) => {
+const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
   const formRef = useRef<HTMLFormElement | null>(null);
   const edit = snippet[EDIT];
 
@@ -43,6 +44,14 @@ const CodeSnippetsEditor = ({ name, snippet, vscode, setEdit }: Props) => {
               }}
             >
               <span className="codicon codicon-edit"></span>
+            </vscode-button>
+            <vscode-button
+              appearance="icon"
+              aria-label="Duplicate Item"
+              title="Duplicate Item"
+              onClick={duplicate}
+            >
+              <span className="codicon codicon-files"></span>
             </vscode-button>
             <vscode-button
               appearance="icon"
@@ -100,10 +109,9 @@ const CodeSnippetsEditor = ({ name, snippet, vscode, setEdit }: Props) => {
                     payload: {
                       name,
                       data: Object.fromEntries(data.entries()),
+                      index: snippet[DUPLICATE_INDEX],
                     },
                   });
-
-                  setEdit(false);
                 }}
               >
                 OK
@@ -139,4 +147,4 @@ const CodeSnippetsEditor = ({ name, snippet, vscode, setEdit }: Props) => {
   );
 };
 
-export default CodeSnippetsEditor;
+export default SnippetItem;

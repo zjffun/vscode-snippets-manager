@@ -103,9 +103,14 @@
       ],
       "view/item/context": [
         {
-          "command": "_snippetsmanager.deleteSnippet",
+          "command": "_snippetsmanager.duplicateSnippet",
           "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
           "group": "inline@2"
+        },
+        {
+          "command": "_snippetsmanager.deleteSnippet",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
+          "group": "inline@3"
         },
         {
           "command": "_snippetsmanager.editSnippet",
@@ -133,6 +138,10 @@
         {
           "command": "snippetsmanager.showEditor",
           "when": "resourceExtname == '.code-snippets' && !snippetsmanagerCodeSnippetsEditorFocus"
+        },
+        {
+          "command": "_snippetsmanager.duplicateSnippet",
+          "when": "false"
         },
         {
           "command": "_snippetsmanager.deleteSnippet",
@@ -175,6 +184,11 @@
         "command": "_snippetsmanager.workbenchActionOpenSnippets",
         "title": "Create Snippet File",
         "icon": "$(add)"
+      },
+      {
+        "command": "_snippetsmanager.duplicateSnippet",
+        "title": "Duplicate Snippet",
+        "icon": "$(files)"
       },
       {
         "command": "_snippetsmanager.deleteSnippet",

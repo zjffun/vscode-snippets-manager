@@ -4,7 +4,7 @@ import { SnippetEntries } from "./typings";
 
 import "./CodeSnippetsEditor.scss";
 import ToolbarComponent from "./components/ToolbarComponent";
-import { EDIT, NEWITEM } from "./symbols";
+import { DUPLICATE_INDEX, EDIT, NEWITEM } from "./symbols";
 
 import getVsCode from "./getVsCode";
 
@@ -58,6 +58,30 @@ const CodeSnippetsEditor = () => {
           });
           return;
 
+        case "duplicate":
+          setSnippetEntries((snippetEntries) => {
+            const srcSnippetIndex = snippetEntries.findIndex(
+              ([k]) => k === message.name
+            );
+            if (srcSnippetIndex === -1) {
+              return snippetEntries;
+            }
+
+            const snippetEntries_ = [...snippetEntries];
+            const [key, snippet] = snippetEntries_[srcSnippetIndex];
+            snippetEntries_.splice(srcSnippetIndex + 1, 0, [
+              key,
+              {
+                ...snippet,
+                [EDIT]: true,
+                [NEWITEM]: true,
+                [DUPLICATE_INDEX]: srcSnippetIndex + 1,
+              },
+            ]);
+            return snippetEntries_;
+          });
+          return;
+
         case "error":
           setError(message.error);
           return;
@@ -94,14 +118,24 @@ const CodeSnippetsEditor = () => {
       ></ToolbarComponent>
       {snippetEntries.length ? (
         <ul className="code-snippets-editor-snippets">
-          {snippetEntries.map(([key, snippet]) => {
+          {snippetEntries.map(([key, snippet], i) => {
             return (
-              <li className="code-snippets-editor-snippets__item" key={key}>
+              <li
+                className="code-snippets-editor-snippets__item"
+                key={snippet[NEWITEM] ? Math.random() : key}
+              >
                 <SnippetItem
                   name={key}
                   snippet={snippet}
                   vscode={vscode}
                   setEdit={(edit) => {
+                    if (snippet[NEWITEM]) {
+                      setSnippetEntries((snippetEntries) =>
+                        snippetEntries.filter(([k, v]) => v !== snippet)
+                      );
+                      return;
+                    }
+
                     setSnippetEntries((snippetEntries) =>
                       snippetEntries.map(([k, v]) => {
                         let _v = v;
@@ -112,6 +146,21 @@ const CodeSnippetsEditor = () => {
                         return [k, _v];
                       })
                     );
+                  }}
+                  duplicate={() => {
+                    setSnippetEntries((snippetEntries) => {
+                      const snippetEntries_ = [...snippetEntries];
+                      snippetEntries_.splice(i + 1, 0, [
+                        key,
+                        {
+                          ...snippet,
+                          [EDIT]: true,
+                          [NEWITEM]: true,
+                          [DUPLICATE_INDEX]: i + 1,
+                        },
+                      ]);
+                      return snippetEntries_;
+                    });
                   }}
                 ></SnippetItem>
               </li>

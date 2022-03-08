@@ -3,6 +3,7 @@ import { CodeSnippetsEditor } from "./CodeSnippetsEditor";
 import createSnippet from "./commands/createSnippet";
 import createSnippetTo from "./commands/createSnippetTo";
 import deleteSnippet from "./commands/deleteSnippet";
+import duplicateSnippet from "./commands/duplicateSnippet";
 import editSnippet from "./commands/editSnippet";
 import showEditor from "./commands/showEditor";
 import showSnippet from "./commands/showSnippet";
@@ -50,6 +51,15 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       workbenchActionOpenSnippetsId,
       workbenchActionOpenSnippets
+    )
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "_snippetsmanager.duplicateSnippet",
+      (snippet) => {
+        duplicateSnippet(snippet);
+      }
     )
   );
 

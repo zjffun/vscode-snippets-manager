@@ -106,9 +106,10 @@ export class CodeSnippetsService {
     return JSON.stringify(Array.from(map.entries()));
   }
 
-  async insert(snippet: ISnippet) {
+  async insert(snippet: ISnippet, opts?: { index?: number }) {
+    const index = opts?.index;
     let content = this.textDocument.getText();
-    content = this.insertProp(content, snippet);
+    content = this.insertProp(content, snippet, index ? { index } : {});
 
     if (content) {
       return await this.save(content);

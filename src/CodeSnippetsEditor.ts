@@ -140,7 +140,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     webviewPanel.webview.onDidReceiveMessage(({ type, payload }) => {
       switch (type) {
         case "insert":
-          codeSnippetsService.insert(payload.data);
+          codeSnippetsService.insert(payload.data, { index: payload.index });
           return;
 
         case "update":

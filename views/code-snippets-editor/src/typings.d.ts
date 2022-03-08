@@ -1,4 +1,4 @@
-import { EDIT, NEWITEM } from "./symbols";
+import { DUPLICATE_INDEX, EDIT, NEWITEM } from "./symbols";
 
 declare global {
   namespace JSX {
@@ -17,6 +17,7 @@ export interface Snippet {
   scope: string;
   [EDIT]?: boolean;
   [NEWITEM]?: boolean;
+  [DUPLICATE_INDEX]?: number;
 }
 
 export type SnippetEntries = [string, Snippet][];
