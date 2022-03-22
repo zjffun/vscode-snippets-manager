@@ -42,6 +42,14 @@ code --install-extension zjffun.snippetsmanager
 
 ### [Unreleased]
 
+### v0.1.2
+
+- Added features delete snippet files.
+- Added features delete confirm.
+
+- Fix bug scroll to top when opening last few snippets.
+- Fix bug refresh tree when create or delete snippets.
+
 ### v0.1.1
 
 - Added features duplicate snippet.
