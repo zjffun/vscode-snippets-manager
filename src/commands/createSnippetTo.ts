@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { Uri } from "vscode";
 import getUserSnippetsFilesInfo from "../core/getUserSnippetsFilesInfo";
 import getWorkspaceSnippetsFilesInfo from "../core/getWorkspaceSnippetsFilesInfo";
+import refreshAllView from "../views/refreshAllView";
 import createSnippet from "./createSnippet";
 
 type Item = vscode.QuickPickItem & { uri: Uri };
@@ -46,5 +47,9 @@ export default async (prefix?: string, uri?: Uri) => {
     return;
   }
 
-  return createSnippet(prefix, snippetsFile.uri);
+  createSnippet(prefix, snippetsFile.uri);
+
+  refreshAllView();
+
+  return true;
 };

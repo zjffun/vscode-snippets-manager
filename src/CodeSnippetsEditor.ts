@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { CodeSnippetsService } from "./CodeSnippetsService";
 import showSource from "./commands/showSource";
 import { getNonce } from "./util";
+import refreshAllView from "./views/refreshAllView";
 
 export let currentDocument: vscode.TextDocument | null = null;
 
@@ -141,6 +142,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
       switch (type) {
         case "insert":
           codeSnippetsService.insert(payload.data, { index: payload.index });
+          refreshAllView();
           return;
 
         case "update":
@@ -149,6 +151,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 
         case "delete":
           codeSnippetsService.delete(payload.name);
+          refreshAllView();
           return;
 
         case "openInDefaultEditor":

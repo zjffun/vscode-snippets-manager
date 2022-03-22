@@ -103,6 +103,11 @@
       ],
       "view/item/context": [
         {
+          "command": "_snippetsmanager.editSnippet",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
+          "group": "inline@1"
+        },
+        {
           "command": "_snippetsmanager.duplicateSnippet",
           "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
           "group": "inline@2"
@@ -113,14 +118,14 @@
           "group": "inline@3"
         },
         {
-          "command": "_snippetsmanager.editSnippet",
-          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
-          "group": "inline@1"
-        },
-        {
           "command": "_snippetsmanager.showSnippet",
           "when": "viewItem == snippetsmanager-snippetsView-Explorer-FileItem",
           "group": "inline@1"
+        },
+        {
+          "command": "_snippetsmanager.deleteSnippetFile",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-FileItem",
+          "group": "inline@2"
         }
       ],
       "commandPalette": [
@@ -153,6 +158,10 @@
         },
         {
           "command": "_snippetsmanager.showSnippet",
+          "when": "false"
+        },
+        {
+          "command": "_snippetsmanager.deleteSnippetFile",
           "when": "false"
         }
       ],
@@ -204,6 +213,11 @@
         "command": "_snippetsmanager.showSnippet",
         "title": "Show Snippet",
         "icon": "$(book)"
+      },
+      {
+        "command": "_snippetsmanager.deleteSnippetFile",
+        "title": "Delete Snippet File",
+        "icon": "$(close)"
       },
       {
         "command": "snippetsmanager.refresh",

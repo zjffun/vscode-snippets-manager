@@ -1,8 +1,8 @@
 import * as vscode from "vscode";
 import { CodeSnippetsService } from "../CodeSnippetsService";
 import getSnippetTextDocument from "../core/getSnippetTextDocument";
-import { getUserFolderUri, context } from "../share";
-import { refresh } from "../views/WorkspaceSnippetsExplorerView";
+import { context, getUserFolderUri } from "../share";
+import refreshAllView from "../views/refreshAllView";
 
 export default async (prefix?: string, snippetUri?: vscode.Uri) => {
   const { activeTextEditor } = vscode.window;
@@ -83,7 +83,7 @@ export default async (prefix?: string, snippetUri?: vscode.Uri) => {
     body: bodyText,
   });
 
-  refresh();
+  refreshAllView();
 
   return true;
 };

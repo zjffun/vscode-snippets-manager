@@ -1,4 +1,6 @@
 .code-snippets-editor {
+  padding-bottom: calc(100vh - 6em);
+
   &-snippets {
     padding: 0;
     list-style: none;

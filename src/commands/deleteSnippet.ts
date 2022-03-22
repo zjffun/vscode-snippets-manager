@@ -1,13 +1,26 @@
+import * as vscode from "vscode";
 import { ISnippet } from "..";
 import { CodeSnippetsService } from "../CodeSnippetsService";
 import getSnippetTextDocument from "../core/getSnippetTextDocument";
-import { refresh } from "../views/WorkspaceSnippetsExplorerView";
+import refreshAllView from "../views/refreshAllView";
 
 export default async (snippet: ISnippet) => {
   if (!snippet.uri) {
     return;
   }
   if (!snippet.name) {
+    return;
+  }
+
+  const answer = await vscode.window.showWarningMessage(
+    `Do you want to delete snippet ${snippet.name}?`,
+    {
+      modal: true,
+    },
+    "Delete"
+  );
+
+  if (answer !== "Delete") {
     return;
   }
 
@@ -19,5 +32,5 @@ export default async (snippet: ISnippet) => {
 
   await codeSnippetsService.delete(snippet.name);
 
-  refresh();
+  refreshAllView();
 };
