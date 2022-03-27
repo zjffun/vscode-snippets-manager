@@ -42,6 +42,10 @@ code --install-extension zjffun.snippetsmanager
 
 ### [Unreleased]
 
+### v0.1.4
+
+- Added features search snippets.
+
 ### v0.1.3
 
 - Publish to Open VSX Registry.
