@@ -6,13 +6,14 @@ import deleteSnippet from "./commands/deleteSnippet";
 import deleteSnippetFile from "./commands/deleteSnippetFile";
 import duplicateSnippet from "./commands/duplicateSnippet";
 import editSnippet from "./commands/editSnippet";
+import searchSnippet from "./commands/searchSnippet";
 import showEditor from "./commands/showEditor";
 import showSnippet from "./commands/showSnippet";
 import showSource from "./commands/showSource";
 import workbenchActionOpenSnippets, {
   workbenchActionOpenSnippetsId,
 } from "./commands/workbenchActionOpenSnippets";
-import { setContext } from "./share";
+import { setContext, SnippetType } from "./share";
 import ExtensionSnippetsExplorerView from "./views/ExtensionSnippetsExplorerView";
 import { registerHelpAndFeedbackView } from "./views/helpAndFeedbackView";
 import refreshAllView from "./views/refreshAllView";
@@ -29,6 +30,48 @@ export function activate(context: vscode.ExtensionContext) {
   new UserSnippetsExplorerView(context);
 
   new ExtensionSnippetsExplorerView(context);
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand("snippetsmanager.search", (type) => {
+      return searchSnippet(type);
+    })
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "snippetsmanager.searchWorkspaceSnippets",
+      async () => {
+        await vscode.commands.executeCommand(
+          "snippetsmanager.search",
+          SnippetType.WORKSPACE
+        );
+      }
+    )
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "snippetsmanager.searchUserSnippets",
+      async () => {
+        await vscode.commands.executeCommand(
+          "snippetsmanager.search",
+          SnippetType.USER
+        );
+      }
+    )
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "snippetsmanager.searchExtensionSnippets",
+      async () => {
+        await vscode.commands.executeCommand(
+          "snippetsmanager.search",
+          SnippetType.EXTENSION
+        );
+      }
+    )
+  );
 
   context.subscriptions.push(
     vscode.commands.registerCommand(

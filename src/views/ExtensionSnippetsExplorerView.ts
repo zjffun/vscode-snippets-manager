@@ -22,60 +22,7 @@ export default class ExtensionSnippetsExplorerView extends BasicSnippetsExplorer
   }
 
   protected async getSnippets() {
-    const extensions: ISnippetContainer[] = [];
-
-    for (const extension of vscode.extensions.all) {
-      let { packageJSON } = extension;
-      if (
-        packageJSON &&
-        packageJSON.isBuiltin === false &&
-        packageJSON?.contributes?.snippets
-      ) {
-        const snippetFiles = [];
-        for (const snippet of packageJSON.contributes.snippets) {
-          const snippetsUri = vscode.Uri.joinPath(
-            vscode.Uri.file(extension.extensionPath),
-            snippet.path
-          );
-
-          let snippetsTextDoc;
-          try {
-            snippetsTextDoc = await vscode.workspace.openTextDocument(
-              snippetsUri
-            );
-          } catch (error) {
-            continue;
-          }
-
-          const codeSnippetsService = new CodeSnippetsService(snippetsTextDoc);
-
-          let snippets = new Map();
-          try {
-            snippets = await codeSnippetsService.getMap();
-          } catch (error: any) {
-            log.appendLine(error?.message);
-          }
-
-          snippetFiles.push({
-            name: snippet.path,
-            isFile: true,
-            uri: snippetsUri,
-            children: Array.from(snippets).map(([name, snippet]) => {
-              return codeSnippetsService.getSnippet(snippet, {
-                name,
-                uri: snippetsUri,
-              });
-            }),
-          });
-        }
-        extensions.push({
-          name: packageJSON.name,
-          children: snippetFiles,
-        });
-      }
-    }
-
-    return extensions;
+    return CodeSnippetsService.getExtensionSnippetsTree();
   }
 }
 

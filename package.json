@@ -78,11 +78,26 @@
         {
           "command": "_snippetsmanager.workbenchActionOpenSnippets",
           "when": "view == snippetsmanager-snippetsView-WorkspaceSnippetsExplorerView",
-          "group": "navigation@9"
+          "group": "navigation@8"
         },
         {
           "command": "_snippetsmanager.workbenchActionOpenSnippets",
           "when": "view == snippetsmanager-snippetsView-UserSnippetsExplorerView",
+          "group": "navigation@8"
+        },
+        {
+          "command": "snippetsmanager.searchWorkspaceSnippets",
+          "when": "view == snippetsmanager-snippetsView-WorkspaceSnippetsExplorerView",
+          "group": "navigation@9"
+        },
+        {
+          "command": "snippetsmanager.searchUserSnippets",
+          "when": "view == snippetsmanager-snippetsView-UserSnippetsExplorerView",
+          "group": "navigation@9"
+        },
+        {
+          "command": "snippetsmanager.searchExtensionSnippets",
+          "when": "view == snippetsmanager-snippetsView-ExtensionSnippetsExplorerView",
           "group": "navigation@9"
         },
         {
@@ -223,6 +238,30 @@
         "command": "snippetsmanager.refresh",
         "title": "Refresh",
         "icon": "$(refresh)",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.search",
+        "title": "Search Workspace, User and Extension Snippets",
+        "icon": "$(search)",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.searchWorkspaceSnippets",
+        "title": "Search Workspace Snippets",
+        "icon": "$(search)",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.searchUserSnippets",
+        "title": "Search User Snippets",
+        "icon": "$(search)",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.searchExtensionSnippets",
+        "title": "Search Extension Snippets",
+        "icon": "$(search)",
         "category": "Snippets Manager"
       },
       {

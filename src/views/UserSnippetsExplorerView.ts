@@ -23,42 +23,7 @@ export default class UserSnippetsExplorerView extends BasicSnippetsExplorerView 
   }
 
   protected async getSnippets() {
-    const userSnippets: ISnippetContainer[] = [];
-
-    const userSnippetInfo = await userSnippetsFilesInfo();
-
-    for (const { uri, fileName } of userSnippetInfo) {
-      let snippetsTextDoc;
-
-      try {
-        snippetsTextDoc = await vscode.workspace.openTextDocument(uri);
-      } catch (error) {
-        continue;
-      }
-
-      const codeSnippetsService = new CodeSnippetsService(snippetsTextDoc);
-
-      let snippets = new Map();
-      try {
-        snippets = await codeSnippetsService.getMap();
-      } catch (error: any) {
-        log.appendLine(error?.message);
-      }
-
-      userSnippets.push({
-        name: fileName,
-        isFile: true,
-        uri,
-        children: Array.from(snippets).map(([name, snippet]) => {
-          return codeSnippetsService.getSnippet(snippet, {
-            name,
-            uri,
-          });
-        }),
-      });
-    }
-
-    return userSnippets;
+    return CodeSnippetsService.getUserSnippetsTree();
   }
 }
 
