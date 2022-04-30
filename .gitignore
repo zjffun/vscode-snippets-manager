@@ -2,9 +2,12 @@ test.temp
 .vscode/*.code-snippets
 .DS_Store
 
-out
+// These files will be generated from the i18n folder
+*nls.*.json
+/out
 out-view
 dist
 node_modules
 .vscode-test/
 *.vsix
+yarn.lock

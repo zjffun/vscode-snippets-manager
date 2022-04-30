@@ -1,8 +1,26 @@
 import * as vscode from "vscode";
+import * as nls from "vscode-nls";
 import { CodeSnippetsService } from "./CodeSnippetsService";
 import showSource from "./commands/showSource";
 import { getNonce } from "./util";
 import refreshAllView from "./views/refreshAllView";
+
+const localize = nls.loadMessageBundle();
+
+const i18nText = {
+  addSnippet: localize("addSnippet", "Add Snippet"),
+  name: localize("name", "Name"),
+  prefix: localize("prefix", "Prefix"),
+  scope: localize("scope", "Scope"),
+  description: localize("description", "Description"),
+  body: localize("body", "Body"),
+  editItem: localize("editItem", "Edit Item"),
+  duplicateItem: localize("duplicateItem", "Duplicate Item"),
+  deleteItem: localize("deleteItem", "Delete Item"),
+  ok: localize("ok", "OK"),
+  cancel: localize("cancel", "Cancel"),
+  noSnippets: localize("noSnippets", "No snippets."),
+};
 
 export let currentDocument: vscode.TextDocument | null = null;
 
@@ -242,7 +260,10 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 				Use a content security policy to only allow loading images from https or from our extension directory,
 				and only allow scripts that have a specific nonce.
 				-->
-				<meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src ${webview.cspSource}; style-src ${webview.cspSource} 'nonce-${nonce}'; font-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
+				<meta http-equiv="Content-Security-Policy" content="default-src 'none';
+          img-src ${webview.cspSource};
+          style-src ${webview.cspSource} 'nonce-${nonce}';
+          font-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
         <meta property="csp-nonce" content="${nonce}" />
        
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -261,6 +282,9 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 				<div id="root">
           <vscode-progress-ring></vscode-progress-ring>
         </div>
+        <script nonce="${nonce}">
+          window.i18nText = ${JSON.stringify(i18nText)}
+        </script>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
 			</body>
 			</html>`;

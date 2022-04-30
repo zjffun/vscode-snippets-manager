@@ -1,0 +1,23 @@
+{
+  "extension.snippetsView.title": "Snippets",
+  "extension.WorkspaceSnippetsExplorerView.name": "Workspace Snippets",
+  "extension.UserSnippetsExplorerView.name": "User Snippets",
+  "extension.ExtensionSnippetsExplorerView.name": "Extension Snippets",
+  "extension.HelpAndFeedback.name": "Help And Feedback",
+  "extension.createSnippet.title": "Create Snippet",
+  "extension.createSnippetTo.title": "Create Snippet To...",
+  "extension.workbenchActionOpenSnippets.title": "Create Snippet File",
+  "extension.duplicateSnippet.title": "Duplicate Snippet",
+  "extension.deleteSnippet.title": "Delete Snippet",
+  "extension.editSnippet.title": "Edit Snippet",
+  "extension.showSnippet.title": "Show Snippet",
+  "extension.deleteSnippetFile.title": "Delete Snippet File",
+  "extension.refresh.title": "Refresh",
+  "extension.search.title": "Search Workspace, User and Extension Snippets",
+  "extension.searchWorkspaceSnippets.title": "Search Workspace Snippets",
+  "extension.searchUserSnippets.title": "Search User Snippets",
+  "extension.searchExtensionSnippets.title": "Search Extension Snippets",
+  "extension.showSource.title": "Show Source",
+  "extension.showEditor.title": "Show Editor",
+  "extension.codeSnippetsEditorView.displayName": "Code Snippets Editor"
+}

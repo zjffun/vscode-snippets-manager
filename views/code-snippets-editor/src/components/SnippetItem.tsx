@@ -21,15 +21,21 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
         <div className="code-snippets-editor-snippet__top">
           <div className="code-snippets-editor-top-items">
             <div className="code-snippets-editor-top-items__item">
-              <span className="code-snippets-editor-label">Name: </span>
+              <span className="code-snippets-editor-label">
+                {window.i18nText.name}:{" "}
+              </span>
               {name}
             </div>
             <div className="code-snippets-editor-top-items__item">
-              <span className="code-snippets-editor-label"> Prefix: </span>
+              <span className="code-snippets-editor-label">
+                {window.i18nText.prefix}:{" "}
+              </span>
               {snippet.prefix}
             </div>
             <div className="code-snippets-editor-top-items__item">
-              <span className="code-snippets-editor-label">Scope: </span>
+              <span className="code-snippets-editor-label">
+                {window.i18nText.scope}:{" "}
+              </span>
               {snippet.scope}
             </div>
           </div>
@@ -37,8 +43,8 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
           <div className="code-snippets-editor-operation">
             <vscode-button
               appearance="icon"
-              aria-label="Edit Item"
-              title="Edit Item"
+              aria-label={window.i18nText.editItem}
+              title={window.i18nText.editItem}
               onClick={() => {
                 setEdit(true);
               }}
@@ -47,16 +53,16 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
             </vscode-button>
             <vscode-button
               appearance="icon"
-              aria-label="Duplicate Item"
-              title="Duplicate Item"
+              aria-label={window.i18nText.duplicateItem}
+              title={window.i18nText.duplicateItem}
               onClick={duplicate}
             >
               <span className="codicon codicon-files"></span>
             </vscode-button>
             <vscode-button
               appearance="icon"
-              aria-label="Remove Item"
-              title="Remove Item"
+              aria-label={window.i18nText.deleteItem}
+              title={window.i18nText.deleteItem}
               onClick={() => {
                 vscode.postMessage({
                   type: "delete",
@@ -69,12 +75,16 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
           </div>
         </div>
         <div className="code-snippets-editor-snippet__desc">
-          <span className="code-snippets-editor-label">Description: </span>
+          <span className="code-snippets-editor-label">
+            {window.i18nText.description}:{" "}
+          </span>
           {snippet.description}
         </div>
         <div className="code-snippets-editor-snippet__body">
           <div>
-            <span className="code-snippets-editor-label">Body:</span>
+            <span className="code-snippets-editor-label">
+              {window.i18nText.body}:{" "}
+            </span>
           </div>
           <div className="code-snippets-editor-snippet__body__content">
             <pre>{snippet.body.join("\n")}</pre>
@@ -86,13 +96,13 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
           <div className="code-snippets-editor-snippet__top">
             <div className="code-snippets-editor-top-items">
               <vscode-text-field name="name" value={name}>
-                Name
+                {window.i18nText.name}
               </vscode-text-field>
               <vscode-text-field name="prefix" value={snippet.prefix}>
-                Prefix
+                {window.i18nText.prefix}
               </vscode-text-field>
               <vscode-text-field name="scope" value={snippet.scope}>
-                Scope
+                {window.i18nText.scope}
               </vscode-text-field>
             </div>
             <div style={{ flex: "1 1 0" }}></div>
@@ -114,7 +124,7 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
                   });
                 }}
               >
-                OK
+                {window.i18nText.ok}
               </vscode-button>
               <vscode-button
                 appearance="secondary"
@@ -122,13 +132,13 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
                   setEdit(false);
                 }}
               >
-                Cancel
+                {window.i18nText.cancel}
               </vscode-button>
             </div>
           </div>
           <div className="code-snippets-editor-snippet__desc">
             <vscode-text-field name="description" value={snippet.description}>
-              Description
+              {window.i18nText.description}
             </vscode-text-field>
           </div>
           <div className="code-snippets-editor-snippet__body">
@@ -138,7 +148,7 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
               rows={10}
               value={snippet.body.join("\n")}
             >
-              Body
+              {window.i18nText.body}
             </vscode-text-area>
           </div>
         </form>

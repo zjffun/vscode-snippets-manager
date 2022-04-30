@@ -1,0 +1,14 @@
+{
+  "addSnippet": "添加代码片段",
+  "name": "名称",
+  "prefix": "前缀",
+  "scope": "范围",
+  "description": "描述",
+  "body": "内容",
+  "editItem": "修改",
+  "duplicateItem": "制作副本",
+  "deleteItem": "删除",
+  "ok": "确定",
+  "cancel": "取消",
+  "noSnippets": "无代码片段"
+}

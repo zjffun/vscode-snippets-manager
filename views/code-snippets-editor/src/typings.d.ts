@@ -8,6 +8,11 @@ declare global {
       "vscode-text-area": any;
     }
   }
+  interface Window {
+    i18nText: {
+      [key: string]: string;
+    };
+  }
 }
 
 export interface Snippet {

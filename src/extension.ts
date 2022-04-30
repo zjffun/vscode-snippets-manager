@@ -1,4 +1,9 @@
 import * as vscode from "vscode";
+// nlsConfig must before other imports
+import "./nlsConfig";
+
+// Add a newline, wait for [Automatically create sort groups based on newlines in organize imports](https://github.com/microsoft/TypeScript/pull/48330)
+
 import { CodeSnippetsEditor } from "./CodeSnippetsEditor";
 import createSnippet from "./commands/createSnippet";
 import createSnippetTo from "./commands/createSnippetTo";

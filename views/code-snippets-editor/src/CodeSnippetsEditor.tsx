@@ -168,7 +168,7 @@ const CodeSnippetsEditor = () => {
           })}
         </ul>
       ) : (
-        <div>No snippets.</div>
+        <div>{window.i18nText.noSnippets}</div>
       )}
     </main>
   );
