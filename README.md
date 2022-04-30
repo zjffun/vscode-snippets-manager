@@ -42,6 +42,8 @@ code --install-extension zjffun.snippetsmanager
 
 ### [Unreleased]
 
+- Added features support chinese.
+
 ### v0.1.4
 
 - Added features search snippets.
