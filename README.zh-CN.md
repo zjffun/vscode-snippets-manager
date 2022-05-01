@@ -1,0 +1,51 @@
+# 代码片段管理
+
+[English](./README.md) | 简体中文
+
+轻松地创建和修改代码片段。
+
+这个拓展程序基于 VS Code 内置的代码片段功能，使用简单的界面让代码片段的创建、修改、编辑、删除和查找更加容易。这个拓展程序支持用户自定义、全局和其他拓展程序的代码片段。
+
+## 功能
+
+### 管理代码片段
+
+创建、修改、编辑、删除和查找代码片段。
+
+![manager](images/manager.png)
+
+### 创建代码片段。
+
+通过选择一段代码创建代码片段。
+
+<img src="images/create1.webp" width="500px">
+
+### 编辑代码片段
+
+使用代码片段编辑器打开和编辑 `*.code-snippets` 文件.
+
+![edit](images/edit.webp)
+
+#### 选择其他编辑器打开 `*.code-snippets` 文件
+
+您可以右键单击 `*.code-snippets` 文件，然后左键单击 `Open Whit...` 选择使用其他编辑器打开 `*.code-snippets` 文件或更改 `*.code-snippets` 文件的默认编辑器。
+
+#### 撤销/重做
+
+这个拓展程序提供了一个自定义的 VS Code 编辑器，所以您可以使用 VS Code 的快捷键来撤销/重做。默认在 Windows 系统撤销是 `Ctrl+Z` 重做是 `Ctrl+Shift+Z`, 在 macOS 系统撤销是 `⌘Z` 重做是 `⇧⌘Z`。
+
+### 搜索代码片段
+
+搜索工作区、用户或拓展程序的代码片段。
+
+![search](images/search.webp)
+
+## 通过命令行安装
+
+```bash
+code --install-extension zjffun.snippetsmanager
+```
+
+## [更新日志](./CHANGELOG.md)
+
+## [贡献](./CONTRIBUTING.md)
