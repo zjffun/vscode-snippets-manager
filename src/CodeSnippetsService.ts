@@ -1,6 +1,12 @@
 import { JSONVisitor, parse, ParseErrorCode, visit } from "jsonc-parser";
 import * as vscode from "vscode";
-import { ISnippet, ISnippetContainer, ISnippetExtra, IVSCodeSnippet } from ".";
+import {
+  IPackageJSONContributesSnippet,
+  ISnippet,
+  ISnippetContainer,
+  ISnippetExtra,
+  IVSCodeSnippet,
+} from ".";
 import getKey from "./core/getKey";
 import getUserSnippetsFilesInfo from "./core/getUserSnippetsFilesInfo";
 import getWorkspaceSnippetsFilesInfo from "./core/getWorkspaceSnippetsFilesInfo";
@@ -404,10 +410,19 @@ export class CodeSnippetsService {
         packageJSON?.contributes?.snippets
       ) {
         const snippetFiles = [];
-        for (const snippet of packageJSON.contributes.snippets) {
+
+        const snippetPaths = this.getExtensionSnippetPaths(
+          packageJSON.contributes.snippets
+        );
+
+        for (const snippetPath of snippetPaths) {
+          if (!snippetPath) {
+            continue;
+          }
+
           const snippetsUri = vscode.Uri.joinPath(
             vscode.Uri.file(extension.extensionPath),
-            snippet.path
+            snippetPath
           );
 
           let snippets;
@@ -419,7 +434,7 @@ export class CodeSnippetsService {
           }
 
           snippetFiles.push({
-            name: snippet.path,
+            name: snippetPath,
             isFile: true,
             uri: snippetsUri,
             children: Array.from(snippets).map(([name, snippet]) => {
@@ -505,10 +520,18 @@ export class CodeSnippetsService {
         packageJSON.isBuiltin === false &&
         packageJSON?.contributes?.snippets
       ) {
-        for (const snippet of packageJSON.contributes.snippets) {
+        const snippetPaths = this.getExtensionSnippetPaths(
+          packageJSON.contributes.snippets
+        );
+
+        for (const snippetPath of snippetPaths) {
+          if (!snippetPath) {
+            continue;
+          }
+
           const snippetsUri = vscode.Uri.joinPath(
             vscode.Uri.file(extension.extensionPath),
-            snippet.path
+            snippetPath
           );
 
           let snippets;
@@ -532,5 +555,12 @@ export class CodeSnippetsService {
     }
 
     return list;
+  }
+
+  private static getExtensionSnippetPaths(
+    snippets: IPackageJSONContributesSnippet[]
+  ) {
+    // remove duplicate snippet paths
+    return new Set<string | undefined>(snippets.map((snippet) => snippet.path));
   }
 }

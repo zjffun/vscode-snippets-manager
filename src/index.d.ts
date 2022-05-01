@@ -1,5 +1,10 @@
 import * as vscode from "vscode";
 
+export interface IPackageJSONContributesSnippet {
+  name?: string;
+  path?: string;
+}
+
 export interface ISnippetExtra {
   name?: string;
   uri?: vscode.Uri;
