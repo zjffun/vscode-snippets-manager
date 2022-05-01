@@ -1,0 +1,10 @@
+{
+	"localize": {
+		"prefix": "localize",
+		"description": "localize",
+		"scope": "typescript",
+		"body": [
+			"$1: localize(\"$1\", \"$2\"),$0"
+		]
+	}
+}
