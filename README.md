@@ -6,7 +6,7 @@ Create and edit snippets easily.
 
 This extension is built over the default VS Code snippets system, wrapping it into a nice and intuitive UI, improving usability, and making snippets easy to create, edit, delete and search. It supports user-custom snippets, global snippets and snippets from installed extensions.
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/xhrl1eCmX5Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+[![video](https://yt-embed.herokuapp.com/embed?v=xhrl1eCmX5Q)](https://www.youtube.com/embed/xhrl1eCmX5Q)
 
 ## Features
 
