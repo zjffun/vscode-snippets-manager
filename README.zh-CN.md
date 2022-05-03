@@ -4,7 +4,9 @@
 
 轻松地创建和修改代码片段。
 
-这个拓展程序基于 VS Code 内置的代码片段功能，使用简单的界面让代码片段的创建、修改、编辑、删除和查找更加容易。这个拓展程序支持用户自定义、全局和其他拓展程序的代码片段。
+这个拓展程序基于 VS Code 内置的代码片段功能，使用简单的界面让代码片段的创建、修改、编辑、删除和查找更加容易。这个拓展程序支持用户自定义、全局和安装的拓展程序的代码片段。
+
+<iframe src="//player.bilibili.com/player.html?aid=683633468&bvid=BV1jS4y1w7SW&cid=711074429&page=1" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
 
 ## 功能
 
@@ -22,9 +24,13 @@
 
 ### 编辑代码片段
 
-使用代码片段编辑器打开和编辑 `*.code-snippets` 文件.
+使用代码片段编辑器打开和编辑 `*.code-snippets` 文件。
 
 ![edit](images/edit.webp)
+
+注意：
+
+- 修改拓展程序代码片段后，需重新加载 VS Code（按 `F1`，然后执行 `Reload Window`）才能生效。
 
 #### 选择其他编辑器打开 `*.code-snippets` 文件
 

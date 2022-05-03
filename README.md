@@ -6,6 +6,8 @@ Create and edit snippets easily.
 
 This extension is built over the default VS Code snippets system, wrapping it into a nice and intuitive UI, improving usability, and making snippets easy to create, edit, delete and search. It supports user-custom snippets, global snippets and snippets from installed extensions.
 
+<iframe width="560" height="315" src="https://www.youtube.com/embed/xhrl1eCmX5Q" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+
 ## Features
 
 ### Manage snippets
@@ -25,6 +27,10 @@ Select range to create a snippet.
 Open `*.code-snippets` in Snippets Editor and edit it.
 
 ![edit](images/edit.webp)
+
+Notice:
+
+- After modifying EXTENSION SNIPPETS, you need to reload VS Code (Press `F1`, then execute `Reload Window`) to take effect.
 
 #### Undo/Redo
 
