@@ -152,5 +152,19 @@
       57,
       57
     ]
+  },
+  {
+    "rev": "e2c865caee86944f2b0df7c70b18110c3c850621",
+    "path": "i18n/chs/package.i18n.json",
+    "range": [
+      1,
+      24
+    ],
+    "srcRev": "e2c865caee86944f2b0df7c70b18110c3c850621",
+    "srcPath": "package.nls.json",
+    "srcRange": [
+      1,
+      24
+    ]
   }
 ]

@@ -304,7 +304,8 @@
     "editor-view:build:dev": "webpack --config ./views/code-snippets-editor/webpack.config.js --mode=development",
     "_vscode:pack": "vsce package",
     "_vscode:install": "ls snippetsmanager-*.vsix | xargs code --install-extension",
-    "_vscode:uninstall": "code --uninstall-extension zjffun.snippetsmanager"
+    "_vscode:uninstall": "code --uninstall-extension zjffun.snippetsmanager",
+    "relation-check": "relation2 check"
   },
   "devDependencies": {
     "@types/glob": "^7.1.3",
