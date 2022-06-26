@@ -198,7 +198,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
   }
 
   /**
-   * Get the static html used for the editor webviews.
+   * Get the static html used for the editor webview.
    */
   private getHtmlForWebview(webview: vscode.Webview): string {
     // Local path to script and css for the webview

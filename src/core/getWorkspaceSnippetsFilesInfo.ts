@@ -1,7 +1,7 @@
 import * as vscode from "vscode";
 
 export default async () => {
-  const workpaces: {
+  const workspaces: {
     folder: vscode.WorkspaceFolder;
     snippetsFiles: {
       name: string;
@@ -24,7 +24,7 @@ export default async () => {
           dotVSCodeFolderUri
         );
       } catch (error) {
-        // havn no .vscode folder, do noting
+        // have no .vscode folder, do noting
       }
 
       const snippetsFiles = [];
@@ -42,12 +42,12 @@ export default async () => {
         }
       }
 
-      workpaces.push({
+      workspaces.push({
         folder: workspaceFolder,
         snippetsFiles,
       });
     }
   }
 
-  return workpaces;
+  return workspaces;
 };
