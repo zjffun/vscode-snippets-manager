@@ -1,9 +1,9 @@
 :root {
-  --container-paddding: 20px;
+  --container-padding: 20px;
 }
 
 body {
-  padding: 0 var(--container-paddding);
+  padding: 0 var(--container-padding);
   color: var(--vscode-foreground);
   font-size: var(--vscode-font-size);
   font-weight: var(--vscode-font-weight);
