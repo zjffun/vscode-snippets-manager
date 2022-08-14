@@ -1,0 +1,167 @@
+[
+  {
+    "id": "f11vllltee",
+    "fromRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "fromPath": "README.md",
+    "fromRange": [
+      1,
+      9
+    ],
+    "toRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toPath": "README.zh-CN.md",
+    "toRange": [
+      1,
+      9
+    ]
+  },
+  {
+    "id": "w5ifyeae68",
+    "fromRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "fromPath": "README.md",
+    "fromRange": [
+      11,
+      11
+    ],
+    "toRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toPath": "README.zh-CN.md",
+    "toRange": [
+      11,
+      11
+    ]
+  },
+  {
+    "id": "ewd27j2u5q",
+    "fromRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "fromPath": "README.md",
+    "fromRange": [
+      13,
+      17
+    ],
+    "toRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toPath": "README.zh-CN.md",
+    "toRange": [
+      13,
+      17
+    ]
+  },
+  {
+    "id": "vjrmys25a1",
+    "fromRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "fromPath": "README.md",
+    "fromRange": [
+      19,
+      23
+    ],
+    "toRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toPath": "README.zh-CN.md",
+    "toRange": [
+      19,
+      23
+    ]
+  },
+  {
+    "id": "beu8nzky62",
+    "fromRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "fromPath": "README.md",
+    "fromRange": [
+      25,
+      33
+    ],
+    "toRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toPath": "README.zh-CN.md",
+    "toRange": [
+      25,
+      33
+    ]
+  },
+  {
+    "id": "1nmikz3pqe",
+    "fromRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "fromPath": "README.md",
+    "fromRange": [
+      43,
+      47
+    ],
+    "toRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toPath": "README.zh-CN.md",
+    "toRange": [
+      43,
+      47
+    ]
+  },
+  {
+    "id": "k6uq6ahsri",
+    "fromRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "fromPath": "README.md",
+    "fromRange": [
+      49,
+      53
+    ],
+    "toRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toPath": "README.zh-CN.md",
+    "toRange": [
+      49,
+      53
+    ]
+  },
+  {
+    "id": "1crkucueuk",
+    "fromRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "fromPath": "README.md",
+    "fromRange": [
+      55,
+      55
+    ],
+    "toRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toPath": "README.zh-CN.md",
+    "toRange": [
+      55,
+      55
+    ]
+  },
+  {
+    "id": "tzi6ei020b",
+    "fromRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "fromPath": "README.md",
+    "fromRange": [
+      57,
+      57
+    ],
+    "toRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toPath": "README.zh-CN.md",
+    "toRange": [
+      57,
+      57
+    ]
+  },
+  {
+    "id": "pdz4o0el6b",
+    "fromRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "fromPath": "src/CodeSnippetsEditor.ts",
+    "fromRange": [
+      10,
+      23
+    ],
+    "toRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toPath": "i18n/chs/out/CodeSnippetsEditor.i18n.json",
+    "toRange": [
+      1,
+      15
+    ]
+  },
+  {
+    "id": "a13q6tcpox",
+    "fromRev": "2578b574c771613cc95016c3406a231b6bb821f2",
+    "fromPath": "README.md",
+    "fromRange": [
+      35,
+      41
+    ],
+    "toRev": "2578b574c771613cc95016c3406a231b6bb821f2",
+    "toPath": "README.zh-CN.md",
+    "toRange": [
+      35,
+      41
+    ]
+  }
+]
