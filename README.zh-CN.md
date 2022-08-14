@@ -32,13 +32,13 @@
 
 - 修改拓展程序代码片段后，需重新加载 VS Code（按 `F1`，然后执行 `Reload Window`）才能生效。
 
-#### 选择其他编辑器打开 `*.code-snippets` 文件
-
-您可以右键单击 `*.code-snippets` 文件，然后左键单击 `Open Whit...` 选择使用其他编辑器打开 `*.code-snippets` 文件或更改 `*.code-snippets` 文件的默认编辑器。
-
 #### 撤销/重做
 
 这个拓展程序提供了一个自定义的 VS Code 编辑器，所以您可以使用 VS Code 的快捷键来撤销/重做。默认在 Windows 系统撤销是 `Ctrl+Z` 重做是 `Ctrl+Shift+Z`, 在 macOS 系统撤销是 `⌘Z` 重做是 `⇧⌘Z`。
+
+#### 选择其他编辑器打开 `*.code-snippets` 文件
+
+您可以右键单击 `*.code-snippets` 文件，然后左键单击 `Open Whit...` 选择使用其他编辑器打开 `*.code-snippets` 文件或更改 `*.code-snippets` 文件的默认编辑器。
 
 ### 搜索代码片段
 
