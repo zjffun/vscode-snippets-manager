@@ -76,13 +76,13 @@
   },
   {
     "id": "1nmikz3pqe",
-    "fromRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "fromRev": "a78edc5f2179abb5dbcd263664deee01aa62782b",
     "fromPath": "README.md",
     "fromRange": [
       43,
       47
     ],
-    "toRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toRev": "a78edc5f2179abb5dbcd263664deee01aa62782b",
     "toPath": "README.zh-CN.md",
     "toRange": [
       43,
@@ -155,12 +155,27 @@
     "fromPath": "README.md",
     "fromRange": [
       35,
-      41
+      37
     ],
     "toRev": "2578b574c771613cc95016c3406a231b6bb821f2",
     "toPath": "README.zh-CN.md",
     "toRange": [
       35,
+      37
+    ]
+  },
+  {
+    "id": "a13q6tcpox",
+    "fromRev": "2578b574c771613cc95016c3406a231b6bb821f2",
+    "fromPath": "README.md",
+    "fromRange": [
+      39,
+      41
+    ],
+    "toRev": "2578b574c771613cc95016c3406a231b6bb821f2",
+    "toPath": "README.zh-CN.md",
+    "toRange": [
+      39,
       41
     ]
   }
