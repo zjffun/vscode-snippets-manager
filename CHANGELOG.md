@@ -2,6 +2,12 @@
 
 # [Unreleased]
 
+# v0.1.6
+
+- Added features support edit body in text editor.
+
+- Fix bug create snippet from `.vue` file can't use.
+
 # v0.1.5
 
 - Added features support chinese.
