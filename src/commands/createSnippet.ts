@@ -4,6 +4,8 @@ import getSnippetTextDocument from "../core/getSnippetTextDocument";
 import { context, getUserFolderUri } from "../share";
 import refreshAllView from "../views/refreshAllView";
 
+const unsupportedScope = ["vue"];
+
 export default async (prefix?: string, snippetUri?: vscode.Uri) => {
   const { activeTextEditor } = vscode.window;
 
@@ -66,7 +68,11 @@ export default async (prefix?: string, snippetUri?: vscode.Uri) => {
 
   const bodyText =
     activeTextEditor?.document?.getText?.(activeTextEditor?.selection) || "";
-  const scope = activeTextEditor?.document?.languageId || "";
+
+  let scope = activeTextEditor?.document?.languageId;
+  if (scope === undefined || unsupportedScope.includes(scope)) {
+    scope = "";
+  }
 
   const textDocument = await getSnippetTextDocument({
     snippetsUri: _snippetUri,
