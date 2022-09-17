@@ -6,11 +6,11 @@ import * as vscode from "vscode";
 import { ISnippet } from "..";
 import { CodeSnippetsService } from "../CodeSnippetsService";
 
-export const pathSnippetMap = new Map<string, ISnippet>();
+export const fsPathSnippetMap = new Map<string, ISnippet>();
 
 export function initEditSnippetBody() {
   async function onDidSaveTextDocument(document: vscode.TextDocument) {
-    const snippet = pathSnippetMap.get(document.uri.path);
+    const snippet = fsPathSnippetMap.get(document.uri.fsPath);
     if (!snippet?.uri || !snippet?.name) {
       return;
     }
@@ -53,7 +53,7 @@ export default async (snippet: ISnippet) => {
 
   writeFileSync(tmpFilePath, snippet.body);
 
-  const uri = vscode.Uri.parse(tmpFilePath);
+  const uri = vscode.Uri.file(tmpFilePath);
   const editor = await vscode.window.showTextDocument(uri);
 
   const vscodeLanguages = await vscode.languages.getLanguages();
@@ -66,7 +66,7 @@ export default async (snippet: ISnippet) => {
     }
   }
 
-  pathSnippetMap.set(uri.path, snippet);
+  fsPathSnippetMap.set(uri.fsPath, snippet);
 
   return editor;
 };
