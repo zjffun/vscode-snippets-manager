@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import * as nls from "vscode-nls";
 import { CodeSnippetsService } from "./CodeSnippetsService";
+import editSnippetBody from "./commands/editSnippetBody";
 import showSource from "./commands/showSource";
 import { getNonce } from "./util";
 import refreshAllView from "./views/refreshAllView";
@@ -15,6 +16,7 @@ const i18nText = {
   description: localize("description", "Description"),
   body: localize("body", "Body"),
   editItem: localize("editItem", "Edit Item"),
+  editBody: localize("editItem", "Edit Body"),
   duplicateItem: localize("duplicateItem", "Duplicate Item"),
   deleteItem: localize("deleteItem", "Delete Item"),
   ok: localize("ok", "OK"),
@@ -67,20 +69,6 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
   ): Promise<void> {
     this.setCurrent({ document, webviewPanel });
     this.setActiveContext(true);
-
-    webviewPanel.onDidChangeViewState(() => {
-      if (
-        currentWebviewPanel === null ||
-        currentWebviewPanel === webviewPanel
-      ) {
-        if (webviewPanel.visible) {
-          this.setCurrent({ document, webviewPanel });
-        } else {
-          this.setCurrent();
-        }
-        this.setActiveContext(webviewPanel.visible);
-      }
-    });
 
     const codeSnippetsService = new CodeSnippetsService(document);
 
@@ -146,6 +134,21 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
       }
     );
 
+    webviewPanel.onDidChangeViewState(() => {
+      if (
+        currentWebviewPanel === null ||
+        currentWebviewPanel === webviewPanel
+      ) {
+        if (webviewPanel.visible) {
+          this.setCurrent({ document, webviewPanel });
+          updateWebview();
+        } else {
+          this.setCurrent();
+        }
+        this.setActiveContext(webviewPanel.visible);
+      }
+    });
+
     // Make sure we get rid of the listener when our editor is closed.
     webviewPanel.onDidDispose(() => {
       if (currentWebviewPanel === webviewPanel) {
@@ -172,9 +175,17 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
           refreshAllView();
           return;
 
+        case "editBody":
+          const snippets = codeSnippetsService.getSnippetByName(payload.name);
+          if (snippets) {
+            editSnippetBody(snippets);
+          }
+          return;
+
         case "openInDefaultEditor":
           showSource();
           return;
+
         case "error":
           this.showErrorMessage(payload.data);
           return;

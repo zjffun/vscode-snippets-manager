@@ -53,5 +53,20 @@
 
   &-label {
     font-weight: 700;
+    &--body {
+      display: flex;
+      align-items: center;
+      &__edit-button {
+        display: none;
+      }
+    }
+  }
+}
+
+.code-snippets-editor-snippets__item {
+  &:hover {
+    .code-snippets-editor-label--body__edit-button {
+      display: block;
+    }
   }
 }

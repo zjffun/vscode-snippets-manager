@@ -82,8 +82,24 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
         </div>
         <div className="code-snippets-editor-snippet__body">
           <div>
-            <span className="code-snippets-editor-label">
-              {window.i18nText.body}:{" "}
+            <span className="code-snippets-editor-label code-snippets-editor-label--body">
+              {window.i18nText.body}{" "}
+              <span className="code-snippets-editor-label--body__edit-button">
+                <vscode-button
+                  appearance="icon"
+                  aria-label={window.i18nText.editBody}
+                  title={window.i18nText.editBody}
+                  onClick={() => {
+                    vscode.postMessage({
+                      type: "editBody",
+                      payload: { name },
+                    });
+                  }}
+                >
+                  <span className="codicon codicon-edit"></span>
+                </vscode-button>
+              </span>{" "}
+              :
             </span>
           </div>
           <div className="code-snippets-editor-snippet__body__content">

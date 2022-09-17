@@ -11,6 +11,7 @@ import deleteSnippet from "./commands/deleteSnippet";
 import deleteSnippetFile from "./commands/deleteSnippetFile";
 import duplicateSnippet from "./commands/duplicateSnippet";
 import editSnippet from "./commands/editSnippet";
+import { initEditSnippetBody } from "./commands/editSnippetBody";
 import searchSnippet from "./commands/searchSnippet";
 import showEditor from "./commands/showEditor";
 import showSnippet from "./commands/showSnippet";
@@ -29,6 +30,8 @@ export const log = vscode.window.createOutputChannel("Snippets Manager");
 
 export function activate(context: vscode.ExtensionContext) {
   setContext(context);
+
+  initEditSnippetBody();
 
   new WorkspaceSnippetsExplorerView(context);
 

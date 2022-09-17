@@ -294,6 +294,18 @@ export class CodeSnippetsService {
     return vSnippet;
   }
 
+  getSnippetByName(name: string) {
+    const snippetsMap = this.getMap();
+    const snippet = snippetsMap.get(name);
+
+    if (snippet) {
+      return CodeSnippetsService.createSnippet(snippet, {
+        name,
+        uri: this.textDocument.uri,
+      });
+    }
+  }
+
   private getObj(): { [key: string]: IVSCodeSnippet } {
     return parse(this.textDocument.getText()) || {};
   }

@@ -6,6 +6,7 @@
   "description": "描述",
   "body": "内容",
   "editItem": "修改",
+  "editBody": "修改内容",
   "duplicateItem": "制作副本",
   "deleteItem": "删除",
   "ok": "确定",
