@@ -23,7 +23,7 @@ suite("Extension", () => {
     await resetTestWorkspace();
   });
 
-  test.only("All package.json commands should be registered in extension", async () => {
+  test("All package.json commands should be registered in extension", async () => {
     const uri = await createTestFile("{}");
 
     const textDocument = await vscode.workspace.openTextDocument(uri);

@@ -1,4 +1,28 @@
 {
+	"testAsync": {
+		"prefix": "testAsync",
+		"description": "testAsync",
+		"scope": "typescript",
+		"body": [
+			"test(\"$1\", async () => {",
+			"  $2",
+			"});",
+			"$0"
+		]
+	},
+	"registerCommand": {
+		"prefix": "registerCommand",
+		"description": "registerCommand",
+		"scope": "typescript",
+		"body": [
+			"context.subscriptions.push(",
+			"  vscode.commands.registerCommand(\"$1\", async () => {",
+			"    $2",
+			"  })",
+			");",
+			"$0"
+		]
+	},
 	"localize": {
 		"prefix": "localize",
 		"description": "localize",
