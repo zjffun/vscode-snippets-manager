@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.1.7
+
+- Update documents.
+
 # v0.1.6
 
 - Added features support edit body in text editor.
