@@ -14,7 +14,7 @@
 
 创建、修改、编辑、删除和查找代码片段。
 
-![manager](images/manager.png)
+![manager](images/manager.webp)
 
 ### 创建代码片段。
 
@@ -31,6 +31,12 @@
 注意：
 
 - 修改拓展程序代码片段后，需重新加载 VS Code（按 `F1`，然后执行 `Reload Window`）才能生效。
+
+#### 在文本编辑器中编辑代码片段主体
+
+您可以通过点击“Body”旁边的编辑按钮按钮在文本编辑器中编辑代码片段主体。
+
+![edit body](images/edit-body.webp)
 
 #### 撤销/重做
 

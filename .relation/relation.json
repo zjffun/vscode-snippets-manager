@@ -12,7 +12,9 @@
     "toRange": [
       1,
       9
-    ]
+    ],
+    "fromBaseDir": "",
+    "toBaseDir": ""
   },
   {
     "id": "w5ifyeae68",
@@ -27,7 +29,9 @@
     "toRange": [
       11,
       11
-    ]
+    ],
+    "fromBaseDir": "",
+    "toBaseDir": ""
   },
   {
     "id": "ewd27j2u5q",
@@ -42,7 +46,9 @@
     "toRange": [
       13,
       17
-    ]
+    ],
+    "fromBaseDir": "",
+    "toBaseDir": ""
   },
   {
     "id": "vjrmys25a1",
@@ -57,7 +63,9 @@
     "toRange": [
       19,
       23
-    ]
+    ],
+    "fromBaseDir": "",
+    "toBaseDir": ""
   },
   {
     "id": "beu8nzky62",
@@ -72,7 +80,9 @@
     "toRange": [
       25,
       33
-    ]
+    ],
+    "fromBaseDir": "",
+    "toBaseDir": ""
   },
   {
     "id": "1nmikz3pqe",
@@ -87,7 +97,9 @@
     "toRange": [
       43,
       47
-    ]
+    ],
+    "fromBaseDir": "",
+    "toBaseDir": ""
   },
   {
     "id": "k6uq6ahsri",
@@ -102,7 +114,9 @@
     "toRange": [
       49,
       53
-    ]
+    ],
+    "fromBaseDir": "",
+    "toBaseDir": ""
   },
   {
     "id": "1crkucueuk",
@@ -117,7 +131,9 @@
     "toRange": [
       55,
       55
-    ]
+    ],
+    "fromBaseDir": "",
+    "toBaseDir": ""
   },
   {
     "id": "tzi6ei020b",
@@ -132,22 +148,26 @@
     "toRange": [
       57,
       57
-    ]
+    ],
+    "fromBaseDir": "",
+    "toBaseDir": ""
   },
   {
     "id": "pdz4o0el6b",
-    "fromRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "fromRev": "c07d91ad504a77dad2788b8692ae11ff786e1872",
     "fromPath": "src/CodeSnippetsEditor.ts",
     "fromRange": [
-      10,
-      23
+      11,
+      25
     ],
-    "toRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toRev": "c07d91ad504a77dad2788b8692ae11ff786e1872",
     "toPath": "i18n/chs/out/CodeSnippetsEditor.i18n.json",
     "toRange": [
       1,
-      15
-    ]
+      16
+    ],
+    "fromBaseDir": "",
+    "toBaseDir": ""
   },
   {
     "id": "a13q6tcpox",
@@ -162,7 +182,9 @@
     "toRange": [
       35,
       37
-    ]
+    ],
+    "fromBaseDir": "",
+    "toBaseDir": ""
   },
   {
     "id": "a13q6tcpox",
@@ -177,6 +199,8 @@
     "toRange": [
       39,
       41
-    ]
+    ],
+    "fromBaseDir": "",
+    "toBaseDir": ""
   }
 ]
