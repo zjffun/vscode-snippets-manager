@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.1.8
+
+- Added features support select workspace folder when create snippets from untitled file.
+
 # v0.1.7
 
 - Update documents.
