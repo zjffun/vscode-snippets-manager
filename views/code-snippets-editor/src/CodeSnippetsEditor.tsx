@@ -30,8 +30,7 @@ const CodeSnippetsEditor = () => {
   const [error, setError] = useState<string>("");
 
   useEffect(() => {
-    // Handle messages sent from the extension to the webview
-    window.addEventListener("message", (event) => {
+    const listener = (event: any) => {
       const message = event.data; // The json data that the extension sent
       switch (message.type) {
         case "update":
@@ -86,8 +85,14 @@ const CodeSnippetsEditor = () => {
           setError(message.error);
           return;
       }
-    });
-  }, []);
+    };
+
+    window.addEventListener("message", listener);
+
+    return () => {
+      window.removeEventListener("message", listener);
+    };
+  }, [snippetEntries, setSnippetEntries, setError]);
 
   const handleAddSnippetClick = () => {
     setSnippetEntries((snippetEntries) => [
