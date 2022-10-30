@@ -41,4 +41,5 @@ export interface IVscodeState {
   addingSnippets?: ISnippet[];
   editingSnippetObjMap?: SnippetObjMap;
   vscodeSnippetEntries?: VscodeSnippetEntries;
+  scrollY?: number;
 }

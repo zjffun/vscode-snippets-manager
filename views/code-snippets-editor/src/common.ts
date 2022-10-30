@@ -8,5 +8,6 @@ export function getState(): Required<IVscodeState> {
     addingSnippets: state?.addingSnippets || [],
     editingSnippetObjMap: state?.editingSnippetObjMap || {},
     vscodeSnippetEntries: state?.vscodeSnippetEntries || [],
+    scrollY: state?.scrollY || 0,
   };
 }

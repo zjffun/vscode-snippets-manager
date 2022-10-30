@@ -6,6 +6,7 @@ import ToolbarComponent from "./components/ToolbarComponent";
 import getVsCode from "./getVsCode";
 import { EDIT, NAME, NEW_ITEM } from "./symbols";
 import { ISnippet } from "./typings";
+import throttle from "lodash/throttle";
 
 import "./CodeSnippetsEditor.scss";
 
@@ -89,6 +90,27 @@ const CodeSnippetsEditor = () => {
   };
 
   useEffect(() => {
+    const state = getState();
+    setTimeout(() => {
+      window.scrollTo(0, state.scrollY);
+    }, 0);
+
+    const listener = throttle(() => {
+      const state = getState();
+      vscode.setState({
+        ...state,
+        scrollY: window.scrollY,
+      });
+    }, 300);
+
+    window.addEventListener("scroll", listener);
+
+    return () => {
+      window.removeEventListener("scroll", listener);
+    };
+  }, []);
+
+  useEffect(() => {
     const listener = (event: any) => {
       const message = event.data;
       switch (message.type) {
@@ -104,7 +126,10 @@ const CodeSnippetsEditor = () => {
           return;
 
         case "show":
-          document.getElementById(message.keyName)?.scrollIntoView();
+          // wait for scroll state apply
+          setTimeout(() => {
+            document.getElementById(message.keyName)?.scrollIntoView();
+          }, 0);
           return;
 
         case "edit":
