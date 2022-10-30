@@ -18,6 +18,9 @@ const SnippetItem = ({ snippet, clickEdit, saveEdit, cancelEdit }: Props) => {
   const keyName = snippet[NAME];
   const editing = snippet[EDIT];
   const formRef = useRef<HTMLFormElement | null>(null);
+  const nameInputRef = useRef<HTMLButtonElement | null>(null);
+  const saveBtnRef = useRef<HTMLButtonElement | null>(null);
+  const cancelBtnRef = useRef<HTMLButtonElement | null>(null);
 
   const handleChange = () => {
     if (!formRef.current) {
@@ -169,6 +172,7 @@ const SnippetItem = ({ snippet, clickEdit, saveEdit, cancelEdit }: Props) => {
           <div className="code-snippets-editor-snippet__top">
             <div className="code-snippets-editor-top-items">
               <vscode-text-field
+                ref={nameInputRef}
                 name="name"
                 value={snippet.name}
                 onInput={handleChange}
@@ -192,10 +196,31 @@ const SnippetItem = ({ snippet, clickEdit, saveEdit, cancelEdit }: Props) => {
             </div>
             <div style={{ flex: "1 1 0" }}></div>
             <div className="code-snippets-editor-operation">
-              <vscode-button onClick={saveEdit}>
+              <vscode-button
+                ref={saveBtnRef}
+                tabindex="-1"
+                onClick={saveEdit}
+                onKeyDown={(e: KeyboardEvent) => {
+                  if (e.key === "Tab") {
+                    e.preventDefault();
+                    cancelBtnRef.current?.focus();
+                  }
+                }}
+              >
                 {window.i18nText.save}
               </vscode-button>
-              <vscode-button appearance="secondary" onClick={cancelEdit}>
+              <vscode-button
+                ref={cancelBtnRef}
+                tabindex="-1"
+                appearance="secondary"
+                onClick={cancelEdit}
+                onKeyDown={(e: KeyboardEvent) => {
+                  if (e.key === "Tab") {
+                    e.preventDefault();
+                    nameInputRef.current?.focus();
+                  }
+                }}
+              >
                 {window.i18nText.cancel}
               </vscode-button>
             </div>
@@ -216,6 +241,12 @@ const SnippetItem = ({ snippet, clickEdit, saveEdit, cancelEdit }: Props) => {
               rows={10}
               value={snippet.body}
               onInput={handleChange}
+              onKeyDown={(e: KeyboardEvent) => {
+                if (e.key === "Tab") {
+                  e.preventDefault();
+                  saveBtnRef.current?.focus();
+                }
+              }}
             >
               {window.i18nText.body}
             </vscode-text-area>
