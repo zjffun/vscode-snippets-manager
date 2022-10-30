@@ -4,7 +4,8 @@
     "jsx": "react-jsx",
     "rootDir": "src",
     "allowSyntheticDefaultImports": true,
-    "strict": true
+    "strict": true,
+    "moduleResolution": "node"
   },
   "exclude": ["node_modules"]
 }

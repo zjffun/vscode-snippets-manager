@@ -5,7 +5,7 @@ import {
   ISnippet,
   ISnippetContainer,
   ISnippetExtra,
-  IVSCodeSnippet,
+  IVscodeSnippet,
 } from ".";
 import getKey from "./core/getKey";
 import getUserSnippetsFilesInfo from "./core/getUserSnippetsFilesInfo";
@@ -18,7 +18,7 @@ import {
   setProperty,
 } from "./vscode/src/vs/base/common/jsonEdit";
 
-type IVSCodeSnippetMap = Map<string, IVSCodeSnippet>;
+type IVSCodeSnippetMap = Map<string, IVscodeSnippet>;
 
 export enum SnippetsResultType {
   TREE = "TREE",
@@ -26,7 +26,7 @@ export enum SnippetsResultType {
 }
 
 export class CodeSnippetsService {
-  private textDocument: vscode.TextDocument;
+  textDocument: vscode.TextDocument;
 
   constructor(textDocument: vscode.TextDocument) {
     this.textDocument = textDocument;
@@ -112,69 +112,75 @@ export class CodeSnippetsService {
     return currentParent[0];
   }
 
-  getEntriesString(): string {
+  getVscodeSnippetEntries(): [string, IVscodeSnippet][] {
     const map = this.getMap();
 
-    return JSON.stringify(Array.from(map.entries()));
+    return Array.from(map.entries());
   }
 
   async insert(snippet: ISnippet, opts?: { index?: number }) {
-    const index = opts?.index;
-    let content = this.textDocument.getText();
-    content = this.insertProp(content, snippet, index ? { index } : {});
-
-    if (content) {
-      return await this.save(content);
-    }
-
-    return false;
+    const newContent = await this.getInsertContent(snippet, opts);
+    const result = await this.save(newContent);
+    return result;
   }
 
   async update(snippet: ISnippet, name: string) {
-    if (!name === undefined) {
-      return;
-    }
-
-    let snippetsMap;
-    try {
-      snippetsMap = this.getMap();
-    } catch (error: any) {
-      log.appendLine(error?.message);
-      return false;
-    }
-
-    let oldSnippet: ISnippet;
-    let oldSnippetIndex = 0;
-    for (const [k, v] of snippetsMap) {
-      if (k === name) {
-        oldSnippet = CodeSnippetsService.createSnippet(v, { name: k });
-        break;
-      }
-      oldSnippetIndex++;
-    }
-
-    // @ts-ignore
-    if (!oldSnippet) {
-      return false;
-    }
-
-    let content = this.textDocument.getText();
-    content = this.updateProp(content, snippet, oldSnippet, oldSnippetIndex);
-
-    if (content) {
-      return await this.save(content);
-    }
-
-    return false;
+    const newContent = await this.getUpdateContent(snippet, name);
+    const result = await this.save(newContent);
+    return result;
   }
 
   async delete(name: string) {
-    let content = this.textDocument.getText();
-    content = this.deleteProp(content, name);
+    const newContent = await this.getDeleteContent(name);
+    const result = await this.save(newContent);
+    return result;
+  }
 
-    if (content) {
-      return this.save(content);
+  async duplicate(name: string) {
+    const snippet = await this.getSnippetByName(name);
+    if (!snippet) {
+      return;
     }
+
+    let index = snippet.index;
+    if (index !== undefined) {
+      index = index + 1;
+    }
+
+    const result = this.insert(snippet, { index });
+    return result;
+  }
+
+  getInsertContent(snippet: ISnippet, opts?: { index?: number }) {
+    const index = opts?.index;
+    const content = this.textDocument.getText();
+    const newContent = this.insertProp(
+      content,
+      snippet,
+      index ? { index } : {}
+    );
+
+    return newContent;
+  }
+
+  getUpdateContent(snippet: ISnippet, name: string) {
+    let oldSnippet = this.getSnippetByName(name);
+
+    if (!oldSnippet) {
+      throw Error(`Snippet '${name}' not found`);
+    }
+
+    const content = this.textDocument.getText();
+    const newContent = this.updateProp(content, snippet, oldSnippet);
+
+    return newContent;
+  }
+
+  getDeleteContent(name: string) {
+    const content = this.textDocument.getText();
+    const newContent = this.deleteProp(content, name);
+
+    return newContent;
   }
 
   insertProp(content: string, snippet: ISnippet, { index = 0 } = {}) {
@@ -188,19 +194,12 @@ export class CodeSnippetsService {
       () => index
     );
 
-    if (edit) {
-      return applyEdit(content, edit);
-    }
+    const newContent = applyEdit(content, edit);
 
-    return "";
+    return newContent;
   }
 
-  updateProp(
-    content: string,
-    snippet: ISnippet,
-    oldSnippet: ISnippet,
-    oldSnippetIndex: number
-  ) {
+  updateProp(content: string, snippet: ISnippet, oldSnippet: ISnippet) {
     const name = snippet.name;
     const oldName = oldSnippet.name;
 
@@ -210,19 +209,18 @@ export class CodeSnippetsService {
 
     let _content = content;
 
-    const vSnippet = this.getVSCodeSnippet(snippet);
-    const oldVSnippet = this.getVSCodeSnippet(oldSnippet);
-
     // name change, replace the snippet
     if (name !== oldName) {
       _content = this.deleteProp(_content, oldName);
-      if (!_content) {
-        return "";
-      }
-      return this.insertProp(_content, snippet, { index: oldSnippetIndex });
+      _content = this.insertProp(_content, snippet, {
+        index: oldSnippet.index,
+      });
+      return _content;
     }
 
     // name not change, update other fields of the snippet
+    const vSnippet = this.getVSCodeSnippet(snippet);
+    const oldVSnippet = this.getVSCodeSnippet(oldSnippet);
     for (const key of ["scope", "description", "prefix"]) {
       const val = (<any>vSnippet)[key];
       const oldVal = (<any>oldVSnippet)[key];
@@ -236,7 +234,7 @@ export class CodeSnippetsService {
       }
     }
 
-    if (vSnippet.body.join("") !== oldVSnippet.body.join("")) {
+    if (snippet.body !== oldSnippet.body) {
       const [edit] = setProperty(content, [name, "body"], vSnippet.body, {});
 
       if (edit) {
@@ -250,28 +248,30 @@ export class CodeSnippetsService {
   deleteProp(content: string, name: string) {
     const [edit] = removeProperty(content, [name], {});
 
-    if (edit) {
-      return applyEdit(content, edit);
-    }
+    const newContent = applyEdit(content, edit);
 
-    return "";
+    return newContent;
   }
 
-  async save(content: string, { refreshExplorerView = true } = {}) {
+  async apply(content: string) {
     const workspaceEdit = new vscode.WorkspaceEdit();
 
-    // Just replace the entire document every time for this example extension.
-    // A more complete extension should compute minimal edits instead.
     workspaceEdit.replace(
       this.textDocument.uri,
       new vscode.Range(0, 0, this.textDocument.lineCount, 0),
       content
     );
 
-    const applyEditRes = await vscode.workspace.applyEdit(workspaceEdit);
+    const result = await vscode.workspace.applyEdit(workspaceEdit);
 
-    if (!applyEditRes) {
-      return applyEditRes;
+    return result;
+  }
+
+  async save(content: string, { refreshExplorerView = true } = {}) {
+    const applyRes = await this.apply(content);
+
+    if (!applyRes) {
+      return applyRes;
     }
 
     const saveRes = await this.textDocument.save();
@@ -283,8 +283,8 @@ export class CodeSnippetsService {
     return saveRes;
   }
 
-  getVSCodeSnippet(snippet: ISnippet): IVSCodeSnippet {
-    const vSnippet: IVSCodeSnippet = {
+  getVSCodeSnippet(snippet: ISnippet): IVscodeSnippet {
+    const vSnippet: IVscodeSnippet = {
       prefix: snippet.prefix,
       description: snippet.description,
       scope: snippet.scope,
@@ -296,23 +296,28 @@ export class CodeSnippetsService {
 
   getSnippetByName(name: string) {
     const snippetsMap = this.getMap();
-    const snippet = snippetsMap.get(name);
+    let snippetIndex = 0;
 
-    if (snippet) {
-      return CodeSnippetsService.createSnippet(snippet, {
-        name,
-        uri: this.textDocument.uri,
-      });
+    for (const [k, v] of snippetsMap) {
+      if (k === name) {
+        const snippet = CodeSnippetsService.createSnippet(v, {
+          name: k,
+          uri: this.textDocument.uri,
+          index: snippetIndex,
+        });
+        return snippet;
+      }
+      snippetIndex++;
     }
   }
 
-  private getObj(): { [key: string]: IVSCodeSnippet } {
+  private getObj(): { [key: string]: IVscodeSnippet } {
     return parse(this.textDocument.getText()) || {};
   }
 
   static createSnippet(
-    vscodeSnippet: IVSCodeSnippet,
-    { name, uri }: ISnippetExtra = {}
+    vscodeSnippet: IVscodeSnippet,
+    { name, uri, index }: ISnippetExtra = {}
   ): ISnippet {
     let body: any = vscodeSnippet.body;
     if (Array.isArray(body)) {
@@ -322,6 +327,7 @@ export class CodeSnippetsService {
     return {
       name,
       uri,
+      index,
       prefix: vscodeSnippet.prefix,
       description: vscodeSnippet.description,
       scope: vscodeSnippet.scope,

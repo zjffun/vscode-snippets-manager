@@ -1,4 +1,3 @@
-import React from "react";
 import ReactDOM from "react-dom";
 import CodeSnippetsEditor from "./CodeSnippetsEditor";
 import { ErrorBoundary } from "./components/ErrorBoundry";

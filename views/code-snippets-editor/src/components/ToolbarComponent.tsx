@@ -1,5 +1,5 @@
 import React, { useRef, useState } from "react";
-import { Snippet } from "../typings";
+import { IVscodeSnippet } from "../typings";
 import "./ToolbarComponent.scss";
 
 interface Props {

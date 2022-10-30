@@ -9,7 +9,7 @@
   "editBody": "修改内容",
   "duplicateItem": "制作副本",
   "deleteItem": "删除",
-  "ok": "确定",
+  "save": "保存",
   "cancel": "取消",
   "noSnippets": "无代码片段"
 }

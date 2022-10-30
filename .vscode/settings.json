@@ -2,7 +2,6 @@
 {
   "files.exclude": {
     ".vscode-test": true,
-    "node_modules": true,
     "out": true,
     "out-view": true
   },

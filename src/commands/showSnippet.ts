@@ -16,6 +16,6 @@ export default async (snippet: ISnippetExtra) => {
 
   await currentWebviewPanel?.webview?.postMessage?.({
     type: "show",
-    name: snippet.name,
+    keyName: snippet.name,
   });
 };

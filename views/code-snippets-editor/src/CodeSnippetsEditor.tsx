@@ -1,88 +1,126 @@
-import React, { useEffect, useState } from "react";
+import { nanoid } from "nanoid";
+import { useEffect, useRef, useState } from "react";
+import { getState } from "./common";
 import SnippetItem from "./components/SnippetItem";
-import { SnippetEntries } from "./typings";
+import ToolbarComponent from "./components/ToolbarComponent";
+import getVsCode from "./getVsCode";
+import { EDIT, NAME, NEW_ITEM } from "./symbols";
+import { ISnippet } from "./typings";
 
 import "./CodeSnippetsEditor.scss";
-import ToolbarComponent from "./components/ToolbarComponent";
-import { DUPLICATE_INDEX, EDIT, NEWITEM } from "./symbols";
-
-import getVsCode from "./getVsCode";
 
 const vscode = getVsCode();
 
-function getSnippetEntries(text: string): SnippetEntries {
-  try {
-    return JSON.parse(text).map(([k, v]: [string, any]) => {
-      return [k, { ...v, [EDIT]: false }];
+function getSnippets(): ISnippet[] {
+  const state = getState();
+
+  let result: ISnippet[] = [...state.addingSnippets];
+
+  for (const [name, vscodeSnippet] of state.vscodeSnippetEntries) {
+    const editingSnippet = state.editingSnippetObjMap[name];
+    if (editingSnippet) {
+      result.push(editingSnippet);
+      continue;
+    }
+
+    let body = vscodeSnippet.body;
+
+    if (Array.isArray(body)) {
+      body = body.join("\n");
+    }
+
+    result.push({
+      ...vscodeSnippet,
+      name,
+      body,
+      [NAME]: name,
     });
-  } catch {
-    return Object.entries({});
   }
+
+  return result;
 }
 
 const CodeSnippetsEditor = () => {
-  // Webviews are normally torn down when not visible and re-created when they become visible again.
-  // State lets us save information across these re-loads
-  const [snippetEntries, setSnippetEntries] = useState<SnippetEntries>(
-    getSnippetEntries(vscode.getState()?.text)
-  );
-
   const [error, setError] = useState<string>("");
+
+  const commonRef = useRef<{
+    addEdit(keyName: string): void;
+    removeEdit(keyName: string): void;
+    removeAdd(keyName: string): void;
+    setError(error: string): void;
+    updateSnippets(): void;
+  }>({
+    removeEdit(keyName: string) {
+      const state = getState();
+      delete state.editingSnippetObjMap[keyName];
+      vscode.setState(state);
+      commonRef.current.updateSnippets();
+    },
+    removeAdd(keyName: string) {
+      const state = getState();
+      state.addingSnippets = state.addingSnippets.filter(
+        (d) => d[NAME] !== keyName
+      );
+      vscode.setState(state);
+      commonRef.current.updateSnippets();
+    },
+    setError,
+    addEdit() {},
+    updateSnippets() {},
+  });
+
+  const [snippets, setSnippets] = useState<ISnippet[]>([]);
+
+  commonRef.current.updateSnippets = () => {
+    setSnippets(getSnippets());
+  };
+
+  commonRef.current.addEdit = (keyName: string) => {
+    const snippet = snippets.find((d) => d[NAME] === keyName);
+
+    if (!snippet) {
+      return;
+    }
+
+    const state = getState();
+    state.editingSnippetObjMap[keyName] = { ...snippet, [EDIT]: true };
+    vscode.setState(state);
+    commonRef.current.updateSnippets();
+  };
 
   useEffect(() => {
     const listener = (event: any) => {
-      const message = event.data; // The json data that the extension sent
+      const message = event.data;
       switch (message.type) {
         case "update":
-          const text = message.text;
-          setSnippetEntries(getSnippetEntries(text));
+          const vscodeSnippetEntries = message.vscodeSnippetEntries;
 
-          // Then persist state information.
-          // This state is returned in the call to `vscode.getState` below when a webview is reloaded.
-          vscode.setState({ text });
+          vscode.setState({
+            ...vscode.getState(),
+            vscodeSnippetEntries,
+          });
+
+          commonRef.current.updateSnippets();
           return;
 
         case "show":
-          document.getElementById(message.name)?.scrollIntoView();
+          document.getElementById(message.keyName)?.scrollIntoView();
           return;
 
         case "edit":
-          setSnippetEntries((snippetEntries) => {
-            return snippetEntries.map(([name, snippet]) => {
-              if (name === message.name) {
-                snippet[EDIT] = true;
-              }
-              return [name, snippet];
-            });
-          });
+          commonRef.current.addEdit(message.keyName);
           return;
 
-        case "duplicate":
-          setSnippetEntries((snippetEntries) => {
-            const srcSnippetIndex = snippetEntries.findIndex(
-              ([k]) => k === message.name
-            );
-            if (srcSnippetIndex === -1) {
-              return snippetEntries;
-            }
+        case "updateSuccess":
+          commonRef.current.removeEdit(message.keyName);
+          return;
 
-            const snippetEntries_ = [...snippetEntries];
-            const [key, snippet] = snippetEntries_[srcSnippetIndex];
-            snippetEntries_.splice(srcSnippetIndex + 1, 0, [
-              key,
-              {
-                ...snippet,
-                [EDIT]: true,
-                [NEWITEM]: true,
-                [DUPLICATE_INDEX]: srcSnippetIndex + 1,
-              },
-            ]);
-            return snippetEntries_;
-          });
+        case "insertSuccess":
+          commonRef.current.removeAdd(message.keyName);
           return;
 
         case "error":
-          setError(message.error);
+          commonRef.current.setError(message.error);
           return;
       }
     };
@@ -92,23 +130,29 @@ const CodeSnippetsEditor = () => {
     return () => {
       window.removeEventListener("message", listener);
     };
-  }, [snippetEntries, setSnippetEntries, setError]);
+  }, []);
 
   const handleAddSnippetClick = () => {
-    setSnippetEntries((snippetEntries) => [
-      [
-        "",
+    const keyName = nanoid();
+    const state = getState();
+    vscode.setState({
+      ...state,
+      addingSnippets: [
         {
-          body: [],
+          name: "",
+          body: "",
           description: "",
           prefix: "",
           scope: "",
+          [NAME]: keyName,
           [EDIT]: true,
-          [NEWITEM]: true,
+          [NEW_ITEM]: true,
         },
+        ...state.addingSnippets,
       ],
-      ...snippetEntries,
-    ]);
+    });
+
+    commonRef.current.updateSnippets();
   };
 
   const throwError = () => {
@@ -121,51 +165,57 @@ const CodeSnippetsEditor = () => {
       <ToolbarComponent
         onAddSnippetClick={handleAddSnippetClick}
       ></ToolbarComponent>
-      {snippetEntries.length ? (
+      {snippets.length ? (
         <ul className="code-snippets-editor-snippets">
-          {snippetEntries.map(([key, snippet], i) => {
+          {snippets.map((snippet) => {
+            const keyName = snippet[NAME];
             return (
-              <li
-                className="code-snippets-editor-snippets__item"
-                key={snippet[NEWITEM] ? Math.random() : key}
-              >
+              <li className="code-snippets-editor-snippets__item" key={keyName}>
                 <SnippetItem
-                  name={key}
                   snippet={snippet}
-                  vscode={vscode}
-                  setEdit={(edit) => {
-                    if (snippet[NEWITEM]) {
-                      setSnippetEntries((snippetEntries) =>
-                        snippetEntries.filter(([k, v]) => v !== snippet)
+                  clickEdit={() => {
+                    commonRef.current.addEdit(keyName);
+                  }}
+                  saveEdit={() => {
+                    const state = getState();
+                    if (snippet[NEW_ITEM]) {
+                      const currentSnippet = state.addingSnippets.find(
+                        (d) => d[NAME] === keyName
                       );
+                      if (!currentSnippet) {
+                        return;
+                      }
+
+                      vscode.postMessage({
+                        type: "insert",
+                        payload: {
+                          keyName,
+                          snippet: currentSnippet,
+                        },
+                      });
                       return;
                     }
 
-                    setSnippetEntries((snippetEntries) =>
-                      snippetEntries.map(([k, v]) => {
-                        let _v = v;
-                        if (k === key) {
-                          _v = { ...v, [EDIT]: edit };
-                        }
+                    const currentSnippet = state.editingSnippetObjMap[keyName];
+                    if (!currentSnippet) {
+                      return;
+                    }
 
-                        return [k, _v];
-                      })
-                    );
-                  }}
-                  duplicate={() => {
-                    setSnippetEntries((snippetEntries) => {
-                      const snippetEntries_ = [...snippetEntries];
-                      snippetEntries_.splice(i + 1, 0, [
-                        key,
-                        {
-                          ...snippet,
-                          [EDIT]: true,
-                          [NEWITEM]: true,
-                          [DUPLICATE_INDEX]: i + 1,
-                        },
-                      ]);
-                      return snippetEntries_;
+                    vscode.postMessage({
+                      type: "update",
+                      payload: {
+                        keyName,
+                        snippet: currentSnippet,
+                      },
                     });
+                  }}
+                  cancelEdit={() => {
+                    if (snippet[NEW_ITEM]) {
+                      commonRef.current.removeAdd(keyName);
+                      return;
+                    }
+
+                    commonRef.current.removeEdit(keyName);
                   }}
                 ></SnippetItem>
               </li>

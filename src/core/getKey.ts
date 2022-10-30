@@ -1,8 +1,8 @@
-import { IVSCodeSnippet } from "..";
+import { IVscodeSnippet } from "..";
 
 export default (
   key: string,
-  vscodeSnippetsObj: { [key: string]: IVSCodeSnippet }
+  vscodeSnippetsObj: { [key: string]: IVscodeSnippet }
 ) => {
   if (!vscodeSnippetsObj[key]) {
     return key;

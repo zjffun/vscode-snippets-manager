@@ -16,10 +16,10 @@ export default async (snippet: ISnippet) => {
 
   await currentWebviewPanel?.webview?.postMessage?.({
     type: "show",
-    name: snippet.name,
+    keyName: snippet.name,
   });
   await currentWebviewPanel?.webview?.postMessage?.({
     type: "edit",
-    name: snippet.name,
+    keyName: snippet.name,
   });
 };

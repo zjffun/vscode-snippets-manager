@@ -34,7 +34,7 @@ suite("CodeSnippetsService", () => {
     assert.ok(codeSnippetsService);
   });
 
-  test("getMap should return error when paser fails", async () => {
+  test("getMap should return error when parse fails", async () => {
     const uri = await createTestFile();
     let textDocument = await vscode.workspace.openTextDocument(uri);
     const codeSnippetsService = new CodeSnippetsService(textDocument);
@@ -56,7 +56,7 @@ suite("CodeSnippetsService", () => {
     assert.throws(codeSnippetsService.getMap);
   });
 
-  test("getMap should return map when paser success", async () => {
+  test("getMap should return map when parse success", async () => {
     const uri = await createTestFile();
     const textDocument = await vscode.workspace.openTextDocument(uri);
     const codeSnippetsService = new CodeSnippetsService(textDocument);

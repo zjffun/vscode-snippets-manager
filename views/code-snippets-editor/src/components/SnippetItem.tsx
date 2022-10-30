@@ -1,30 +1,82 @@
-import React, { useRef, useState } from "react";
-import { DUPLICATE_INDEX, EDIT, NEWITEM } from "../symbols";
-import { Snippet } from "../typings";
+import { useRef } from "react";
+import { getState } from "../common";
+import getVsCode from "../getVsCode";
+import { EDIT, NAME, NEW_ITEM } from "../symbols";
+import { ISnippet } from "../typings";
+
 import "./SnippetItem.scss";
 
 interface Props {
-  name: string;
-  snippet: Snippet;
-  vscode: any;
-  setEdit(edit: boolean): void;
-  duplicate(): void;
+  snippet: ISnippet;
+  clickEdit(): void;
+  saveEdit(): void;
+  cancelEdit(): void;
 }
 
-const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
+const SnippetItem = ({ snippet, clickEdit, saveEdit, cancelEdit }: Props) => {
+  const vscode = getVsCode();
+  const keyName = snippet[NAME];
+  const editing = snippet[EDIT];
   const formRef = useRef<HTMLFormElement | null>(null);
-  const edit = snippet[EDIT];
+
+  const handleChange = () => {
+    if (!formRef.current) {
+      return;
+    }
+
+    const data = new FormData(formRef.current);
+    const newSnippet = {
+      name: data.get("name")?.toString() || "",
+      prefix: data.get("prefix")?.toString() || "",
+      scope: data.get("scope")?.toString() || "",
+      description: data.get("description")?.toString() || "",
+      body: data.get("body")?.toString() || "",
+    };
+    const state = getState();
+
+    if (snippet[NEW_ITEM]) {
+      const index = state.addingSnippets.findIndex((d) => d[NAME] === keyName);
+
+      if (index === -1) {
+        return;
+      }
+
+      const currentSnippet = state.addingSnippets[index];
+
+      state.addingSnippets.splice(index, 1, {
+        ...currentSnippet,
+        ...newSnippet,
+      });
+
+      vscode.setState(state);
+      return;
+    }
+
+    if (editing) {
+      const snippet = state.editingSnippetObjMap[keyName];
+      if (!snippet) {
+        return;
+      }
+
+      state.editingSnippetObjMap[keyName] = {
+        ...snippet,
+        ...newSnippet,
+      };
+      vscode.setState(state);
+      return;
+    }
+  };
 
   return (
-    <section id={name} className="code-snippets-editor-snippet">
-      <div hidden={edit}>
+    <section id={keyName} className="code-snippets-editor-snippet">
+      <div hidden={editing}>
         <div className="code-snippets-editor-snippet__top">
           <div className="code-snippets-editor-top-items">
             <div className="code-snippets-editor-top-items__item">
               <span className="code-snippets-editor-label">
                 {window.i18nText.name}:{" "}
               </span>
-              {name}
+              {keyName}
             </div>
             <div className="code-snippets-editor-top-items__item">
               <span className="code-snippets-editor-label">
@@ -45,9 +97,7 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
               appearance="icon"
               aria-label={window.i18nText.editItem}
               title={window.i18nText.editItem}
-              onClick={() => {
-                setEdit(true);
-              }}
+              onClick={clickEdit}
             >
               <span className="codicon codicon-edit"></span>
             </vscode-button>
@@ -55,7 +105,14 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
               appearance="icon"
               aria-label={window.i18nText.duplicateItem}
               title={window.i18nText.duplicateItem}
-              onClick={duplicate}
+              onClick={() => {
+                vscode.postMessage({
+                  type: "duplicate",
+                  payload: {
+                    keyName,
+                  },
+                });
+              }}
             >
               <span className="codicon codicon-files"></span>
             </vscode-button>
@@ -66,7 +123,7 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
               onClick={() => {
                 vscode.postMessage({
                   type: "delete",
-                  payload: { name },
+                  payload: { keyName },
                 });
               }}
             >
@@ -92,7 +149,7 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
                   onClick={() => {
                     vscode.postMessage({
                       type: "editBody",
-                      payload: { name },
+                      payload: { keyName },
                     });
                   }}
                 >
@@ -103,57 +160,52 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
             </span>
           </div>
           <div className="code-snippets-editor-snippet__body__content">
-            <pre>{snippet.body.join("\n")}</pre>
+            <pre>{snippet.body}</pre>
           </div>
         </div>
       </div>
-      {edit && (
+      {editing && (
         <form ref={formRef}>
           <div className="code-snippets-editor-snippet__top">
             <div className="code-snippets-editor-top-items">
-              <vscode-text-field name="name" value={name}>
+              <vscode-text-field
+                name="name"
+                value={snippet.name}
+                onInput={handleChange}
+              >
                 {window.i18nText.name}
               </vscode-text-field>
-              <vscode-text-field name="prefix" value={snippet.prefix}>
+              <vscode-text-field
+                name="prefix"
+                value={snippet.prefix}
+                onInput={handleChange}
+              >
                 {window.i18nText.prefix}
               </vscode-text-field>
-              <vscode-text-field name="scope" value={snippet.scope}>
+              <vscode-text-field
+                name="scope"
+                value={snippet.scope}
+                onInput={handleChange}
+              >
                 {window.i18nText.scope}
               </vscode-text-field>
             </div>
             <div style={{ flex: "1 1 0" }}></div>
             <div className="code-snippets-editor-operation">
-              <vscode-button
-                onClick={() => {
-                  if (!formRef.current) {
-                    return;
-                  }
-
-                  const data = new FormData(formRef.current);
-                  vscode.postMessage({
-                    type: snippet[NEWITEM] ? "insert" : "update",
-                    payload: {
-                      name,
-                      data: Object.fromEntries(data.entries()),
-                      index: snippet[DUPLICATE_INDEX],
-                    },
-                  });
-                }}
-              >
-                {window.i18nText.ok}
+              <vscode-button onClick={saveEdit}>
+                {window.i18nText.save}
               </vscode-button>
-              <vscode-button
-                appearance="secondary"
-                onClick={() => {
-                  setEdit(false);
-                }}
-              >
+              <vscode-button appearance="secondary" onClick={cancelEdit}>
                 {window.i18nText.cancel}
               </vscode-button>
             </div>
           </div>
           <div className="code-snippets-editor-snippet__desc">
-            <vscode-text-field name="description" value={snippet.description}>
+            <vscode-text-field
+              name="description"
+              value={snippet.description}
+              onInput={handleChange}
+            >
               {window.i18nText.description}
             </vscode-text-field>
           </div>
@@ -162,7 +214,8 @@ const SnippetItem = ({ name, snippet, vscode, setEdit, duplicate }: Props) => {
               resize="vertical"
               name="body"
               rows={10}
-              value={snippet.body.join("\n")}
+              value={snippet.body}
+              onInput={handleChange}
             >
               {window.i18nText.body}
             </vscode-text-area>

@@ -19,7 +19,7 @@ const i18nText = {
   editBody: localize("editItem", "Edit Body"),
   duplicateItem: localize("duplicateItem", "Duplicate Item"),
   deleteItem: localize("deleteItem", "Delete Item"),
-  ok: localize("ok", "OK"),
+  save: localize("save", "Save"),
   cancel: localize("cancel", "Cancel"),
   noSnippets: localize("noSnippets", "No snippets."),
 };
@@ -79,9 +79,9 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     webviewPanel.webview.html = this.getHtmlForWebview(webviewPanel.webview);
 
     async function updateWebview() {
-      let text;
+      let vscodeSnippetEntries;
       try {
-        text = codeSnippetsService.getEntriesString();
+        vscodeSnippetEntries = codeSnippetsService.getVscodeSnippetEntries();
       } catch (error: any) {
         if (error?.message !== "Parse error: empty content") {
           webviewPanel.webview.postMessage({
@@ -102,7 +102,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
         });
 
         try {
-          text = codeSnippetsService.getEntriesString();
+          vscodeSnippetEntries = codeSnippetsService.getVscodeSnippetEntries();
         } catch (error: any) {
           webviewPanel.webview.postMessage({
             type: "error",
@@ -114,7 +114,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 
       webviewPanel.webview.postMessage({
         type: "update",
-        text,
+        vscodeSnippetEntries,
       });
     }
 
@@ -161,22 +161,45 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     // Receive message from the webview.
     webviewPanel.webview.onDidReceiveMessage(({ type, payload }) => {
       switch (type) {
-        case "insert":
-          codeSnippetsService.insert(payload.data, { index: payload.index });
+        case "insert": {
+          codeSnippetsService.insert(payload.snippet, { index: payload.index });
+
+          webviewPanel.webview.postMessage({
+            type: "insertSuccess",
+            keyName: payload.keyName,
+          });
+
           refreshAllView();
           return;
+        }
 
-        case "update":
-          codeSnippetsService.update(payload.data, payload.name);
+        case "update": {
+          codeSnippetsService.update(payload.snippet, payload.keyName);
+
+          webviewPanel.webview.postMessage({
+            type: "updateSuccess",
+            keyName: payload.keyName,
+          });
+
+          refreshAllView();
           return;
+        }
+
+        case "duplicate": {
+          codeSnippetsService.duplicate(payload.keyName);
+          refreshAllView();
+          return;
+        }
 
         case "delete":
-          codeSnippetsService.delete(payload.name);
+          codeSnippetsService.delete(payload.keyName);
           refreshAllView();
           return;
 
         case "editBody":
-          const snippets = codeSnippetsService.getSnippetByName(payload.name);
+          const snippets = codeSnippetsService.getSnippetByName(
+            payload.keyName
+          );
           if (snippets) {
             editSnippetBody(snippets);
           }

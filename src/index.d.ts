@@ -8,6 +8,7 @@ export interface IPackageJSONContributesSnippet {
 export interface ISnippetExtra {
   name?: string;
   uri?: vscode.Uri;
+  index?: number;
 }
 
 export interface ISnippet extends ISnippetExtra {
@@ -17,8 +18,8 @@ export interface ISnippet extends ISnippetExtra {
   scope: string;
 }
 
-export interface IVSCodeSnippet {
-  body: string[];
+export interface IVscodeSnippet {
+  body: string[] | string;
   description: string;
   prefix: string;
   scope: string;

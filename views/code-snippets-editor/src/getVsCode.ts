@@ -1,3 +1,11 @@
+import { IVscodeState } from "./typings";
+
+export interface IVscode {
+  getState: () => IVscodeState | undefined;
+  setState: (state: any) => void;
+  [key: string]: any;
+}
+
 declare global {
   interface Window {
     vsCodeApi: any;
@@ -5,8 +13,9 @@ declare global {
   const acquireVsCodeApi: any;
 }
 
-let vscode: any;
-export default () => {
+let vscode: IVscode;
+
+export default (): IVscode => {
   if (vscode) {
     return vscode;
   }

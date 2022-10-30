@@ -1,4 +1,4 @@
-import { DUPLICATE_INDEX, EDIT, NEWITEM } from "./symbols";
+import { EDIT, NAME, NEW_ITEM } from "./symbols";
 
 declare global {
   namespace JSX {
@@ -15,14 +15,30 @@ declare global {
   }
 }
 
-export interface Snippet {
-  body: string[];
+export interface IVscodeSnippet {
+  body: string[] | string;
   description: string;
   prefix: string;
   scope: string;
-  [EDIT]?: boolean;
-  [NEWITEM]?: boolean;
-  [DUPLICATE_INDEX]?: number;
 }
 
-export type SnippetEntries = [string, Snippet][];
+export interface ISnippet {
+  name: string;
+  body: string;
+  description: string;
+  prefix: string;
+  scope: string;
+  [NAME]: string;
+  [EDIT]?: boolean;
+  [NEW_ITEM]?: boolean;
+}
+
+export type SnippetObjMap = { [key: string]: ISnippet };
+
+export type VscodeSnippetEntries = [string, IVscodeSnippet][];
+
+export interface IVscodeState {
+  addingSnippets?: ISnippet[];
+  editingSnippetObjMap?: SnippetObjMap;
+  vscodeSnippetEntries?: VscodeSnippetEntries;
+}
