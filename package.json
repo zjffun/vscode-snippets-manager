@@ -293,8 +293,7 @@
   "scripts": {
     "vscode:prepublish": "yarn run compile",
     "compile": "yarn run editor-view:build && gulp build",
-    "// use `--raw` to match $tsc-watch problemMatcher": "",
-    "watch": "concurrently --raw \"yarn run editor-view:watch\" \"gulp watch\"",
+    "watch": "concurrently \"yarn run editor-view:watch\" \"gulp watch\"",
     "pretest": "yarn run compile && yarn run lint",
     "test": "node ./out/test/runTest.js",
     "lint": "eslint src --ext ts",

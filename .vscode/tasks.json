@@ -13,6 +13,23 @@
       "group": {
         "kind": "build",
         "isDefault": true
+      },
+      "problemMatcher": {
+        "owner": "typescript",
+        "fileLocation": "relative",
+        "pattern": {
+          "regexp": "^$",
+          "file": 1,
+          "location": 2,
+          "severity": 3,
+          "code": 4,
+          "message": 5
+        },
+        "background": {
+          "activeOnStart": true,
+          "beginsPattern": "Using gulpfile",
+          "endsPattern": "webpack .*? compiled successfully"
+        }
       }
     }
   ]
