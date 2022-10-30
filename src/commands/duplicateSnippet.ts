@@ -2,6 +2,7 @@ import * as vscode from "vscode";
 import { ISnippet } from "..";
 import { CodeSnippetsEditor, currentWebviewPanel } from "../CodeSnippetsEditor";
 import { CodeSnippetsService } from "../CodeSnippetsService";
+import refreshAllView from "../views/refreshAllView";
 
 export default async (snippet: ISnippet) => {
   if (!snippet.uri || snippet.name === undefined) {
@@ -12,7 +13,9 @@ export default async (snippet: ISnippet) => {
 
   const codeSnippetsService = new CodeSnippetsService(snippetsTextDoc);
 
-  codeSnippetsService.duplicate(snippet.name);
+  await codeSnippetsService.duplicate(snippet.name);
+
+  refreshAllView();
 
   await vscode.commands.executeCommand(
     "vscode.openWith",
