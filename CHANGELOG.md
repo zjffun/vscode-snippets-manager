@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.1.10
+
+- Fix bug tab order of editor inconvenient.
+
 # v0.1.9
 
 - Added features keep editing state while switching tab.
