@@ -159,12 +159,14 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     });
 
     // Receive message from the webview.
-    webviewPanel.webview.onDidReceiveMessage(({ type, payload }) => {
+    webviewPanel.webview.onDidReceiveMessage(async ({ type, payload }) => {
       switch (type) {
         case "insert": {
-          codeSnippetsService.insert(payload.snippet, { index: payload.index });
+          await codeSnippetsService.insert(payload.snippet, {
+            index: payload.index,
+          });
 
-          webviewPanel.webview.postMessage({
+          await webviewPanel.webview.postMessage({
             type: "insertSuccess",
             keyName: payload.keyName,
           });
@@ -174,9 +176,9 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
         }
 
         case "update": {
-          codeSnippetsService.update(payload.snippet, payload.keyName);
+          await codeSnippetsService.update(payload.snippet, payload.keyName);
 
-          webviewPanel.webview.postMessage({
+          await webviewPanel.webview.postMessage({
             type: "updateSuccess",
             keyName: payload.keyName,
           });
@@ -186,13 +188,13 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
         }
 
         case "duplicate": {
-          codeSnippetsService.duplicate(payload.keyName);
+          await codeSnippetsService.duplicate(payload.keyName);
           refreshAllView();
           return;
         }
 
         case "delete":
-          codeSnippetsService.delete(payload.keyName);
+          await codeSnippetsService.delete(payload.keyName);
           refreshAllView();
           return;
 
