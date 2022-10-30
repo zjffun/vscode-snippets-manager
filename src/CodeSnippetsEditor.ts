@@ -166,7 +166,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
             index: payload.index,
           });
 
-          await webviewPanel.webview.postMessage({
+          webviewPanel.webview.postMessage({
             type: "insertSuccess",
             keyName: payload.keyName,
           });
@@ -178,7 +178,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
         case "update": {
           await codeSnippetsService.update(payload.snippet, payload.keyName);
 
-          await webviewPanel.webview.postMessage({
+          webviewPanel.webview.postMessage({
             type: "updateSuccess",
             keyName: payload.keyName,
           });
