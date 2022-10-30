@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.1.9
+
+- Added features keep editing state while switching tab.
+
 # v0.1.8
 
 - Added features support select workspace folder when create snippets from untitled file.
