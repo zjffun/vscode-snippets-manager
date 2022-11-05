@@ -283,6 +283,16 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
       )
     );
 
+    const tabGotoUri = webview.asWebviewUri(
+      vscode.Uri.joinPath(
+        this.context.extensionUri,
+        "node_modules",
+        "tab-goto",
+        "dist",
+        "index.min.js"
+      )
+    );
+
     // Use a nonce to whitelist which scripts can be run
     const nonce = getNonce();
 
@@ -322,6 +332,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
           window.i18nText = ${JSON.stringify(i18nText)}
         </script>
 				<script nonce="${nonce}" src="${scriptUri}"></script>
+        <script nonce="${nonce}" src="${tabGotoUri}"></script>
 			</body>
 			</html>`;
   }

@@ -176,6 +176,8 @@ const SnippetItem = ({ snippet, clickEdit, saveEdit, cancelEdit }: Props) => {
                 name="name"
                 value={snippet.name}
                 onInput={handleChange}
+                tab-goto-key={`${keyName}-name-input`}
+                shift-tab-goto={`[tab-goto-key="${keyName}-cancel-button"]`}
               >
                 {window.i18nText.name}
               </vscode-text-field>
@@ -190,6 +192,8 @@ const SnippetItem = ({ snippet, clickEdit, saveEdit, cancelEdit }: Props) => {
                 name="scope"
                 value={snippet.scope}
                 onInput={handleChange}
+                tab-goto-key={`${keyName}-scope-input`}
+                tab-goto={`[tab-goto-key="${keyName}-description-input"]`}
               >
                 {window.i18nText.scope}
               </vscode-text-field>
@@ -198,28 +202,18 @@ const SnippetItem = ({ snippet, clickEdit, saveEdit, cancelEdit }: Props) => {
             <div className="code-snippets-editor-operation">
               <vscode-button
                 ref={saveBtnRef}
-                tabindex="-1"
                 onClick={saveEdit}
-                onKeyDown={(e: KeyboardEvent) => {
-                  if (e.key === "Tab") {
-                    e.preventDefault();
-                    cancelBtnRef.current?.focus();
-                  }
-                }}
+                tab-goto-key={`${keyName}-save-button`}
+                shift-tab-goto={`[tab-goto-key="${keyName}-body-input"]`}
               >
                 {window.i18nText.save}
               </vscode-button>
               <vscode-button
                 ref={cancelBtnRef}
-                tabindex="-1"
                 appearance="secondary"
                 onClick={cancelEdit}
-                onKeyDown={(e: KeyboardEvent) => {
-                  if (e.key === "Tab") {
-                    e.preventDefault();
-                    nameInputRef.current?.focus();
-                  }
-                }}
+                tab-goto-key={`${keyName}-cancel-button`}
+                tab-goto={`[tab-goto-key="${keyName}-name-input"]`}
               >
                 {window.i18nText.cancel}
               </vscode-button>
@@ -230,6 +224,8 @@ const SnippetItem = ({ snippet, clickEdit, saveEdit, cancelEdit }: Props) => {
               name="description"
               value={snippet.description}
               onInput={handleChange}
+              tab-goto-key={`${keyName}-description-input`}
+              shift-tab-goto={`[tab-goto-key="${keyName}-scope-input"]`}
             >
               {window.i18nText.description}
             </vscode-text-field>
@@ -241,12 +237,8 @@ const SnippetItem = ({ snippet, clickEdit, saveEdit, cancelEdit }: Props) => {
               rows={10}
               value={snippet.body}
               onInput={handleChange}
-              onKeyDown={(e: KeyboardEvent) => {
-                if (e.key === "Tab") {
-                  e.preventDefault();
-                  saveBtnRef.current?.focus();
-                }
-              }}
+              tab-goto-key={`${keyName}-body-input`}
+              tab-goto={`[tab-goto-key="${keyName}-save-button"]`}
             >
               {window.i18nText.body}
             </vscode-text-area>

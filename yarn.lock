@@ -6443,6 +6443,11 @@ sver-compat@^1.5.0:
     es6-iterator "^2.0.1"
     es6-symbol "^3.1.1"
 
+tab-goto@^0.1.1:
+  version "0.1.1"
+  resolved "https://registry.npmmirror.com/tab-goto/-/tab-goto-0.1.1.tgz#1c98d996a60ccf2e8541e24f704da2bb0f40bbc2"
+  integrity sha512-ekuFNVHROhsx7atqPSK4K2W04x4HMZ5TmG0YRcUgOXALU5llh+UcTIQzULkaVVm2JbQzsEulHQSL45F9dYd71A==
+
 tabbable@^5.2.0:
   version "5.3.3"
   resolved "https://registry.npmmirror.com/tabbable/-/tabbable-5.3.3.tgz#aac0ff88c73b22d6c3c5a50b1586310006b47fbf"
