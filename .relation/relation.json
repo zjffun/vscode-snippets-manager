@@ -1,201 +1,197 @@
 [
   {
     "id": "f11vllltee",
-    "fromGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
     "fromPath": "README.md",
+    "toPath": "README.zh-CN.md",
     "fromRange": [
       1,
       9
     ],
-    "toGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
-    "toPath": "README.zh-CN.md",
     "toRange": [
       1,
       9
-    ]
+    ],
+    "fromGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toGitRev": "9420f45177c29964fae662b3123303a35c8e488a"
   },
   {
     "id": "w5ifyeae68",
-    "fromG'i'tRev": "9420f45177c29964fae662b3123303a35c8e488a",
     "fromPath": "README.md",
+    "toPath": "README.zh-CN.md",
     "fromRange": [
       11,
       11
     ],
-    "toGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
-    "toPath": "README.zh-CN.md",
     "toRange": [
       11,
       11
-    ]
+    ],
+    "fromGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toGitRev": "9420f45177c29964fae662b3123303a35c8e488a"
   },
   {
     "id": "ewd27j2u5q",
-    "fromGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86",
     "fromPath": "README.md",
+    "toPath": "README.zh-CN.md",
     "fromRange": [
       13,
       17
     ],
-    "toGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86",
-    "toPath": "README.zh-CN.md",
     "toRange": [
       13,
       17
-    ]
+    ],
+    "fromGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86",
+    "toGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86"
   },
   {
     "id": "vjrmys25a1",
-    "fromGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
     "fromPath": "README.md",
+    "toPath": "README.zh-CN.md",
     "fromRange": [
       19,
       23
     ],
-    "toGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
-    "toPath": "README.zh-CN.md",
     "toRange": [
       19,
       23
-    ]
+    ],
+    "fromGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toGitRev": "9420f45177c29964fae662b3123303a35c8e488a"
   },
   {
     "id": "beu8nzky62",
-    "fromGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86",
     "fromPath": "README.md",
+    "toPath": "README.zh-CN.md",
     "fromRange": [
       25,
       33
     ],
-    "toGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86",
-    "toPath": "README.zh-CN.md",
     "toRange": [
       25,
       33
-    ]
+    ],
+    "fromGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86",
+    "toGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86"
   },
   {
     "id": "1nmikz3pqe",
-    "fromGitRev": "a78edc5f2179abb5dbcd263664deee01aa62782b",
     "fromPath": "README.md",
+    "toPath": "README.zh-CN.md",
     "fromRange": [
       43,
       47
     ],
-    "toGitRev": "a78edc5f2179abb5dbcd263664deee01aa62782b",
-    "toPath": "README.zh-CN.md",
     "toRange": [
       43,
       47
-    ]
+    ],
+    "fromGitRev": "a78edc5f2179abb5dbcd263664deee01aa62782b",
+    "toGitRev": "a78edc5f2179abb5dbcd263664deee01aa62782b"
   },
   {
     "id": "k6uq6ahsri",
-    "fromGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
     "fromPath": "README.md",
+    "toPath": "README.zh-CN.md",
     "fromRange": [
       49,
       53
     ],
-    "toGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
-    "toPath": "README.zh-CN.md",
     "toRange": [
       49,
       53
-    ]
+    ],
+    "fromGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toGitRev": "9420f45177c29964fae662b3123303a35c8e488a"
   },
   {
     "id": "1crkucueuk",
-    "fromGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
     "fromPath": "README.md",
+    "toPath": "README.zh-CN.md",
     "fromRange": [
       55,
       55
     ],
-    "toGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
-    "toPath": "README.zh-CN.md",
     "toRange": [
       55,
       55
-    ]
+    ],
+    "fromGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toGitRev": "9420f45177c29964fae662b3123303a35c8e488a"
   },
   {
     "id": "tzi6ei020b",
-    "fromGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
     "fromPath": "README.md",
+    "toPath": "README.zh-CN.md",
     "fromRange": [
       57,
       57
     ],
-    "toGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
-    "toPath": "README.zh-CN.md",
     "toRange": [
       57,
       57
-    ]
+    ],
+    "fromGitRev": "9420f45177c29964fae662b3123303a35c8e488a",
+    "toGitRev": "9420f45177c29964fae662b3123303a35c8e488a"
   },
   {
     "id": "pdz4o0el6b",
-    "fromGitRev": "c07d91ad504a77dad2788b8692ae11ff786e1872",
     "fromPath": "src/CodeSnippetsEditor.ts",
+    "toPath": "i18n/chs/out/CodeSnippetsEditor.i18n.json",
     "fromRange": [
       11,
       25
     ],
-    "toGitRev": "c07d91ad504a77dad2788b8692ae11ff786e1872",
-    "toPath": "i18n/chs/out/CodeSnippetsEditor.i18n.json",
     "toRange": [
       1,
       16
-    ]
+    ],
+    "fromGitRev": "cb9ebf79fc6cf3baa7f0df1be8ab0d06b3b4a072",
+    "toGitRev": "cb9ebf79fc6cf3baa7f0df1be8ab0d06b3b4a072"
   },
   {
     "id": "a13q6tcpox",
-    "fromGitRev": "2578b574c771613cc95016c3406a231b6bb821f2",
     "fromPath": "README.md",
+    "toPath": "README.zh-CN.md",
     "fromRange": [
       39,
       41
     ],
-    "toGitRev": "2578b574c771613cc95016c3406a231b6bb821f2",
-    "toPath": "README.zh-CN.md",
     "toRange": [
       39,
       41
-    ]
+    ],
+    "fromGitRev": "2578b574c771613cc95016c3406a231b6bb821f2",
+    "toGitRev": "2578b574c771613cc95016c3406a231b6bb821f2"
   },
   {
     "id": "ylyob3umaw",
-    "fromGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86",
     "fromPath": "README.md",
-    "fromBaseDir": "",
+    "toPath": "README.zh-CN.md",
     "fromRange": [
       35,
       39
     ],
-    "toGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86",
-    "toPath": "README.zh-CN.md",
-    "toBaseDir": "",
     "toRange": [
       35,
       39
-    ]
+    ],
+    "fromGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86",
+    "toGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86"
   },
   {
     "id": "bcxdzfl5ji",
-    "fromGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86",
     "fromPath": "README.md",
-    "fromBaseDir": "",
+    "toPath": "README.zh-CN.md",
     "fromRange": [
       41,
       43
     ],
-    "toGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86",
-    "toPath": "README.zh-CN.md",
-    "toBaseDir": "",
     "toRange": [
       41,
       43
-    ]
+    ],
+    "fromGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86",
+    "toGitRev": "405dfe0cabecc8767feb4865c3a5c4375e3f6c86"
   }
 ]
