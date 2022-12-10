@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.1.12
+
+- Fix broken thumbnails in document.
+
 # v0.1.11
 
 - Fix bug tab and shift tab of snippets editor.
