@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.1.13
+
+- Added features support using in browser editor.
+
 # v0.1.12
 
 - Fix broken thumbnails in document.
