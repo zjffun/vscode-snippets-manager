@@ -1,16 +1,29 @@
-import { ensureFileSync, writeFileSync } from "fs-extra";
-import * as crypto from "node:crypto";
-import * as os from "node:os";
-import * as path from "node:path";
+import { Buffer } from "buffer";
 import * as vscode from "vscode";
 import { ISnippet } from "..";
 import { CodeSnippetsService } from "../CodeSnippetsService";
+import { context } from "../share";
 
-export const fsPathSnippetMap = new Map<string, ISnippet>();
+const sha1 = require("sha1");
+
+export const pathSnippetMap = new Map<string, ISnippet>();
 
 export function initEditSnippetBody() {
+  // Clean up
+  try {
+    const tempFolderUri = vscode.Uri.joinPath(context.globalStorageUri, "temp");
+
+    vscode.workspace.fs.delete(tempFolderUri, {
+      recursive: true,
+      useTrash: false,
+    });
+  } catch (error) {
+    console.error(error);
+  }
+
+  // Listen save event
   async function onDidSaveTextDocument(document: vscode.TextDocument) {
-    const snippet = fsPathSnippetMap.get(document.uri.fsPath);
+    const snippet = pathSnippetMap.get(document.uri.path);
     if (!snippet?.uri || !snippet?.name) {
       return;
     }
@@ -43,18 +56,16 @@ export default async (snippet: ISnippet) => {
     return;
   }
 
-  const tmpFilePath = path.join(
-    os.tmpdir(),
-    crypto.createHash("sha1").update(snippet.uri.path).digest("hex"),
+  const tmpFileUri = vscode.Uri.joinPath(
+    context.globalStorageUri,
+    "temp",
+    sha1(snippet.uri.path),
     `Edit Snippet ${snippet.name}`
   );
 
-  ensureFileSync(tmpFilePath);
+  await vscode.workspace.fs.writeFile(tmpFileUri, Buffer.from(snippet.body));
 
-  writeFileSync(tmpFilePath, snippet.body);
-
-  const uri = vscode.Uri.file(tmpFilePath);
-  const editor = await vscode.window.showTextDocument(uri);
+  const editor = await vscode.window.showTextDocument(tmpFileUri);
 
   const vscodeLanguages = await vscode.languages.getLanguages();
   const scopes = snippet.scope.split(",");
@@ -66,7 +77,7 @@ export default async (snippet: ISnippet) => {
     }
   }
 
-  fsPathSnippetMap.set(uri.fsPath, snippet);
+  pathSnippetMap.set(tmpFileUri.path, snippet);
 
   return editor;
 };

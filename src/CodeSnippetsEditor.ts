@@ -1,3 +1,4 @@
+import { Buffer } from "buffer";
 import * as vscode from "vscode";
 import * as nls from "vscode-nls";
 import { CodeSnippetsService } from "./CodeSnippetsService";
@@ -91,10 +92,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
           return;
         }
 
-        vscode.workspace.fs.writeFile(
-          document.uri,
-          Uint8Array.from(Buffer.from("{}"))
-        );
+        vscode.workspace.fs.writeFile(document.uri, Buffer.from("{}"));
 
         // wait for take effect
         await new Promise((resolve, reject) => {

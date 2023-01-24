@@ -5,6 +5,7 @@ import editSnippetBody from "../../../commands/editSnippetBody";
 import {
   closeAllEditors,
   createTestFile,
+  isBrowser,
   resetTestWorkspace,
   testWorkspaceFolder,
   writeTextDocument,
@@ -12,7 +13,7 @@ import {
 
 assert.ok(testWorkspaceFolder);
 
-suite("Extension", () => {
+suite("editSnippetBody", () => {
   setup(async () => {
     await closeAllEditors();
     await resetTestWorkspace();
@@ -23,7 +24,11 @@ suite("Extension", () => {
     await resetTestWorkspace();
   });
 
-  test("All package.json commands should be registered in extension", async () => {
+  test("should work", async () => {
+    if (isBrowser) {
+      return;
+    }
+
     const uri = await createTestFile("{}");
 
     const textDocument = await vscode.workspace.openTextDocument(uri);

@@ -9,6 +9,7 @@ import {
 import {
   closeAllEditors,
   createTestFile,
+  isBrowser,
   resetTestWorkspace,
   testWorkspaceFolder,
 } from "../util";
@@ -92,6 +93,10 @@ suite("Extension", () => {
   });
 
   test("Code snippets editor should work", async () => {
+    if (isBrowser) {
+      return;
+    }
+
     const uri = await createTestFile("");
 
     await vscode.commands.executeCommand("vscode.open", uri);
@@ -110,6 +115,10 @@ suite("Extension", () => {
   });
 
   test("Code snippets editor context should currect", async () => {
+    if (isBrowser) {
+      return;
+    }
+
     const uri = await createTestFile("");
     const uri2 = await createTestFile("");
     const uri3 = await createTestFile("");
@@ -137,6 +146,10 @@ suite("Extension", () => {
   });
 
   test("Code snippets editor open array json file should work", async () => {
+    if (isBrowser) {
+      return;
+    }
+
     const uri = await createTestFile(`[{"test": {}}]`);
 
     await vscode.commands.executeCommand("vscode.open", uri);

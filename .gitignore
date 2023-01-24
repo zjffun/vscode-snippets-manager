@@ -7,5 +7,6 @@ test.temp
 out-view
 dist
 node_modules
+.vscode-test-web/
 .vscode-test/
 *.vsix

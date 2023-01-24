@@ -1,8 +1,15 @@
 import * as vscode from "vscode";
 import { ISnippet, ISnippetContainer } from "..";
 
+export class SnippetTreeItem extends vscode.TreeItem {
+  name?: string = "";
+  isFile?: boolean;
+  uri?: vscode.Uri;
+  children?: SnippetTreeItem[] = [];
+}
+
 export default abstract class BasicSnippetsExplorerView
-  implements vscode.TreeDataProvider<ISnippet | ISnippetContainer>
+  implements vscode.TreeDataProvider<SnippetTreeItem>
 {
   public static viewId = "";
 
@@ -10,7 +17,7 @@ export default abstract class BasicSnippetsExplorerView
 
   public abstract readonly onDidChangeTreeData: vscode.Event<any>;
 
-  protected abstract getSnippets(): Promise<ISnippetContainer[]>;
+  protected abstract getSnippets(): Promise<SnippetTreeItem[]>;
 
   protected context: vscode.ExtensionContext;
 
@@ -19,21 +26,19 @@ export default abstract class BasicSnippetsExplorerView
     const that = this;
 
     // wait for onDidChangeTreeData and _onDidChangeTreeData added
-    setImmediate(() => {
+    setTimeout(() => {
       vscode.window.createTreeView((that.constructor as any).viewId, {
         treeDataProvider: that,
         showCollapseAll: true,
       });
-    });
+    }, 0);
   }
 
   public refresh(): any {
     this._onDidChangeTreeData.fire(null);
   }
 
-  public getTreeItem(element: ISnippet | ISnippetContainer): vscode.TreeItem {
-    const { children: isSnippetContainer, isFile } = <ISnippetContainer>element;
-
+  public getTreeItem(element: SnippetTreeItem): SnippetTreeItem {
     const showSnippetCommand = {
       command: "_snippetsmanager.showSnippet",
       title: "Show this snippet in editor.",
@@ -41,39 +46,32 @@ export default abstract class BasicSnippetsExplorerView
     };
 
     let contextValue = "";
-    if (isFile) {
+    if (element.isFile) {
       contextValue = "snippetsmanager-snippetsView-Explorer-FileItem";
-    } else if (!isSnippetContainer) {
+    } else if (!element.children) {
       contextValue = "snippetsmanager-snippetsView-Explorer-Item";
     }
 
-    return {
-      label: element.name,
-      command: !isSnippetContainer ? showSnippetCommand : undefined,
-      collapsibleState: isSnippetContainer
-        ? vscode.TreeItemCollapsibleState.Collapsed
-        : undefined,
-      contextValue: contextValue,
-    };
+    const item = new SnippetTreeItem(
+      element.name || "",
+      element.children ? vscode.TreeItemCollapsibleState.Collapsed : undefined
+    );
+    item.command = !element.children ? showSnippetCommand : undefined;
+    item.contextValue = contextValue;
+
+    return item;
   }
 
   public getChildren(
-    element?: ISnippet | ISnippetContainer
-  ):
-    | ISnippet[]
-    | Thenable<ISnippet[]>
-    | ISnippetContainer[]
-    | Thenable<ISnippetContainer[]> {
-    return element ? this.getTreeElement(element) : this.getSnippets();
-  }
-
-  protected getTreeElement = (element: ISnippet | ISnippetContainer) => {
-    const _element = <ISnippetContainer>element;
-
-    if (!_element?.children) {
-      return [];
+    element?: SnippetTreeItem
+  ): SnippetTreeItem[] | Thenable<SnippetTreeItem[]> {
+    if (element) {
+      if (!element.children) {
+        return [];
+      }
+      return element.children;
     }
 
-    return _element.children;
-  };
+    return this.getSnippets();
+  }
 }

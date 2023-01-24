@@ -439,7 +439,7 @@ export class CodeSnippetsService {
           }
 
           const snippetsUri = vscode.Uri.joinPath(
-            vscode.Uri.file(extension.extensionPath),
+            extension.extensionUri,
             snippetPath
           );
 

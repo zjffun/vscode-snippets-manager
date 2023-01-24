@@ -1,8 +1,12 @@
+import { Buffer } from "buffer";
 import * as vscode from "vscode";
 
 const testWorkspaceRoot = <vscode.Uri>(
   vscode.workspace.workspaceFolders?.[0]?.uri
 );
+
+// @ts-ignore-next-line
+export const isBrowser = vscode.env.appHost !== "desktop";
 
 export const testWorkspaceFolder = vscode.Uri.joinPath(
   testWorkspaceRoot,
@@ -23,10 +27,7 @@ export async function createTestFile(
 }
 
 export async function writeFile(uri: vscode.Uri, content: string) {
-  await vscode.workspace.fs.writeFile(
-    uri,
-    Uint8Array.from(Buffer.from(content))
-  );
+  await vscode.workspace.fs.writeFile(uri, Buffer.from(content));
 }
 
 export async function writeTextDocument(

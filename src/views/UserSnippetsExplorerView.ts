@@ -1,8 +1,5 @@
 import * as vscode from "vscode";
-import { ISnippetContainer } from "..";
 import { CodeSnippetsService } from "../CodeSnippetsService";
-import userSnippetsFilesInfo from "../core/getUserSnippetsFilesInfo";
-import { log } from "../extension";
 import BasicSnippetsExplorerView from "./BasicSnippetsExplorerView";
 
 let snippetsExplorerView: UserSnippetsExplorerView;
