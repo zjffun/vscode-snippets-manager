@@ -2,6 +2,11 @@
 
 # [Unreleased]
 
+# v0.1.14
+
+- Fix unable edit snippet body when has no scope.
+- Fix unable delete user snippets in web editor.
+
 # v0.1.13
 
 - Added features support using in browser editor.
