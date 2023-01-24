@@ -12,3 +12,5 @@ export const setContext = (c: vscode.ExtensionContext) => (context = c);
 
 export const getUserFolderUri = () =>
   vscode.Uri.joinPath(context.globalStorageUri, "../../../User/snippets");
+
+export const isBrowser = vscode.env.appHost !== "desktop";

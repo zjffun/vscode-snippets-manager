@@ -5,9 +5,6 @@ const testWorkspaceRoot = <vscode.Uri>(
   vscode.workspace.workspaceFolders?.[0]?.uri
 );
 
-// @ts-ignore-next-line
-export const isBrowser = vscode.env.appHost !== "desktop";
-
 export const testWorkspaceFolder = vscode.Uri.joinPath(
   testWorkspaceRoot,
   "test"

@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { ISnippetExtra } from "..";
+import { isBrowser } from "../share";
 import refreshAllView from "../views/refreshAllView";
 
 export default async (snippet: ISnippetExtra) => {
@@ -19,7 +20,7 @@ export default async (snippet: ISnippetExtra) => {
     return;
   }
 
-  await vscode.workspace.fs.delete(snippet.uri, { useTrash: true });
+  await vscode.workspace.fs.delete(snippet.uri, { useTrash: !isBrowser });
 
   refreshAllView();
 

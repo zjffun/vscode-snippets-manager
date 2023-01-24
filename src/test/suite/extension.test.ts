@@ -6,10 +6,10 @@ import {
   CodeSnippetsEditor,
   currentWebviewPanel,
 } from "../../CodeSnippetsEditor";
+import { isBrowser } from "../../share";
 import {
   closeAllEditors,
   createTestFile,
-  isBrowser,
   resetTestWorkspace,
   testWorkspaceFolder,
 } from "../util";

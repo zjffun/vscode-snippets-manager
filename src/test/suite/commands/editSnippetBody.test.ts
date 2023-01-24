@@ -2,10 +2,10 @@ import * as assert from "assert";
 import * as vscode from "vscode";
 import { CodeSnippetsService } from "../../../CodeSnippetsService";
 import editSnippetBody from "../../../commands/editSnippetBody";
+import { isBrowser } from "../../../share";
 import {
   closeAllEditors,
   createTestFile,
-  isBrowser,
   resetTestWorkspace,
   testWorkspaceFolder,
   writeTextDocument,

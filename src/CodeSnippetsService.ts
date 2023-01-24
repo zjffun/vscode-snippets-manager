@@ -94,6 +94,9 @@ export class CodeSnippetsService {
           throw Error("Not the correct format");
         }
 
+        // handle scope
+        snippet.scope = snippet.scope || "";
+
         // handle body
         if (snippet.body === undefined) {
           snippet.body = [];
