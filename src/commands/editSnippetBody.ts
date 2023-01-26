@@ -26,13 +26,15 @@ export function initEditSnippetBody() {
 
   // Listen save event
   async function onDidSaveTextDocument(document: vscode.TextDocument) {
-    const snippet = pathSnippetMap.get(document.uri.path);
+    const snippet = pathSnippetMap.get(document.uri.path.toLocaleLowerCase());
+
     console.log(
       "editSnippetBody.ts:29",
       document.uri.path,
       snippet,
       document.getText()
     );
+
     if (!snippet?.uri || !snippet?.name) {
       return;
     }
@@ -92,7 +94,7 @@ export default async (snippet: ISnippet) => {
     // do nothing
   }
 
-  pathSnippetMap.set(tmpFileUri.path, snippet);
+  pathSnippetMap.set(tmpFileUri.path.toLocaleLowerCase(), snippet);
 
   console.log("editSnippetBody.ts:91", tmpFileUri.path, snippet);
 
