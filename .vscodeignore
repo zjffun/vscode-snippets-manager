@@ -4,6 +4,8 @@ yarn.lock
 .vscode/**
 .vscode-test/**
 out/test/**
+views/**
+test.temp/**
 
 src/**
 .gitignore

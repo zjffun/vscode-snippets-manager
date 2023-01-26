@@ -2,18 +2,17 @@
 {
   "files.exclude": {
     ".vscode-test": true,
+    ".vscode-test-web": true,
     "out": true,
     "out-view": true
   },
   "search.exclude": {
-    "out-view": true,
-    "out": true
+    ".vscode-test": true,
+    ".vscode-test-web": true,
+    "out": true,
+    "out-view": true
   },
   // Turn off tsc task auto detection since we have the necessary tasks as npm scripts
   "typescript.tsc.autoDetect": "off",
-  "cSpell.words": [
-    "codicon",
-    "codicons",
-    "snippetsmanager"
-  ]
+  "cSpell.words": ["codicon", "codicons", "snippetsmanager"]
 }
