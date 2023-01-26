@@ -27,6 +27,12 @@ export function initEditSnippetBody() {
   // Listen save event
   async function onDidSaveTextDocument(document: vscode.TextDocument) {
     const snippet = pathSnippetMap.get(document.uri.path);
+    console.log(
+      "editSnippetBody.ts:29",
+      document.uri.path,
+      snippet,
+      document.getText()
+    );
     if (!snippet?.uri || !snippet?.name) {
       return;
     }
@@ -87,6 +93,8 @@ export default async (snippet: ISnippet) => {
   }
 
   pathSnippetMap.set(tmpFileUri.path, snippet);
+
+  console.log("editSnippetBody.ts:91", tmpFileUri.path, snippet);
 
   return editor;
 };
