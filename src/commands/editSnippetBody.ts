@@ -6,7 +6,7 @@ import { context } from "../share";
 
 const sha1 = require("sha1");
 
-export const pathSnippetMap = new Map<string, ISnippet>();
+export const docSnippetMap = new Map<vscode.TextDocument, ISnippet>();
 
 export function initEditSnippetBody() {
   // Clean up
@@ -26,7 +26,8 @@ export function initEditSnippetBody() {
 
   // Listen save event
   async function onDidSaveTextDocument(document: vscode.TextDocument) {
-    const snippet = pathSnippetMap.get(document.uri.path);
+    const snippet = docSnippetMap.get(document);
+
     if (!snippet?.uri || !snippet?.name) {
       return;
     }
@@ -44,7 +45,7 @@ export function initEditSnippetBody() {
       snippet.name
     );
 
-    pathSnippetMap.delete(document.uri.path);
+    docSnippetMap.delete(document);
 
     if (vscode.window.activeTextEditor?.document === document) {
       vscode.commands.executeCommand("workbench.action.closeActiveEditor");
@@ -86,7 +87,7 @@ export default async (snippet: ISnippet) => {
     // do nothing
   }
 
-  pathSnippetMap.set(tmpFileUri.path, snippet);
+  docSnippetMap.set(editor.document, snippet);
 
   return editor;
 };

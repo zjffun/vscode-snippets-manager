@@ -22,6 +22,8 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
+      - name: Fix npm registry
+        run: sed -i 's#https://registry.npmmirror.com/#https://registry.npmjs.org/#g' ./yarn.lock
       - run: yarn install
       - run: xvfb-run -a yarn test
         if: runner.os == 'Linux'
