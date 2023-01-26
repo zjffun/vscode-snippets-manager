@@ -10,16 +10,19 @@ export const pathSnippetMap = new Map<string, ISnippet>();
 
 export function initEditSnippetBody() {
   // Clean up
-  try {
-    const tempFolderUri = vscode.Uri.joinPath(context.globalStorageUri, "temp");
+  const tempFolderUri = vscode.Uri.joinPath(context.globalStorageUri, "temp");
 
-    vscode.workspace.fs.delete(tempFolderUri, {
+  vscode.workspace.fs
+    .delete(tempFolderUri, {
       recursive: true,
       useTrash: false,
-    });
-  } catch (error) {
-    // do nothing
-  }
+    })
+    .then(
+      () => {},
+      () => {
+        // do nothing
+      }
+    );
 
   // Listen save event
   async function onDidSaveTextDocument(document: vscode.TextDocument) {
@@ -69,14 +72,18 @@ export default async (snippet: ISnippet) => {
 
   const editor = await vscode.window.showTextDocument(tmpFileUri);
 
-  const vscodeLanguages = await vscode.languages.getLanguages();
-  const scopes = snippet.scope.split(",");
+  try {
+    const vscodeLanguages = await vscode.languages.getLanguages();
+    const scopes = snippet.scope.split(",");
 
-  for (const scope of scopes) {
-    if (vscodeLanguages.includes(scope)) {
-      vscode.languages.setTextDocumentLanguage(editor.document, snippet.scope);
-      break;
+    for (const scope of scopes) {
+      if (vscodeLanguages.includes(scope)) {
+        await vscode.languages.setTextDocumentLanguage(editor.document, scope);
+        break;
+      }
     }
+  } catch (error) {
+    // do nothing
   }
 
   pathSnippetMap.set(tmpFileUri.path, snippet);

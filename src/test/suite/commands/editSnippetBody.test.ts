@@ -59,9 +59,7 @@ suite("editSnippetBody", () => {
     await writeTextDocument(editor.document, "new body");
 
     // wait for save take effect
-    await new Promise((resolve, reject) => {
-      setTimeout(resolve, 1000);
-    });
+    await new Promise((resolve) => setTimeout(resolve, 100));
 
     assert.equal(
       codeSnippetsService.getSnippetByName(name)?.body,
