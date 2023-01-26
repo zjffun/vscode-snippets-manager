@@ -60,7 +60,7 @@ suite("editSnippetBody", () => {
 
     // wait for save take effect
     await new Promise((resolve, reject) => {
-      setTimeout(resolve, 100);
+      setTimeout(resolve, 500);
     });
 
     assert.equal(
