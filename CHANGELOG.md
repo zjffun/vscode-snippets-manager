@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.1.16
+
+Fix profiles get user folder uri.
+
 # v0.1.15
 
 Fix dependencies bug.
