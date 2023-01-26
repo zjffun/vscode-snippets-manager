@@ -16,7 +16,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-      - run: yarn config set registry https://registry.npmjs.org/
+      - run: sed -i 's#https://registry.npmmirror.com/#https://registry.npmjs.org/#g' ./yarn.lock
       - run: yarn config list
       - run: yarn install
       - run: xvfb-run -a yarn test
