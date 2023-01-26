@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.1.17
+
+Fix can't edit snippet body in Windows.
+
 # v0.1.16
 
 Fix profiles get user folder uri.
