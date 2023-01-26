@@ -18,7 +18,7 @@ export function initEditSnippetBody() {
       useTrash: false,
     });
   } catch (error) {
-    console.error(error);
+    // do nothing
   }
 
   // Listen save event
@@ -40,6 +40,8 @@ export function initEditSnippetBody() {
       },
       snippet.name
     );
+
+    pathSnippetMap.delete(document.uri.path);
 
     if (vscode.window.activeTextEditor?.document === document) {
       vscode.commands.executeCommand("workbench.action.closeActiveEditor");

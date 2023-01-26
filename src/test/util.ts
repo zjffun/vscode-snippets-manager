@@ -45,7 +45,13 @@ export async function writeTextDocument(
     throw Error("applyEdit failed");
   }
 
-  await textDocument.save();
+  const saveRes = await textDocument.save();
+
+  if (!saveRes) {
+    throw Error("save failed");
+  }
+
+  return true;
 }
 
 export async function closeAllEditors() {
