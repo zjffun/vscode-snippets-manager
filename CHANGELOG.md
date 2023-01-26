@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.1.15
+
+Fix dependencies bug.
+
 # v0.1.14
 
 - Fix unable edit snippet body when has no scope.
