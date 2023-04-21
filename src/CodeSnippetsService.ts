@@ -33,6 +33,7 @@ export class CodeSnippetsService {
   }
 
   getMap(): IVSCodeSnippetMap {
+    let currentFilename = this.textDocument.uri.path.split('/').pop();
     let currentProperty: string | null = null;
     let currentParent: any = [];
     const initCurrentParent = currentParent;
@@ -75,7 +76,8 @@ export class CodeSnippetsService {
         currentParent = previousParents.pop();
       },
       onLiteralValue: onValue,
-      onError: (e: ParseErrorCode, offset: number, length: number) => {
+      onError: (e: ParseErrorCode, offset: number, length: number, startLine: number) => {
+
         if (
           currentParent === initCurrentParent &&
           e === ParseErrorCode.ValueExpected
@@ -83,7 +85,8 @@ export class CodeSnippetsService {
           throw Error(`Parse error: empty content`);
         }
 
-        throw Error(`Parse error`);
+        throw Error(`Parse error: ${ParseErrorCode[e]} in ${currentFilename} (Line: ${startLine}).
+        Tip: Check for trailing commas in the snippet file.`);
       },
     };
     visit(this.textDocument.getText(), visitor);
