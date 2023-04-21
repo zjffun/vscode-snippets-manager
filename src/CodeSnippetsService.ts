@@ -85,8 +85,10 @@ export class CodeSnippetsService {
           throw Error(`Parse error: empty content`);
         }
 
-        throw Error(`Parse error: ${ParseErrorCode[e]} in ${currentFilename} (Line: ${startLine}).
-        Tip: Check for trailing commas in the snippet file.`);
+        throw Error(
+          `Parse error: ${ParseErrorCode[e]} in ${currentFilename} (Line: ${startLine}).\n` +
+          `Tip: Check for trailing commas in the snippet file.`
+        );
       },
     };
     visit(this.textDocument.getText(), visitor);
