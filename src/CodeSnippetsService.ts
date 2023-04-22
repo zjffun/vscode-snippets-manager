@@ -76,8 +76,13 @@ export class CodeSnippetsService {
         currentParent = previousParents.pop();
       },
       onLiteralValue: onValue,
-      onError: (e: ParseErrorCode, offset: number, length: number, startLine: number) => {
-
+      onError: (
+        e: ParseErrorCode,
+        offset: number,
+        length: number,
+        startLine: number,
+        startCharacter: number
+      ) => {
         if (
           currentParent === initCurrentParent &&
           e === ParseErrorCode.ValueExpected
@@ -85,9 +90,23 @@ export class CodeSnippetsService {
           throw Error(`Parse error: empty content`);
         }
 
+        let errorType = "Unknown";
+
+        try {
+          // @ts-ignore
+          if (ParseErrorCode[e]) {
+            // @ts-ignore
+            errorType = ParseErrorCode[e];
+          }
+        } catch (error) {
+          console.error(error);
+        }
+
         throw Error(
-          `Parse error: ${ParseErrorCode[e]} in ${currentFilename} (Line: ${startLine}).\n` +
-          `Tip: Check for trailing commas in the snippet file.`
+          `Parse error: ${errorType} in ${currentFilename} (Line: ${
+            startLine + 1
+          }, Char: ${startCharacter + 1}).\n` +
+            `Tip: Check if the file conforms to the JSONC specification, example trailing commas or quotes.`
         );
       },
     };
