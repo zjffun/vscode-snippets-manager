@@ -33,7 +33,7 @@ export class CodeSnippetsService {
   }
 
   getMap(): IVSCodeSnippetMap {
-    let currentFilename = this.textDocument.uri.path.split('/').pop();
+    let currentFilename = this.textDocument.uri.path.split("/").pop();
     let currentProperty: string | null = null;
     let currentParent: any = [];
     const initCurrentParent = currentParent;
