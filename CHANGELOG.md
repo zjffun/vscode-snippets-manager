@@ -2,6 +2,11 @@
 
 # [Unreleased]
 
+# v0.1.18
+
+- [@ryanspain (Ryan Spain)](https://github.com/ryanspain): Log snippet file name and line on parse error. [PR #14](https://github.com/zjffun/vscode-snippets-manager/pull/14)
+- Update ErrorBoundary style.
+
 # v0.1.17
 
 Fix can't edit snippet body in Windows.
