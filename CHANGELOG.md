@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.1.20
+
+Fix postMessage.
+
 # v0.1.19
 
 Fix error message doesn't display.
