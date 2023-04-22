@@ -21,9 +21,9 @@ export class ErrorBoundary extends React.Component<{}, { hasError: boolean }> {
   }
 
   componentDidCatch(e: any) {
-    const errMsg = e.message;
+    const errMsg = e?.message;
 
-    window.vsCodeApi.postMessage({
+    vscode.postMessage({
       type: "error",
       payload: {
         errMsg,
