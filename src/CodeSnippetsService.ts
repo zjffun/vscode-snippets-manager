@@ -33,6 +33,7 @@ export class CodeSnippetsService {
   }
 
   getMap(): IVSCodeSnippetMap {
+    let currentFilename = this.textDocument.uri.path.split('/').pop();
     let currentProperty: string | null = null;
     let currentParent: any = [];
     const initCurrentParent = currentParent;
@@ -75,7 +76,13 @@ export class CodeSnippetsService {
         currentParent = previousParents.pop();
       },
       onLiteralValue: onValue,
-      onError: (e: ParseErrorCode, offset: number, length: number) => {
+      onError: (
+        e: ParseErrorCode,
+        offset: number,
+        length: number,
+        startLine: number,
+        startCharacter: number
+      ) => {
         if (
           currentParent === initCurrentParent &&
           e === ParseErrorCode.ValueExpected
@@ -83,7 +90,24 @@ export class CodeSnippetsService {
           throw Error(`Parse error: empty content`);
         }
 
-        throw Error(`Parse error`);
+        let errorType = "Unknown";
+
+        try {
+          // @ts-ignore
+          if (ParseErrorCode[e]) {
+            // @ts-ignore
+            errorType = ParseErrorCode[e];
+          }
+        } catch (error) {
+          console.error(error);
+        }
+
+        throw Error(
+          `Parse error: ${errorType} in ${currentFilename} (Line: ${
+            startLine + 1
+          }, Char: ${startCharacter + 1}).\n` +
+            `Tip: Check if the file conforms to the JSONC specification, example trailing commas or quotes.`
+        );
       },
     };
     visit(this.textDocument.getText(), visitor);
