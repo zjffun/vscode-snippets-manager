@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.1.19
+
+Fix error message doesn't display.
+
 # v0.1.18
 
 - [@ryanspain (Ryan Spain)](https://github.com/ryanspain): Log snippet file name and line on parse error. [PR #14](https://github.com/zjffun/vscode-snippets-manager/pull/14)
