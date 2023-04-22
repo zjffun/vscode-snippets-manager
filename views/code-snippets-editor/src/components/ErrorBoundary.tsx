@@ -20,6 +20,17 @@ export class ErrorBoundary extends React.Component<{}, { hasError: boolean }> {
     });
   }
 
+  componentDidCatch(e: any) {
+    const errMsg = e.message;
+
+    window.vsCodeApi.postMessage({
+      type: "error",
+      payload: {
+        errMsg,
+      },
+    });
+  }
+
   render() {
     if (this.state.hasError) {
       return (

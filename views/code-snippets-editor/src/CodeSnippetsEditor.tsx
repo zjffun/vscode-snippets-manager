@@ -145,7 +145,7 @@ const CodeSnippetsEditor = () => {
           return;
 
         case "error":
-          commonRef.current.setError(message.error);
+          commonRef.current.setError(message.errMsg);
           return;
       }
     };

@@ -87,7 +87,7 @@ export class CodeSnippetsService {
           currentParent === initCurrentParent &&
           e === ParseErrorCode.ValueExpected
         ) {
-          throw Error(`Parse error: empty content`);
+          throw Error(`Parse Error: empty content`);
         }
 
         let errorType = "Unknown";
@@ -103,7 +103,7 @@ export class CodeSnippetsService {
         }
 
         throw Error(
-          `Parse error: ${errorType} in ${currentFilename} (Line: ${
+          `Parse Error: ${errorType} in ${currentFilename} (Line: ${
             startLine + 1
           }, Char: ${startCharacter + 1}).\n` +
             `Tip: Check if the file conforms to the JSONC specification, example trailing commas or quotes.`

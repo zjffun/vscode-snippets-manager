@@ -84,10 +84,11 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
       try {
         vscodeSnippetEntries = codeSnippetsService.getVscodeSnippetEntries();
       } catch (error: any) {
-        if (error?.message !== "Parse error: empty content") {
+        const errMsg = error?.message;
+        if (errMsg !== "Parse Error: empty content") {
           webviewPanel.webview.postMessage({
             type: "error",
-            error: error.message,
+            errMsg,
           });
           return;
         }
@@ -102,9 +103,10 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
         try {
           vscodeSnippetEntries = codeSnippetsService.getVscodeSnippetEntries();
         } catch (error: any) {
+          const errMsg = error?.message;
           webviewPanel.webview.postMessage({
             type: "error",
-            error: error?.message,
+            errMsg,
           });
           return;
         }
@@ -210,7 +212,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
           return;
 
         case "error":
-          this.showErrorMessage(payload.data);
+          this.showErrorMessage(payload.errMsg);
           return;
       }
     });
@@ -218,9 +220,9 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     await updateWebview();
   }
 
-  private async showErrorMessage(ErrMsg: string) {
+  private async showErrorMessage(errMsg: string) {
     const answer = await vscode.window.showErrorMessage(
-      `It seems an error occurred in the code snippets editor, do you want to open in default editor? (Error Message: ${ErrMsg})`,
+      `It seems an error occurred in the code snippets editor, do you want to open in default editor? (Error Message: ${errMsg})`,
       "Yes",
       "No"
     );
