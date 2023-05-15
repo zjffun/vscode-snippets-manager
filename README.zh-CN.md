@@ -52,6 +52,12 @@
 
 ![search](images/search.webp)
 
+## 配置
+
+### `snippetsManager.autoCloseSnippetBodyEditor`
+
+控制是否保存后自动关闭代码片段主体编辑器，默认是 `true`。
+
 ## 通过命令行安装
 
 ```bash

@@ -33,6 +33,17 @@
   "main": "./out/extension.js",
   "browser": "./dist/web/extension.js",
   "contributes": {
+    "configuration": {
+      "title": "%extension.configuration.title%",
+      "properties": {
+        "snippetsManager.autoCloseSnippetBodyEditor": {
+          "type": "boolean",
+          "default": true,
+          "scope": "machine",
+          "description": "%extension.configuration.autoCloseSnippetBodyEditor.desc%"
+        }
+      }
+    },
     "viewsContainers": {
       "activitybar": [
         {

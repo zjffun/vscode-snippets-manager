@@ -52,6 +52,12 @@ Search workspace, user or extension snippets.
 
 ![search](images/search.webp)
 
+## Settings
+
+### `snippetsManager.autoCloseSnippetBodyEditor`
+
+Controls whether to automatically close the code snippet body editor after saving, Default: `true`.
+
 ## Install via CLI
 
 ```bash

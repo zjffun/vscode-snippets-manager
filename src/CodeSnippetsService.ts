@@ -10,7 +10,7 @@ import {
 import getKey from "./core/getKey";
 import getUserSnippetsFilesInfo from "./core/getUserSnippetsFilesInfo";
 import getWorkspaceSnippetsFilesInfo from "./core/getWorkspaceSnippetsFilesInfo";
-import { log } from "./extension";
+import logger from "./utils/logger";
 import { refresh } from "./views/WorkspaceSnippetsExplorerView";
 import {
   applyEdit,
@@ -371,7 +371,7 @@ export class CodeSnippetsService {
     try {
       snippets = await codeSnippetsService.getMap();
     } catch (error: any) {
-      log.appendLine(error?.message);
+      logger.error(error?.message);
     }
 
     return snippets;
@@ -388,7 +388,7 @@ export class CodeSnippetsService {
         try {
           snippets = await CodeSnippetsService.getSnippetsByUri(uri);
         } catch (error: any) {
-          log.appendLine(error?.message);
+          logger.error(error?.message);
           continue;
         }
 
@@ -424,7 +424,7 @@ export class CodeSnippetsService {
       try {
         snippets = await CodeSnippetsService.getSnippetsByUri(uri);
       } catch (error: any) {
-        log.appendLine(error?.message);
+        logger.error(error?.message);
         continue;
       }
 
@@ -474,7 +474,7 @@ export class CodeSnippetsService {
           try {
             snippets = await CodeSnippetsService.getSnippetsByUri(snippetsUri);
           } catch (error: any) {
-            log.appendLine(error?.message);
+            logger.error(error?.message);
             continue;
           }
 
@@ -510,7 +510,7 @@ export class CodeSnippetsService {
         try {
           snippets = await CodeSnippetsService.getSnippetsByUri(uri);
         } catch (error: any) {
-          log.appendLine(error?.message);
+          logger.error(error?.message);
           continue;
         }
 
@@ -538,7 +538,7 @@ export class CodeSnippetsService {
       try {
         snippets = await CodeSnippetsService.getSnippetsByUri(uri);
       } catch (error: any) {
-        log.appendLine(error?.message);
+        logger.error(error?.message);
         continue;
       }
 
@@ -583,7 +583,7 @@ export class CodeSnippetsService {
           try {
             snippets = await CodeSnippetsService.getSnippetsByUri(snippetsUri);
           } catch (error: any) {
-            log.appendLine(error?.message);
+            logger.error(error?.message);
             continue;
           }
 

@@ -19,5 +19,8 @@
   "extension.searchExtensionSnippets.title": "Search Extension Snippets",
   "extension.showSource.title": "Show Source",
   "extension.showEditor.title": "Show Editor",
-  "extension.codeSnippetsEditorView.displayName": "Code Snippets Editor"
+  "extension.codeSnippetsEditorView.displayName": "Code Snippets Editor",
+
+  "extension.configuration.title": "Snippets Manager",
+  "extension.configuration.autoCloseSnippetBodyEditor.desc": "Controls whether to automatically close the code snippet body editor after saving."
 }

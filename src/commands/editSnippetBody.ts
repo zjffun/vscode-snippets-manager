@@ -3,10 +3,11 @@ import * as vscode from "vscode";
 import { ISnippet } from "..";
 import { CodeSnippetsService } from "../CodeSnippetsService";
 import { context } from "../share";
+import logger from "../utils/logger";
 
 const sha1 = require("sha1");
 
-export const docSnippetMap = new Map<vscode.TextDocument, ISnippet>();
+export const docSnippetMap = new WeakMap<vscode.TextDocument, ISnippet>();
 
 export function initEditSnippetBody() {
   // Clean up
@@ -32,6 +33,8 @@ export function initEditSnippetBody() {
       return;
     }
 
+    logger.info(`Edit snippet body: save ${document.fileName}`);
+
     const snippetsTextDoc = await vscode.workspace.openTextDocument(
       snippet?.uri
     );
@@ -45,19 +48,41 @@ export function initEditSnippetBody() {
       snippet.name
     );
 
-    docSnippetMap.delete(document);
+    const config = vscode.workspace.getConfiguration("snippetsManager");
+    const autoCloseSnippetBodyEditor = config.get<boolean>(
+      "autoCloseSnippetBodyEditor"
+    );
 
-    if (vscode.window.activeTextEditor?.document === document) {
-      vscode.commands.executeCommand("workbench.action.closeActiveEditor");
+    if (
+      autoCloseSnippetBodyEditor &&
+      vscode.window.activeTextEditor?.document === document
+    ) {
+      logger.info(
+        `Edit snippet body: autoCloseSnippetBodyEditor ${document.fileName}`
+      );
+
+      docSnippetMap.delete(document);
+
+      await vscode.commands.executeCommand(
+        "workbench.action.closeActiveEditor"
+      );
     }
   }
 
-  vscode.workspace.onDidSaveTextDocument((document) => {
-    onDidSaveTextDocument(document);
-  });
+  // Can't find the way to delete `docSnippetMap` item when the editor is closed by clicking the close button.
+  // onDidCloseTextDocument don't trigger when the editor is closed by clicking the close button.
+
+  const onDidSaveTextDocumentDisposable =
+    vscode.workspace.onDidSaveTextDocument((document) => {
+      onDidSaveTextDocument(document);
+    });
+
+  return onDidSaveTextDocumentDisposable;
 }
 
 export default async (snippet: ISnippet) => {
+  logger.info(`Edit snippet body: edit ${snippet?.name}`);
+
   if (!snippet.uri || !snippet.name) {
     return;
   }
@@ -83,8 +108,8 @@ export default async (snippet: ISnippet) => {
         break;
       }
     }
-  } catch (error) {
-    // do nothing
+  } catch (error: any) {
+    logger.error(error?.message);
   }
 
   docSnippetMap.set(editor.document, snippet);

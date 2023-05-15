@@ -19,5 +19,8 @@
   "extension.searchExtensionSnippets.title": "搜索拓展程序的代码片段",
   "extension.showSource.title": "打开源文件",
   "extension.showEditor.title": "打开代码片段编辑器",
-  "extension.codeSnippetsEditorView.displayName": "代码片段编辑器"
+  "extension.codeSnippetsEditorView.displayName": "代码片段编辑器",
+
+  "extension.configuration.title": "代码片段管理",
+  "extension.configuration.autoCloseSnippetBodyEditor.desc": "控制是否保存后自动关闭代码片段主体编辑器。"
 }
