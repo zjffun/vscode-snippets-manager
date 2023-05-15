@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.1.21
+
+Add autoCloseSnippetBodyEditor setting.
+
 # v0.1.20
 
 Fix postMessage.

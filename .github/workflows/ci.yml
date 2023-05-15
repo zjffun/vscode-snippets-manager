@@ -2,18 +2,14 @@ on:
   push:
     branches:
       - main
-  release:
-    types:
-      - created
+  pull_request:
+    branches: [main]
 
 jobs:
   build:
     strategy:
       matrix:
         os: [macos-latest, ubuntu-latest, windows-latest]
-        exclude:
-          - os: ${{ startsWith( github.ref, 'refs/tags/') && 'macos-latest' || '' }}
-          - os: ${{ startsWith( github.ref, 'refs/tags/') && 'windows-latest' || '' }}
     runs-on: ${{ matrix.os }}
     steps:
       - name: Checkout
@@ -29,13 +25,3 @@ jobs:
         if: runner.os == 'Linux'
       - run: yarn test
         if: runner.os != 'Linux'
-      - name: Publish
-        if: success() && startsWith( github.ref, 'refs/tags/') && matrix.os == 'ubuntu-latest'
-        run: yarn run deploy
-        env:
-          VSCE_PAT: ${{ secrets.VSCE_PAT }}
-      - name: Publish to Open VSX Registry
-        if: success() && startsWith( github.ref, 'refs/tags/') && matrix.os == 'ubuntu-latest'
-        uses: HaaLeo/publish-vscode-extension@v1
-        with:
-          pat: ${{ secrets.OPEN_VSX_TOKEN }}
