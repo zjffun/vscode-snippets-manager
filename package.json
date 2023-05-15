@@ -39,7 +39,7 @@
         "snippetsManager.autoCloseSnippetBodyEditor": {
           "type": "boolean",
           "default": true,
-          "scope": "machine",
+          "scope": "window",
           "description": "%extension.configuration.autoCloseSnippetBodyEditor.desc%"
         }
       }
