@@ -58,6 +58,8 @@ Search workspace, user or extension snippets.
 
 Controls whether to automatically close the code snippet body editor after saving, Default: `true`.
 
+Usually this option needs to be turned off when using `files.autoSave`.
+
 ## Install via CLI
 
 ```bash
