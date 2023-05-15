@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.1.23
+
+Update autoCloseSnippetBodyEditor scope
+
 # v0.1.22
 
 Update `autoCloseSnippetBodyEditor` doc.
