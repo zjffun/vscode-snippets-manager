@@ -2,9 +2,13 @@
 
 # [Unreleased]
 
+# v0.1.22
+
+Update `autoCloseSnippetBodyEditor` doc.
+
 # v0.1.21
 
-Add autoCloseSnippetBodyEditor setting.
+Add `autoCloseSnippetBodyEditor` setting.
 
 # v0.1.20
 
