@@ -1,9 +1,12 @@
 import { Buffer } from "buffer";
 import * as vscode from "vscode";
+import * as nls from "vscode-nls";
 import { ISnippet } from "..";
 import { CodeSnippetsService } from "../CodeSnippetsService";
 import { context } from "../share";
 import logger from "../utils/logger";
+
+const localize = nls.loadMessageBundle();
 
 const sha1 = require("sha1");
 
@@ -48,8 +51,9 @@ export function initEditSnippetBody() {
       snippet.name
     );
 
-    const config = vscode.workspace.getConfiguration("snippetsManager");
-    const autoCloseSnippetBodyEditor = config.get<boolean>(
+    const snippetsManagerConfig =
+      vscode.workspace.getConfiguration("snippetsManager");
+    const autoCloseSnippetBodyEditor = snippetsManagerConfig.get<boolean>(
       "autoCloseSnippetBodyEditor"
     );
 
@@ -80,6 +84,62 @@ export function initEditSnippetBody() {
   return onDidSaveTextDocumentDisposable;
 }
 
+async function askTurnOffAutoCloseSnippetBodyEditor() {
+  const filesConfig = vscode.workspace.getConfiguration("files");
+  const autoSave = filesConfig.get<string>("autoSave") || "";
+
+  const autoSaveConflict = ["afterDelay", "onWindowChange"].includes(autoSave);
+
+  if (!autoSaveConflict) {
+    return;
+  }
+
+  const snippetsManagerConfig =
+    vscode.workspace.getConfiguration("snippetsManager");
+  const autoCloseSnippetBodyEditor = snippetsManagerConfig.get<boolean>(
+    "autoCloseSnippetBodyEditor"
+  );
+  if (!autoCloseSnippetBodyEditor) {
+    return;
+  }
+
+  const askTurnOffAutoCloseSnippetBodyEditorState = context.globalState.get(
+    "askTurnOffAutoCloseSnippetBodyEditor",
+    true
+  );
+  if (!askTurnOffAutoCloseSnippetBodyEditorState) {
+    return;
+  }
+
+  const answer = await vscode.window.showInformationMessage(
+    localize(
+      "askTurnOffAutoCloseSnippetBodyMsg",
+      "Detected that `files.autoSave` is `afterDelay` or `onWindowChange`, whether to turn off automatically close the code snippet body editor after saving?"
+    ),
+    ...["Yes", "No", "No, and don't ask me again"]
+  );
+
+  if (answer === "Yes") {
+    let target = vscode.ConfigurationTarget.Global;
+    if (vscode.workspace.workspaceFolders?.length) {
+      target = vscode.ConfigurationTarget.Workspace;
+    }
+
+    await snippetsManagerConfig.update(
+      "autoCloseSnippetBodyEditor",
+      false,
+      target
+    );
+
+    return;
+  }
+
+  if (answer === "No, and don't ask me again") {
+    context.globalState.update("askTurnOffAutoCloseSnippetBodyEditor", false);
+    return;
+  }
+}
+
 export default async (snippet: ISnippet) => {
   logger.info(`Edit snippet body: edit ${snippet?.name}`);
 
@@ -97,6 +157,9 @@ export default async (snippet: ISnippet) => {
   await vscode.workspace.fs.writeFile(tmpFileUri, Buffer.from(snippet.body));
 
   const editor = await vscode.window.showTextDocument(tmpFileUri);
+
+  // This is an async task
+  askTurnOffAutoCloseSnippetBodyEditor();
 
   try {
     const vscodeLanguages = await vscode.languages.getLanguages();

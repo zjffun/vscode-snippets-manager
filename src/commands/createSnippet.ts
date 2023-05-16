@@ -1,8 +1,11 @@
 import * as vscode from "vscode";
+import * as nls from "vscode-nls";
 import { CodeSnippetsService } from "../CodeSnippetsService";
 import getSnippetTextDocument from "../core/getSnippetTextDocument";
 import { context, getUserFolderUri } from "../share";
 import refreshAllView from "../views/refreshAllView";
+
+const localize = nls.loadMessageBundle();
 
 const unsupportedScope = ["vue"];
 
@@ -61,7 +64,10 @@ async function getSnippetUri() {
 
   if (askAddUserSnippets) {
     const answer = await vscode.window.showInformationMessage(
-      "Can't find workspace folder, do you want to add the snippet to user snippets?",
+      localize(
+        "askAddUserSnippetsMsg",
+        "Can't find workspace folder, do you want to add the snippet to user snippets?"
+      ),
       ...["Yes, and don't ask me again", "Yes", "No"]
     );
 

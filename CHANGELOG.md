@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.2.0
+
+Ask whether to turn off `autoCloseSnippetBodyEditor` when `autoSave` is on.
+
 # v0.1.23
 
 Update `autoCloseSnippetBodyEditor` scope.
