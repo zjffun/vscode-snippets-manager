@@ -9,11 +9,11 @@ const unsupportedScope = ["vue"];
 export default async ({
   prefix,
   uri,
-  escapeDollar,
+  escape,
 }: {
   prefix?: string;
   uri?: vscode.Uri;
-  escapeDollar?: boolean;
+  escape?: boolean;
 } = {}) => {
   const { activeTextEditor } = vscode.window;
 
@@ -46,8 +46,8 @@ export default async ({
   let bodyText =
     activeTextEditor?.document?.getText?.(activeTextEditor?.selection) || "";
 
-  if (escapeDollar === true) {
-    bodyText = bodyText.replaceAll("$", "\\$");
+  if (escape === true) {
+    bodyText = bodyText.replaceAll("\\", "\\\\").replaceAll("$", "\\$");
   }
 
   let scope = activeTextEditor?.document?.languageId;

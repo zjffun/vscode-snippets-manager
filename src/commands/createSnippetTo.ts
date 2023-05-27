@@ -11,18 +11,18 @@ type Items = Item[];
 export default async ({
   prefix,
   uri,
-  escapeDollar,
+  escape,
 }: {
   prefix?: string;
   uri?: vscode.Uri;
-  escapeDollar?: boolean;
+  escape?: boolean;
 } = {}) => {
   // for test only
   if (uri) {
     return createSnippet({
       prefix,
       uri,
-      escapeDollar,
+      escape,
     });
   }
 
@@ -62,7 +62,7 @@ export default async ({
   createSnippet({
     prefix,
     uri: snippetsFile.uri,
-    escapeDollar,
+    escape,
   });
 
   refreshAllView();

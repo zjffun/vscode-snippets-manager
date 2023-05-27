@@ -83,7 +83,7 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "snippetsmanager.createSnippet",
       async (prefix?: string) => {
-        return createSnippet({ prefix, escapeDollar: true });
+        return createSnippet({ prefix, escape: true });
       }
     )
   );
@@ -92,14 +92,14 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand(
       "snippetsmanager.createSnippetTo",
       async (prefix?: string, uri?: vscode.Uri) => {
-        return createSnippetTo({ prefix, uri, escapeDollar: true });
+        return createSnippetTo({ prefix, uri, escape: true });
       }
     )
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "snippetsmanager.createSnippetWithoutEscapeDollar",
+      "snippetsmanager.createSnippetWithoutEscape",
       async (prefix?: string) => {
         return createSnippet({ prefix });
       }
@@ -108,7 +108,7 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "snippetsmanager.createSnippetWithoutEscapeDollarTo",
+      "snippetsmanager.createSnippetWithoutEscapeTo",
       async (prefix?: string, uri?: vscode.Uri) => {
         return createSnippetTo({ prefix, uri });
       }

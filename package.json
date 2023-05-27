@@ -196,22 +196,22 @@
         {
           "command": "snippetsmanager.createSnippet",
           "when": "editorHasSelection",
-          "group": "snippets"
+          "group": "snippets@1"
         },
         {
           "command": "snippetsmanager.createSnippetTo",
           "when": "editorHasSelection",
-          "group": "snippets"
+          "group": "snippets@2"
         },
         {
-          "command": "snippetsmanager.createSnippetWithoutEscapeDollar",
+          "command": "snippetsmanager.createSnippetWithoutEscape",
           "when": "editorHasSelection",
-          "group": "snippets"
+          "group": "snippets@3"
         },
         {
-          "command": "snippetsmanager.createSnippetWithoutEscapeDollarTo",
+          "command": "snippetsmanager.createSnippetWithoutEscapeTo",
           "when": "editorHasSelection",
-          "group": "snippets"
+          "group": "snippets@4"
         }
       ]
     },
@@ -227,13 +227,13 @@
         "category": "Snippets Manager"
       },
       {
-        "command": "snippetsmanager.createSnippetWithoutEscapeDollar",
-        "title": "%extension.createSnippetWithoutEscapeDollar.title%",
+        "command": "snippetsmanager.createSnippetWithoutEscape",
+        "title": "%extension.createSnippetWithoutEscape.title%",
         "category": "Snippets Manager"
       },
       {
-        "command": "snippetsmanager.createSnippetWithoutEscapeDollarTo",
-        "title": "%extension.createSnippetWithoutEscapeDollarTo.title%",
+        "command": "snippetsmanager.createSnippetWithoutEscapeTo",
+        "title": "%extension.createSnippetWithoutEscapeTo.title%",
         "category": "Snippets Manager"
       },
       {

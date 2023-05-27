@@ -98,3 +98,6 @@ export async function getCodeSnippetsService({
   const codeSnippetsService = new CodeSnippetsService(textDocument);
   return codeSnippetsService;
 }
+
+export const escapeBody = `test content $1 \\$1`;
+export const escapedBody = `test content \\$1 \\\\\\$1`;
