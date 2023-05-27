@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.3.0
+
+Escape snippet body by default when create snippets from selection.
+
 # v0.2.0
 
 Ask whether to turn off `autoCloseSnippetBodyEditor` when `autoSave` is on.
