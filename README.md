@@ -4,7 +4,7 @@ English | [简体中文](./README.zh-CN.md)
 
 Create and edit snippets easily.
 
-This extension is built over the default VS Code snippets system, wrapping it into a nice and intuitive UI, improving usability, and making snippets easy to create, edit, delete and search. It supports user-custom snippets, global snippets and snippets from installed extensions.
+This extension is built over the default [VS Code snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets) system, wrapping it into a nice and intuitive UI, improving usability, and making snippets easy to create, edit, delete and search. It supports user-custom snippets, global snippets and snippets from installed extensions.
 
 [![video](./images/video.webp)](https://www.youtube.com/embed/xhrl1eCmX5Q)
 
@@ -21,6 +21,8 @@ Create, edit, delete or search snippets.
 Select range to create a snippet.
 
 <img src="images/create1.webp" width="500px">
+
+- In order to make the content output by the snippet consistent with the selected content, we will automatically escape `\` in the body of the snippet to `\\` and `$` to `\$` by default. If you do not want to escape, you can choose menu items with `(Without Escape)`.
 
 ### Edit snippets
 
