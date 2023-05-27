@@ -60,32 +60,6 @@ suite("Extension", () => {
     });
   });
 
-  test("Create snippet command should work when has selection", async () => {
-    const uri = await createTestFile("test content");
-
-    await vscode.commands.executeCommand("vscode.open", uri);
-    await vscode.commands.executeCommand("editor.action.selectAll", uri);
-
-    const res = await vscode.commands.executeCommand(
-      "snippetsmanager.createSnippet",
-      "test"
-    );
-
-    assert.ok(res);
-  });
-
-  test("Create snippet to command should work when has no selection", async () => {
-    const uri = await createTestFile("{}");
-
-    const res = await vscode.commands.executeCommand(
-      "snippetsmanager.createSnippetTo",
-      "test",
-      uri
-    );
-
-    assert.ok(res);
-  });
-
   test("Explorer should work", async () => {
     await vscode.commands.executeCommand(
       "workbench.view.extension.snippetsmanager-snippetsView"

@@ -1,5 +1,9 @@
+import * as assert from "assert";
 import { Buffer } from "buffer";
 import * as vscode from "vscode";
+import { CodeSnippetsService } from "../CodeSnippetsService";
+import getSnippetTextDocument from "../core/getSnippetTextDocument";
+import getSnippetUri from "../core/getSnippetUri";
 
 const testWorkspaceRoot = <vscode.Uri>(
   vscode.workspace.workspaceFolders?.[0]?.uri
@@ -61,8 +65,36 @@ export async function closeAllEditors() {
 export async function resetTestWorkspace() {
   try {
     await vscode.workspace.fs.delete(testWorkspaceFolder, { recursive: true });
+    await vscode.workspace.fs.delete(
+      vscode.Uri.joinPath(
+        testWorkspaceRoot,
+        ".vscode",
+        "default-snippets-manager.code-snippets"
+      )
+    );
   } catch {
     // ok if file doesn't exist
   }
   await vscode.workspace.fs.createDirectory(testWorkspaceFolder);
+}
+
+export async function getCodeSnippetsService({
+  uri,
+}: { uri?: vscode.Uri } = {}) {
+  let _snippetUri = uri;
+
+  if (!_snippetUri) {
+    _snippetUri = await getSnippetUri();
+  }
+
+  if (!_snippetUri) {
+    assert.fail("can't find snippet uri");
+  }
+
+  const textDocument = await getSnippetTextDocument({
+    snippetsUri: _snippetUri,
+  });
+
+  const codeSnippetsService = new CodeSnippetsService(textDocument);
+  return codeSnippetsService;
 }

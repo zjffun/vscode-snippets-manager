@@ -1,0 +1,90 @@
+import * as assert from "assert";
+// You can import and use all API from the 'vscode' module
+// as well as import your extension to test it
+import * as vscode from "vscode";
+import {
+  closeAllEditors,
+  createTestFile,
+  getCodeSnippetsService,
+  resetTestWorkspace,
+  testWorkspaceFolder,
+} from "../../util";
+
+// import * as myExtension from '../../extension';
+
+assert.ok(testWorkspaceFolder);
+
+suite("Extension", () => {
+  const extensionID = "zjffun.snippetsmanager";
+  const extensionShortName = "snippetsmanager";
+
+  let extension: vscode.Extension<any> | undefined;
+
+  extension = vscode.extensions.getExtension(extensionID);
+
+  setup(async () => {
+    await closeAllEditors();
+    await resetTestWorkspace();
+  });
+
+  teardown(async () => {
+    await closeAllEditors();
+    await resetTestWorkspace();
+  });
+
+  test("createSnippet command should work when has selection", async () => {
+    const uri = await createTestFile("test content $1");
+
+    await vscode.commands.executeCommand("vscode.open", uri);
+    await vscode.commands.executeCommand("editor.action.selectAll", uri);
+
+    const res = await vscode.commands.executeCommand(
+      "snippetsmanager.createSnippet",
+      "test"
+    );
+
+    assert.ok(res);
+
+    const codeSnippetsService = await getCodeSnippetsService();
+    const snippet = codeSnippetsService.getSnippetByName("test");
+
+    assert.equal(snippet?.body, ["test content \\$1"]);
+  });
+
+  test("createSnippetWithoutEscapeDollar command should work when has selection", async () => {
+    const uri = await createTestFile("test content $1");
+
+    await vscode.commands.executeCommand("vscode.open", uri);
+    await vscode.commands.executeCommand("editor.action.selectAll", uri);
+
+    const res = await vscode.commands.executeCommand(
+      "snippetsmanager.createSnippetWithoutEscapeDollar",
+      "test"
+    );
+
+    assert.ok(res);
+
+    const codeSnippetsService = await getCodeSnippetsService();
+    const snippet = codeSnippetsService.getSnippetByName("test");
+
+    assert.equal(snippet?.body, ["test content $1"]);
+  });
+
+  test("createSnippet command should work when has no selection", async () => {
+    const res = await vscode.commands.executeCommand(
+      "snippetsmanager.createSnippet",
+      "test"
+    );
+
+    assert.ok(res);
+  });
+
+  test("createSnippetWithoutEscapeDollar command should work when has no selection", async () => {
+    const res = await vscode.commands.executeCommand(
+      "snippetsmanager.createSnippetWithoutEscapeDollar",
+      "test"
+    );
+
+    assert.ok(res);
+  });
+});
