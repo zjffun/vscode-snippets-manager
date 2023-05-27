@@ -6,6 +6,8 @@
   "extension.HelpAndFeedback.name": "帮助和反馈",
   "extension.createSnippet.title": "创建代码片段",
   "extension.createSnippetTo.title": "创建代码片段到...",
+  "extension.createSnippetWithoutEscapeDollar.title": "创建代码片段（不转义$）",
+  "extension.createSnippetWithoutEscapeDollarTo.title": "创建代码片段（不转义$）到...",
   "extension.workbenchActionOpenSnippets.title": "创建代码片段文件",
   "extension.duplicateSnippet.title": "制作代码片段副本",
   "extension.deleteSnippet.title": "删除代码片段",

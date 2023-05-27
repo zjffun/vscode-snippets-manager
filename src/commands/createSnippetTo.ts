@@ -8,10 +8,22 @@ import createSnippet from "./createSnippet";
 type Item = vscode.QuickPickItem & { uri: Uri };
 type Items = Item[];
 
-export default async (prefix?: string, uri?: Uri) => {
+export default async ({
+  prefix,
+  uri,
+  escapeDollar,
+}: {
+  prefix?: string;
+  uri?: vscode.Uri;
+  escapeDollar?: boolean;
+} = {}) => {
   // for test only
   if (uri) {
-    return createSnippet(prefix, uri);
+    return createSnippet({
+      prefix,
+      uri,
+      escapeDollar,
+    });
   }
 
   const userSnippetsFilesInfo = await getUserSnippetsFilesInfo();
@@ -47,7 +59,11 @@ export default async (prefix?: string, uri?: Uri) => {
     return;
   }
 
-  createSnippet(prefix, snippetsFile.uri);
+  createSnippet({
+    prefix,
+    uri: snippetsFile.uri,
+    escapeDollar,
+  });
 
   refreshAllView();
 

@@ -202,6 +202,16 @@
           "command": "snippetsmanager.createSnippetTo",
           "when": "editorHasSelection",
           "group": "snippets"
+        },
+        {
+          "command": "snippetsmanager.createSnippetWithoutEscapeDollar",
+          "when": "editorHasSelection",
+          "group": "snippets"
+        },
+        {
+          "command": "snippetsmanager.createSnippetWithoutEscapeDollarTo",
+          "when": "editorHasSelection",
+          "group": "snippets"
         }
       ]
     },
@@ -214,6 +224,16 @@
       {
         "command": "snippetsmanager.createSnippetTo",
         "title": "%extension.createSnippetTo.title%",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.createSnippetWithoutEscapeDollar",
+        "title": "%extension.createSnippetWithoutEscapeDollar.title%",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.createSnippetWithoutEscapeDollarTo",
+        "title": "%extension.createSnippetWithoutEscapeDollarTo.title%",
         "category": "Snippets Manager"
       },
       {

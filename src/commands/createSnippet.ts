@@ -86,10 +86,18 @@ async function getSnippetUri() {
   }
 }
 
-export default async (prefix?: string, snippetUri?: vscode.Uri) => {
+export default async ({
+  prefix,
+  uri,
+  escapeDollar,
+}: {
+  prefix?: string;
+  uri?: vscode.Uri;
+  escapeDollar?: boolean;
+} = {}) => {
   const { activeTextEditor } = vscode.window;
 
-  let _snippetUri = snippetUri;
+  let _snippetUri = uri;
 
   if (!_snippetUri) {
     _snippetUri = await getSnippetUri();
@@ -115,8 +123,12 @@ export default async (prefix?: string, snippetUri?: vscode.Uri) => {
     });
   }
 
-  const bodyText =
+  let bodyText =
     activeTextEditor?.document?.getText?.(activeTextEditor?.selection) || "";
+
+  if (escapeDollar === true) {
+    bodyText = bodyText.replaceAll("$", "\\$");
+  }
 
   let scope = activeTextEditor?.document?.languageId;
   if (scope === undefined || unsupportedScope.includes(scope)) {
