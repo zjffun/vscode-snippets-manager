@@ -9,7 +9,7 @@
     "snippet manager",
     "snippets"
   ],
-  "version": "0.2.0",
+  "version": "0.2.1",
   "publisher": "zjffun",
   "engines": {
     "vscode": "^1.59.0"
@@ -32,7 +32,10 @@
   ],
   "main": "./out/extension.js",
   "browser": "./dist/web/extension.js",
-  "extensionKind": ["ui", "workspace"],
+  "extensionKind": [
+    "ui",
+    "workspace"
+  ],
   "contributes": {
     "configuration": {
       "title": "%extension.configuration.title%",
