@@ -135,28 +135,38 @@
       "view/item/context": [
         {
           "command": "_snippetsmanager.editSnippet",
-          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item && !listMultiSelection",
           "group": "inline@1"
         },
         {
           "command": "_snippetsmanager.duplicateSnippet",
-          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item && !listMultiSelection",
           "group": "inline@2"
+        },
+        {
+          "command": "_snippetsmanager.copySnippet",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
+          "group": "snippets@1"
         },
         {
           "command": "_snippetsmanager.deleteSnippet",
           "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
-          "group": "inline@3"
+          "group": "snippets@2"
         },
         {
           "command": "_snippetsmanager.showSnippet",
-          "when": "viewItem == snippetsmanager-snippetsView-Explorer-FileItem",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-FileItem && !listMultiSelection",
           "group": "inline@1"
         },
         {
-          "command": "_snippetsmanager.deleteSnippetFile",
+          "command": "_snippetsmanager.pasteSnippet",
           "when": "viewItem == snippetsmanager-snippetsView-Explorer-FileItem",
-          "group": "inline@2"
+          "group": "snippets@1"
+        },
+        {
+          "command": "_snippetsmanager.deleteSnippetFile",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-FileItem && !listMultiSelection",
+          "group": "snippets@2"
         }
       ],
       "commandPalette": [
@@ -244,6 +254,14 @@
         "command": "_snippetsmanager.workbenchActionOpenSnippets",
         "title": "%extension.workbenchActionOpenSnippets.title%",
         "icon": "$(add)"
+      },
+      {
+        "command": "_snippetsmanager.copySnippet",
+        "title": "%extension.copySnippet.title%"
+      },
+      {
+        "command": "_snippetsmanager.pasteSnippet",
+        "title": "%extension.pasteSnippet.title%"
       },
       {
         "command": "_snippetsmanager.duplicateSnippet",

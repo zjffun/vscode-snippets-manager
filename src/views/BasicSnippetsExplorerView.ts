@@ -30,6 +30,7 @@ export default abstract class BasicSnippetsExplorerView
       vscode.window.createTreeView((that.constructor as any).viewId, {
         treeDataProvider: that,
         showCollapseAll: true,
+        canSelectMany: true,
       });
     }, 0);
   }

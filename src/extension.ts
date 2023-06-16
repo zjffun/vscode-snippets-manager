@@ -5,6 +5,7 @@ import "./nlsConfig";
 // Add a newline, wait for [Automatically create sort groups based on newlines in organize imports](https://github.com/microsoft/TypeScript/pull/48330)
 
 import { CodeSnippetsEditor } from "./CodeSnippetsEditor";
+import copySnippet from "./commands/copySnippet";
 import createSnippet from "./commands/createSnippet";
 import createSnippetTo from "./commands/createSnippetTo";
 import deleteSnippet from "./commands/deleteSnippet";
@@ -12,6 +13,7 @@ import deleteSnippetFile from "./commands/deleteSnippetFile";
 import duplicateSnippet from "./commands/duplicateSnippet";
 import editSnippet from "./commands/editSnippet";
 import { initEditSnippetBody } from "./commands/editSnippetBody";
+import pasteSnippet from "./commands/pasteSnippet";
 import searchSnippet from "./commands/searchSnippet";
 import showEditor from "./commands/showEditor";
 import showSnippet from "./commands/showSnippet";
@@ -20,6 +22,7 @@ import workbenchActionOpenSnippets, {
   workbenchActionOpenSnippetsId,
 } from "./commands/workbenchActionOpenSnippets";
 import { setContext, SnippetType } from "./share";
+import getSnippets from "./utils/getSnippets";
 import ExtensionSnippetsExplorerView from "./views/ExtensionSnippetsExplorerView";
 import { registerHelpAndFeedbackView } from "./views/helpAndFeedbackView";
 import refreshAllView from "./views/refreshAllView";
@@ -133,6 +136,25 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand(
+      "_snippetsmanager.copySnippet",
+      (snippet, snippets) => {
+        const _snippets = getSnippets(snippet, snippets);
+        copySnippet(_snippets);
+      }
+    )
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "_snippetsmanager.pasteSnippet",
+      (snippet) => {
+        pasteSnippet(snippet);
+      }
+    )
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
       "_snippetsmanager.duplicateSnippet",
       (snippet) => {
         duplicateSnippet(snippet);
@@ -143,8 +165,9 @@ export function activate(context: vscode.ExtensionContext) {
   context.subscriptions.push(
     vscode.commands.registerCommand(
       "_snippetsmanager.deleteSnippet",
-      (snippet) => {
-        deleteSnippet(snippet);
+      (snippet, snippets) => {
+        const _snippets = getSnippets(snippet, snippets);
+        deleteSnippet(_snippets);
       }
     )
   );
