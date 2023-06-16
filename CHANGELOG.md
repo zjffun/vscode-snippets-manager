@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.2.2
+
+Added features copy and paste snippets.
+
 # v0.2.1
 
 Fix [snippets on WSL](https://github.com/zjffun/vscode-snippets-manager/issues/19).
