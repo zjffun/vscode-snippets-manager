@@ -54,6 +54,10 @@
 
 ![search](images/search.webp)
 
+### 复制粘贴代码片段
+
+复制粘贴工作区、用户或拓展程序的代码片段。
+
 ## 配置
 
 ### `snippetsManager.autoCloseSnippetBodyEditor`
