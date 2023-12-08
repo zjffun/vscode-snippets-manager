@@ -48,6 +48,12 @@
         }
       }
     },
+    "configurationDefaults": {
+      "workbench.editorAssociations": {
+        "git:/**/*.code-snippets": "default",
+        "gitlens:/**/*.code-snippets": "default"
+      }
+    },
     "viewsContainers": {
       "activitybar": [
         {
