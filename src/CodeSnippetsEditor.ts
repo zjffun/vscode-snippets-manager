@@ -6,6 +6,7 @@ import editSnippetBody from "./commands/editSnippetBody";
 import showSource from "./commands/showSource";
 import { getNonce } from "./util";
 import refreshAllView from "./views/refreshAllView";
+import logger from "./utils/logger";
 
 const localize = nls.loadMessageBundle();
 
@@ -24,8 +25,6 @@ const i18nText = {
   cancel: localize("cancel", "Cancel"),
   noSnippets: localize("noSnippets", "No snippets."),
 };
-
-export let currentDocument: vscode.TextDocument | null = null;
 
 export let currentWebviewPanel: vscode.WebviewPanel | null = null;
 
@@ -54,8 +53,6 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
   private static readonly activeContextKey =
     "snippetsmanagerCodeSnippetsEditorFocus";
 
-  public static isActive: boolean = false;
-
   public static readonly viewType = "snippetsmanager.codeSnippetsEditorView";
 
   constructor(private readonly context: vscode.ExtensionContext) {}
@@ -68,8 +65,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     webviewPanel: vscode.WebviewPanel,
     _token: vscode.CancellationToken
   ): Promise<void> {
-    this.setCurrent({ document, webviewPanel });
-    this.setActiveContext(true);
+    currentWebviewPanel = webviewPanel;
 
     const codeSnippetsService = new CodeSnippetsService(document);
 
@@ -81,6 +77,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 
     async function updateWebview() {
       let vscodeSnippetEntries;
+      let readonly = false;
       try {
         vscodeSnippetEntries = codeSnippetsService.getVscodeSnippetEntries();
       } catch (error: any) {
@@ -112,9 +109,16 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
         }
       }
 
+      try {
+        readonly = document.uri.toString().startsWith("git");
+      } catch (error: any) {
+        logger.error(`Failed to check readonly: ${error?.message}`);
+      }
+
       webviewPanel.webview.postMessage({
         type: "update",
         vscodeSnippetEntries,
+        readonly,
       });
     }
 
@@ -125,7 +129,6 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     //
     // Remember that a single text document can also be shared between multiple custom
     // editors (this happens for example when you split a custom editor)
-
     const changeDocumentSubscription = vscode.workspace.onDidChangeTextDocument(
       (e) => {
         if (e.document.uri.toString() === document.uri.toString()) {
@@ -135,32 +138,26 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     );
 
     webviewPanel.onDidChangeViewState(() => {
-      if (
-        currentWebviewPanel === null ||
-        currentWebviewPanel === webviewPanel
-      ) {
-        if (webviewPanel.visible) {
-          this.setCurrent({ document, webviewPanel });
-          updateWebview();
-        } else {
-          this.setCurrent();
-        }
-        this.setActiveContext(webviewPanel.visible);
+      if (webviewPanel.visible) {
+        currentWebviewPanel = webviewPanel;
+        updateWebview();
+      } else {
+        currentWebviewPanel = null;
       }
     });
 
     // Make sure we get rid of the listener when our editor is closed.
     webviewPanel.onDidDispose(() => {
-      if (currentWebviewPanel === webviewPanel) {
-        this.setCurrent();
-        this.setActiveContext(false);
-      }
       changeDocumentSubscription.dispose();
     });
 
     // Receive message from the webview.
     webviewPanel.webview.onDidReceiveMessage(async ({ type, payload }) => {
       switch (type) {
+        case "ready":
+          updateWebview();
+          return;
+
         case "insert": {
           await codeSnippetsService.insert(payload.snippet, {
             index: payload.index,
@@ -335,25 +332,5 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
         <script nonce="${nonce}" src="${tabGotoUri}"></script>
 			</body>
 			</html>`;
-  }
-
-  private setActiveContext(value: boolean) {
-    vscode.commands.executeCommand(
-      "setContext",
-      CodeSnippetsEditor.activeContextKey,
-      value
-    );
-    CodeSnippetsEditor.isActive = value;
-  }
-
-  private setCurrent({
-    document = null,
-    webviewPanel = null,
-  }: {
-    document?: vscode.TextDocument | null;
-    webviewPanel?: vscode.WebviewPanel | null;
-  } = {}) {
-    currentDocument = document;
-    currentWebviewPanel = webviewPanel;
   }
 }

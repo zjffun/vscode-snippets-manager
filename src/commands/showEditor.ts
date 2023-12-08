@@ -5,9 +5,6 @@ export default async () => {
   const { activeTextEditor } = vscode.window;
 
   if (!activeTextEditor) {
-    vscode.window.showErrorMessage(
-      "Get `vscode.window.activeTextEditor` failed."
-    );
     return;
   }
 

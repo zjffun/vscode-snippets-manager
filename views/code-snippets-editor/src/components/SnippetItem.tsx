@@ -8,12 +8,19 @@ import "./SnippetItem.scss";
 
 interface Props {
   snippet: ISnippet;
+  readonly: boolean;
   clickEdit(): void;
   saveEdit(): void;
   cancelEdit(): void;
 }
 
-const SnippetItem = ({ snippet, clickEdit, saveEdit, cancelEdit }: Props) => {
+const SnippetItem = ({
+  snippet,
+  readonly,
+  clickEdit,
+  saveEdit,
+  cancelEdit,
+}: Props) => {
   const vscode = getVsCode();
   const keyName = snippet[NAME];
   const editing = snippet[EDIT];
@@ -95,44 +102,46 @@ const SnippetItem = ({ snippet, clickEdit, saveEdit, cancelEdit }: Props) => {
             </div>
           </div>
           <div style={{ flex: "1 1 0" }}></div>
-          <div className="code-snippets-editor-operation">
-            <vscode-button
-              appearance="icon"
-              aria-label={window.i18nText.editItem}
-              title={window.i18nText.editItem}
-              onClick={clickEdit}
-            >
-              <span className="codicon codicon-edit"></span>
-            </vscode-button>
-            <vscode-button
-              appearance="icon"
-              aria-label={window.i18nText.duplicateItem}
-              title={window.i18nText.duplicateItem}
-              onClick={() => {
-                vscode.postMessage({
-                  type: "duplicate",
-                  payload: {
-                    keyName,
-                  },
-                });
-              }}
-            >
-              <span className="codicon codicon-files"></span>
-            </vscode-button>
-            <vscode-button
-              appearance="icon"
-              aria-label={window.i18nText.deleteItem}
-              title={window.i18nText.deleteItem}
-              onClick={() => {
-                vscode.postMessage({
-                  type: "delete",
-                  payload: { keyName },
-                });
-              }}
-            >
-              <span className="codicon codicon-close"></span>
-            </vscode-button>
-          </div>
+          {!readonly && (
+            <div className="code-snippets-editor-operation">
+              <vscode-button
+                appearance="icon"
+                aria-label={window.i18nText.editItem}
+                title={window.i18nText.editItem}
+                onClick={clickEdit}
+              >
+                <span className="codicon codicon-edit"></span>
+              </vscode-button>
+              <vscode-button
+                appearance="icon"
+                aria-label={window.i18nText.duplicateItem}
+                title={window.i18nText.duplicateItem}
+                onClick={() => {
+                  vscode.postMessage({
+                    type: "duplicate",
+                    payload: {
+                      keyName,
+                    },
+                  });
+                }}
+              >
+                <span className="codicon codicon-files"></span>
+              </vscode-button>
+              <vscode-button
+                appearance="icon"
+                aria-label={window.i18nText.deleteItem}
+                title={window.i18nText.deleteItem}
+                onClick={() => {
+                  vscode.postMessage({
+                    type: "delete",
+                    payload: { keyName },
+                  });
+                }}
+              >
+                <span className="codicon codicon-close"></span>
+              </vscode-button>
+            </div>
+          )}
         </div>
         <div className="code-snippets-editor-snippet__desc">
           <span className="code-snippets-editor-label">
@@ -143,22 +152,27 @@ const SnippetItem = ({ snippet, clickEdit, saveEdit, cancelEdit }: Props) => {
         <div className="code-snippets-editor-snippet__body">
           <div>
             <span className="code-snippets-editor-label code-snippets-editor-label--body">
-              {window.i18nText.body}{" "}
-              <span className="code-snippets-editor-label--body__edit-button">
-                <vscode-button
-                  appearance="icon"
-                  aria-label={window.i18nText.editBody}
-                  title={window.i18nText.editBody}
-                  onClick={() => {
-                    vscode.postMessage({
-                      type: "editBody",
-                      payload: { keyName },
-                    });
-                  }}
-                >
-                  <span className="codicon codicon-edit"></span>
-                </vscode-button>
-              </span>{" "}
+              {window.i18nText.body}
+              {!readonly && (
+                <>
+                  {" "}
+                  <span className="code-snippets-editor-label--body__edit-button">
+                    <vscode-button
+                      appearance="icon"
+                      aria-label={window.i18nText.editBody}
+                      title={window.i18nText.editBody}
+                      onClick={() => {
+                        vscode.postMessage({
+                          type: "editBody",
+                          payload: { keyName },
+                        });
+                      }}
+                    >
+                      <span className="codicon codicon-edit"></span>
+                    </vscode-button>
+                  </span>{" "}
+                </>
+              )}
               :
             </span>
           </div>

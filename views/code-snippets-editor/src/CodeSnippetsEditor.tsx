@@ -43,6 +43,7 @@ function getSnippets(): ISnippet[] {
 
 const CodeSnippetsEditor = () => {
   const [error, setError] = useState<string>("");
+  const [readonly, setReadonly] = useState<boolean>(false);
 
   const commonRef = useRef<{
     addEdit(keyName: string): void;
@@ -50,6 +51,7 @@ const CodeSnippetsEditor = () => {
     removeAdd(keyName: string): void;
     setError(error: string): void;
     updateSnippets(): void;
+    setReadonly(readonly: boolean): void;
   }>({
     removeEdit(keyName: string) {
       const state = getState();
@@ -68,6 +70,7 @@ const CodeSnippetsEditor = () => {
     setError,
     addEdit() {},
     updateSnippets() {},
+    setReadonly,
   });
 
   const [snippets, setSnippets] = useState<ISnippet[]>([]);
@@ -123,6 +126,7 @@ const CodeSnippetsEditor = () => {
           });
 
           commonRef.current.updateSnippets();
+          commonRef.current.setReadonly(message.readonly);
           return;
 
         case "show":
@@ -152,6 +156,9 @@ const CodeSnippetsEditor = () => {
 
     window.addEventListener("message", listener);
 
+    vscode.postMessage({
+      type: "ready",
+    });
     return () => {
       window.removeEventListener("message", listener);
     };
@@ -187,9 +194,11 @@ const CodeSnippetsEditor = () => {
   return (
     <main className="code-snippets-editor">
       {error ? throwError() : null}
-      <ToolbarComponent
-        onAddSnippetClick={handleAddSnippetClick}
-      ></ToolbarComponent>
+      {!readonly && (
+        <ToolbarComponent
+          onAddSnippetClick={handleAddSnippetClick}
+        ></ToolbarComponent>
+      )}
       {snippets.length ? (
         <ul className="code-snippets-editor-snippets">
           {snippets.map((snippet) => {
@@ -198,6 +207,7 @@ const CodeSnippetsEditor = () => {
               <li className="code-snippets-editor-snippets__item" key={keyName}>
                 <SnippetItem
                   snippet={snippet}
+                  readonly={readonly}
                   clickEdit={() => {
                     commonRef.current.addEdit(keyName);
                   }}

@@ -99,24 +99,24 @@ suite("Extension", () => {
 
     await vscode.commands.executeCommand("vscode.open", uri);
     await vscode.commands.executeCommand("snippetsmanager.showEditor");
-    assert.ok(CodeSnippetsEditor.isActive);
+    assert.ok(currentWebviewPanel);
 
     await vscode.commands.executeCommand("vscode.open", uri2);
     await vscode.commands.executeCommand("snippetsmanager.showEditor");
-    assert.ok(CodeSnippetsEditor.isActive);
+    assert.ok(currentWebviewPanel);
 
     await vscode.commands.executeCommand("vscode.open", uri3);
-    assert.ok(!CodeSnippetsEditor.isActive);
+    assert.ok(!currentWebviewPanel);
 
     await vscode.commands.executeCommand("vscode.open", uri2);
     await vscode.commands.executeCommand("snippetsmanager.showEditor");
-    assert.ok(CodeSnippetsEditor.isActive);
+    assert.ok(currentWebviewPanel);
 
     await vscode.commands.executeCommand("snippetsmanager.showSource");
-    assert.ok(!CodeSnippetsEditor.isActive);
+    assert.ok(!currentWebviewPanel);
 
     await vscode.commands.executeCommand("snippetsmanager.showEditor");
-    assert.ok(CodeSnippetsEditor.isActive);
+    assert.ok(currentWebviewPanel);
   });
 
   test("Code snippets editor open array json file should work", async () => {

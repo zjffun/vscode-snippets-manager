@@ -80,13 +80,8 @@
     "menus": {
       "editor/title": [
         {
-          "command": "snippetsmanager.showSource",
-          "when": "snippetsmanagerCodeSnippetsEditorFocus",
-          "group": "navigation"
-        },
-        {
           "command": "snippetsmanager.showEditor",
-          "when": "resourceExtname == '.code-snippets'&& !snippetsmanagerCodeSnippetsEditorFocus",
+          "when": "resourceExtname == '.code-snippets'",
           "group": "navigation"
         }
       ],
@@ -179,11 +174,11 @@
         },
         {
           "command": "snippetsmanager.showSource",
-          "when": "snippetsmanagerCodeSnippetsEditorFocus"
+          "when": "resourceExtname == '.code-snippets'"
         },
         {
           "command": "snippetsmanager.showEditor",
-          "when": "resourceExtname == '.code-snippets' && !snippetsmanagerCodeSnippetsEditorFocus"
+          "when": "resourceExtname == '.code-snippets'"
         },
         {
           "command": "_snippetsmanager.duplicateSnippet",
