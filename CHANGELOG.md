@@ -2,6 +2,12 @@
 
 # [Unreleased]
 
+# v0.3.0
+
+- Added features using the default editor when diff snippets.
+- Fixed snippets editor lose content in diff mode.
+- Updated UI.
+
 # v0.2.2
 
 Added features copy and paste snippets.
