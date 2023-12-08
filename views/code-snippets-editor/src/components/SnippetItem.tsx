@@ -81,26 +81,10 @@ const SnippetItem = ({
     <section id={keyName} className="code-snippets-editor-snippet">
       <div hidden={editing}>
         <div className="code-snippets-editor-snippet__top">
-          <div className="code-snippets-editor-top-items">
-            <div className="code-snippets-editor-top-items__item">
-              <span className="code-snippets-editor-label">
-                {window.i18nText.name}:{" "}
-              </span>
-              {keyName}
-            </div>
-            <div className="code-snippets-editor-top-items__item">
-              <span className="code-snippets-editor-label">
-                {window.i18nText.prefix}:{" "}
-              </span>
-              {snippet.prefix}
-            </div>
-            <div className="code-snippets-editor-top-items__item">
-              <span className="code-snippets-editor-label">
-                {window.i18nText.scope}:{" "}
-              </span>
-              {snippet.scope}
-            </div>
-          </div>
+          <span className="code-snippets-editor-snippet__top__prefix">
+            {snippet.prefix}
+          </span>
+
           <div style={{ flex: "1 1 0" }}></div>
           {!readonly && (
             <div className="code-snippets-editor-operation">
@@ -143,42 +127,47 @@ const SnippetItem = ({
             </div>
           )}
         </div>
-        <div className="code-snippets-editor-snippet__desc">
-          <span className="code-snippets-editor-label">
-            {window.i18nText.description}:{" "}
-          </span>
-          {snippet.description}
-        </div>
+
+        {snippet.scope && (
+          <div className="code-snippets-editor-snippet__scope">
+            {snippet.scope.split(",").map((scope, index) => {
+              return (
+                <span
+                  key={index}
+                  className="code-snippets-editor-snippet__scope__item"
+                >
+                  {scope}
+                </span>
+              );
+            })}
+          </div>
+        )}
+
+        {snippet.description && (
+          <div className="code-snippets-editor-snippet__desc">
+            {snippet.description}
+          </div>
+        )}
+
         <div className="code-snippets-editor-snippet__body">
-          <div>
-            <span className="code-snippets-editor-label code-snippets-editor-label--body">
-              {window.i18nText.body}
-              {!readonly && (
-                <>
-                  {" "}
-                  <span className="code-snippets-editor-label--body__edit-button">
-                    <vscode-button
-                      appearance="icon"
-                      aria-label={window.i18nText.editBody}
-                      title={window.i18nText.editBody}
-                      onClick={() => {
-                        vscode.postMessage({
-                          type: "editBody",
-                          payload: { keyName },
-                        });
-                      }}
-                    >
-                      <span className="codicon codicon-edit"></span>
-                    </vscode-button>
-                  </span>{" "}
-                </>
-              )}
-              :
+          <pre>{snippet.body}</pre>
+          {!readonly && (
+            <span className="code-snippets-editor-snippet__body__edit-button">
+              <vscode-button
+                appearance="icon"
+                aria-label={window.i18nText.editBody}
+                title={window.i18nText.editBody}
+                onClick={() => {
+                  vscode.postMessage({
+                    type: "editBody",
+                    payload: { keyName },
+                  });
+                }}
+              >
+                <span className="codicon codicon-edit"></span> Edit Body
+              </vscode-button>
             </span>
-          </div>
-          <div className="code-snippets-editor-snippet__body__content">
-            <pre>{snippet.body}</pre>
-          </div>
+          )}
         </div>
       </div>
       {editing && (

@@ -1,32 +1,76 @@
 .code-snippets-editor {
   &-snippet {
-    $paddingBottom: 0.3em;
-
     &__top {
+      position: sticky;
+      top: 0;
+      // larger than vscode-webview-ui-toolkit form item
+      z-index: 10;
       display: flex;
-      flex-wrap: nowrap;
-      padding-bottom: $paddingBottom;
+      align-items: center;
+      width: 100%;
+      background: var(--code-snippets-editor-snippet-item-background);
+      padding-bottom: 0.5rem;
+      &__prefix {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        padding-right: 0.5rem;
+        font-weight: 600;
+        color: var(--vscode-settings-headerForeground);
+      }
     }
+
+    &__scope {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.2rem;
+      padding-bottom: 0.5rem;
+      &__item {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-size: 0.8em;
+
+        // vscode-webview-ui-toolkit tag will uppercase
+        background-color: var(--badge-background);
+        border: calc(var(--border-width) * 1px) solid var(--button-border);
+        border-radius: var(--tag-corner-radius);
+        color: var(--badge-foreground);
+        padding: calc(var(--design-unit) * 0.5px) calc(var(--design-unit) * 1px);
+      }
+    }
+
     &__desc {
-      padding-bottom: $paddingBottom;
+      padding-bottom: 0.5rem;
       overflow: hidden;
       text-overflow: ellipsis;
-      min-height: 24px;
       vscode-text-field {
         width: 100%;
       }
     }
     &__body {
-      padding-bottom: $paddingBottom;
-      &__content {
-        color: var(--vscode-textPreformat-foreground);
-        overflow: auto;
-      }
+      position: relative;
+      color: var(--vscode-textPreformat-foreground);
+
       pre {
-        margin: 8px 0 0;
+        margin: 0;
       }
+
       vscode-text-area {
         width: 100%;
+      }
+
+      &__edit-button {
+        display: none;
+        position: absolute;
+        top: -24px;
+        left: 0;
+        width: 100%;
+        background: var(--code-snippets-editor-snippet-item-background);
+      }
+
+      &:hover {
+        .code-snippets-editor-snippet__body__edit-button {
+          display: block;
+        }
       }
     }
   }
@@ -49,24 +93,5 @@
     display: flex;
     justify-content: flex-end;
     gap: 0.5em;
-  }
-
-  &-label {
-    font-weight: 700;
-    &--body {
-      display: flex;
-      align-items: center;
-      &__edit-button {
-        display: none;
-      }
-    }
-  }
-}
-
-.code-snippets-editor-snippets__item {
-  &:hover {
-    .code-snippets-editor-label--body__edit-button {
-      display: block;
-    }
   }
 }
