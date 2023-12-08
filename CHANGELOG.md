@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.3.1
+
+Fixed set currentWebviewPanel to null when dispose.
+
 # v0.3.0
 
 - Added features using the default editor when diff snippets.
