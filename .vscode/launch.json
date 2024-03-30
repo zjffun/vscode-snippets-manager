@@ -6,7 +6,7 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "name": "Run Extension",
+      "name": "Start Debugging",
       "type": "extensionHost",
       "request": "launch",
       "args": ["--extensionDevelopmentPath=${workspaceFolder}"],
@@ -26,7 +26,7 @@
       "preLaunchTask": "${defaultBuildTask}"
     },
     {
-      "name": "Run Web Extension",
+      "name": "Start Debugging Web Extension",
       "type": "pwa-extensionHost",
       "debugWebWorkerHost": true,
       "request": "launch",
