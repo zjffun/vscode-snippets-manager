@@ -161,7 +161,7 @@
         },
         {
           "command": "_snippetsmanager.pasteSnippet",
-          "when": "viewItem == snippetsmanager-snippetsView-Explorer-FileItem",
+          "when": "snippetsmanager.copyingSnippets && (viewItem == snippetsmanager-snippetsView-Explorer-FileItem || viewItem == snippetsmanager-snippetsView-Explorer-Item)",
           "group": "snippets@1"
         },
         {

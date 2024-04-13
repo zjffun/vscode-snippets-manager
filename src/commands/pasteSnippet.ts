@@ -4,21 +4,29 @@ import { CodeSnippetsService } from "../CodeSnippetsService";
 import { getClipboard } from "../core/snippetsClipboard";
 import refreshAllView from "../views/refreshAllView";
 
-export default async (snippetFile: ISnippetExtra) => {
-  if (!snippetFile.uri) {
+export default async (targetSnippet: ISnippetExtra) => {
+  if (!targetSnippet.uri) {
     return;
   }
 
   const snippetsTextDoc = await vscode.workspace.openTextDocument(
-    snippetFile.uri
+    targetSnippet.uri
   );
 
   const codeSnippetsService = new CodeSnippetsService(snippetsTextDoc);
 
   const snippets = getClipboard();
 
+  let index = targetSnippet.index;
+
+  if (index !== undefined) {
+    index += 1;
+  }
+
   for (const snippet of snippets) {
-    await codeSnippetsService.insert(snippet);
+    await codeSnippetsService.insert(snippet, {
+      index,
+    });
   }
 
   refreshAllView();

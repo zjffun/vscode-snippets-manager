@@ -362,6 +362,21 @@ export class CodeSnippetsService {
     };
   }
 
+  static getSnippetList(
+    vscodeSnippets: Map<string, IVscodeSnippet>,
+    { uri }: ISnippetExtra = {}
+  ) {
+    const list = Array.from(vscodeSnippets).map(([name, snippet], index) => {
+      return CodeSnippetsService.createSnippet(snippet, {
+        name,
+        uri,
+        index,
+      });
+    });
+
+    return list;
+  }
+
   static async getSnippetsByUri(uri: vscode.Uri) {
     let snippetsTextDoc = await vscode.workspace.openTextDocument(uri);
 
@@ -396,12 +411,7 @@ export class CodeSnippetsService {
           name,
           isFile: true,
           uri,
-          children: Array.from(snippets).map(([name, snippet]) => {
-            return CodeSnippetsService.createSnippet(snippet, {
-              name,
-              uri,
-            });
-          }),
+          children: CodeSnippetsService.getSnippetList(snippets, { uri }),
         });
       }
 
@@ -432,12 +442,7 @@ export class CodeSnippetsService {
         name: fileName,
         isFile: true,
         uri,
-        children: Array.from(snippets).map(([name, snippet]) => {
-          return CodeSnippetsService.createSnippet(snippet, {
-            name,
-            uri,
-          });
-        }),
+        children: CodeSnippetsService.getSnippetList(snippets, { uri }),
       });
     }
 
@@ -465,14 +470,11 @@ export class CodeSnippetsService {
             continue;
           }
 
-          const snippetsUri = vscode.Uri.joinPath(
-            extension.extensionUri,
-            snippetPath
-          );
+          const uri = vscode.Uri.joinPath(extension.extensionUri, snippetPath);
 
           let snippets;
           try {
-            snippets = await CodeSnippetsService.getSnippetsByUri(snippetsUri);
+            snippets = await CodeSnippetsService.getSnippetsByUri(uri);
           } catch (error: any) {
             logger.error(error?.message);
             continue;
@@ -481,13 +483,8 @@ export class CodeSnippetsService {
           snippetFiles.push({
             name: snippetPath,
             isFile: true,
-            uri: snippetsUri,
-            children: Array.from(snippets).map(([name, snippet]) => {
-              return CodeSnippetsService.createSnippet(snippet, {
-                name,
-                uri: snippetsUri,
-              });
-            }),
+            uri: uri,
+            children: CodeSnippetsService.getSnippetList(snippets, { uri }),
           });
         }
         tree.push({
@@ -515,12 +512,7 @@ export class CodeSnippetsService {
         }
 
         list = list.concat(
-          Array.from(snippets).map(([name, snippet]) => {
-            return CodeSnippetsService.createSnippet(snippet, {
-              name,
-              uri,
-            });
-          })
+          CodeSnippetsService.getSnippetList(snippets, { uri })
         );
       }
     }
@@ -542,14 +534,7 @@ export class CodeSnippetsService {
         continue;
       }
 
-      list = list.concat(
-        Array.from(snippets).map(([name, snippet]) => {
-          return CodeSnippetsService.createSnippet(snippet, {
-            name,
-            uri,
-          });
-        })
-      );
+      list = list.concat(CodeSnippetsService.getSnippetList(snippets, { uri }));
     }
 
     return list;
@@ -574,26 +559,21 @@ export class CodeSnippetsService {
             continue;
           }
 
-          const snippetsUri = vscode.Uri.joinPath(
+          const uri = vscode.Uri.joinPath(
             vscode.Uri.file(extension.extensionPath),
             snippetPath
           );
 
           let snippets;
           try {
-            snippets = await CodeSnippetsService.getSnippetsByUri(snippetsUri);
+            snippets = await CodeSnippetsService.getSnippetsByUri(uri);
           } catch (error: any) {
             logger.error(error?.message);
             continue;
           }
 
           list = list.concat(
-            Array.from(snippets).map(([name, snippet]) => {
-              return CodeSnippetsService.createSnippet(snippet, {
-                name,
-                uri: snippetsUri,
-              });
-            })
+            CodeSnippetsService.getSnippetList(snippets, { uri })
           );
         }
       }
