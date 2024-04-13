@@ -58,6 +58,10 @@
 
 复制粘贴工作区、用户或拓展程序的代码片段。
 
+## 拖拽代码片段
+
+拖拽工作区、用户或拓展程序的代码片段。
+
 ## 配置
 
 ### `snippetsManager.autoCloseSnippetBodyEditor`

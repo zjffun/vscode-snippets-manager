@@ -54,9 +54,13 @@ Search workspace, user or extension snippets.
 
 ![search](images/search.webp)
 
-### Copy&Paste snippets
+### Copy & Paste snippets
 
 Copy&Paste snippets across workspace, user or extension.
+
+## Darg & Drop snippets
+
+Drag&Drop snippets across workspace, user or extension.
 
 ## Settings
 

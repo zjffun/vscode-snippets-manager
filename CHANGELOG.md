@@ -2,6 +2,12 @@
 
 # [Unreleased]
 
+# v0.3.2
+
+- Added features drag and drop snippets.
+- Added features paste snippets after the selected snippet.
+- Fixed bug copy snippets when selected workspaces or extensions.
+
 # v0.3.1
 
 Fixed set currentWebviewPanel to null when dispose.

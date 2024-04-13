@@ -1,4 +1,6 @@
 import * as vscode from "vscode";
+import moveSnippets, { movingSnippetsMimeType } from "../core/moveSnippets";
+import getSnippets from "../utils/getSnippets";
 import { ISnippet, ISnippetContainer } from "..";
 
 export class SnippetTreeItem extends vscode.TreeItem {
@@ -31,6 +33,54 @@ export default abstract class BasicSnippetsExplorerView
         treeDataProvider: that,
         showCollapseAll: true,
         canSelectMany: true,
+        dragAndDropController: {
+          dragMimeTypes: [movingSnippetsMimeType],
+          dropMimeTypes: [movingSnippetsMimeType],
+          handleDrag(
+            source: (ISnippet | ISnippetContainer)[],
+            dataTransfer,
+            token
+          ) {
+            const snippets = getSnippets(undefined, source);
+
+            if (!snippets.length) {
+              token.isCancellationRequested = true;
+              return;
+            }
+
+            dataTransfer.set(
+              movingSnippetsMimeType,
+              new vscode.DataTransferItem(snippets)
+            );
+          },
+          async handleDrop(
+            target: ISnippet | ISnippetContainer,
+            dataTransfer,
+            token
+          ) {
+            if (
+              (target as ISnippetContainer)?.isWorkspace ||
+              (target as ISnippetContainer)?.isExtension
+            ) {
+              token.isCancellationRequested = true;
+              return;
+            }
+
+            let snippets = dataTransfer.get(movingSnippetsMimeType)?.value;
+
+            if (typeof snippets === "string") {
+              snippets = JSON.parse(snippets, function (key, value) {
+                if (key === "uri") {
+                  return vscode.Uri.from(value);
+                }
+
+                return value;
+              });
+            }
+
+            await moveSnippets(target, snippets);
+          },
+        },
       });
     }, 0);
   }

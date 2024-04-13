@@ -32,6 +32,7 @@ export interface ISnippets {
 export interface ISnippetContainer {
   name: string;
   isFile?: boolean;
+  isWorkspace?: boolean;
   isExtension?: boolean;
   uri?: vscode.Uri;
   children: ISnippetContainer[] | ISnippet[];

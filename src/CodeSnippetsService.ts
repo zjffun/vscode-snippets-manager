@@ -417,6 +417,7 @@ export class CodeSnippetsService {
 
       tree.push({
         name: folder.name,
+        isWorkspace: true,
         children: workspaceSnippetFiles,
       });
     }
