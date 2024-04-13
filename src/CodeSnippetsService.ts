@@ -489,6 +489,7 @@ export class CodeSnippetsService {
         }
         tree.push({
           name: packageJSON.name,
+          isExtension: true,
           children: snippetFiles,
         });
       }

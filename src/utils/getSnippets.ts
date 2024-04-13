@@ -5,7 +5,11 @@ export default function getSnippets(
   snippets: (ISnippet | ISnippetContainer)[]
 ) {
   if (snippets) {
-    const result = snippets.filter((s) => !(s as ISnippetContainer).isFile);
+    const result = snippets.filter(
+      (s) =>
+        !(s as ISnippetContainer).isFile &&
+        !(s as ISnippetContainer).isExtension
+    );
     return result as ISnippet[];
   }
 
