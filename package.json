@@ -381,7 +381,7 @@
     "@vscode/test-web": "^0.0.34",
     "@vscode/vsce": "^2.26.0",
     "assert": "^2.0.0",
-    "concurrently": "^6.3.0",
+    "concurrently": "^8.2.2",
     "css-loader": "^6.4.0",
     "del": "^6.0.0",
     "eslint": "^7.27.0",
