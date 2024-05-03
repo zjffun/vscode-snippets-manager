@@ -1,0 +1,19 @@
+{
+  "Add Snippet": "添加代码片段",
+  "Name": "名称",
+  "Prefix": "前缀",
+  "Scope": "范围",
+  "Description": "描述",
+  "Body": "内容",
+  "Edit Item": "修改",
+  "Edit Body": "修改内容",
+  "Duplicate Item": "制作副本",
+  "Delete Item": "删除",
+  "Save": "保存",
+  "Cancel": "取消",
+  "No snippets.": "无代码片段",
+  "Can't find workspace folder, do you want to add the snippet to user snippets?": "没有找到工作区，创建代码片段到用户代码片段？",
+  "Detected that `files.autoSave` is `afterDelay` or `onWindowChange`, whether to turn off automatically close the code snippet body editor after saving?": "检测到开启了自动保存，是否关闭保存后自动关闭代码片段主体编辑器？",
+  "Do you want to delete selected {0} snippets?": "是否删除选中的 {0} 个代码片段？",
+  "Do you want to delete snippet {0}?": "是否删除代码片段 {0} ？"
+}

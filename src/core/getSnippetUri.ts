@@ -1,8 +1,5 @@
 import * as vscode from "vscode";
-import * as nls from "vscode-nls";
 import { context, getUserFolderUri } from "../share";
-
-const localize = nls.loadMessageBundle();
 
 export default async function getSnippetUri() {
   const { activeTextEditor } = vscode.window;
@@ -59,8 +56,7 @@ export default async function getSnippetUri() {
 
   if (askAddUserSnippets) {
     const answer = await vscode.window.showInformationMessage(
-      localize(
-        "askAddUserSnippetsMsg",
+      vscode.l10n.t(
         "Can't find workspace folder, do you want to add the snippet to user snippets?"
       ),
       ...["Yes, and don't ask me again", "Yes", "No"]

@@ -1,19 +1,15 @@
 import * as vscode from "vscode";
-import * as nls from "vscode-nls";
 import { ISnippet } from "..";
 import { CodeSnippetsService } from "../CodeSnippetsService";
 import getSnippetTextDocument from "../core/getSnippetTextDocument";
 import refreshAllView from "../views/refreshAllView";
-
-const localize = nls.loadMessageBundle();
 
 export default async (snippets: ISnippet[]) => {
   if (snippets.length === 0) {
     return;
   }
 
-  let message = localize(
-    "batchDeleteMsg",
+  let message = vscode.l10n.t(
     "Do you want to delete selected {0} snippets?",
     snippets.length
   );
@@ -23,8 +19,7 @@ export default async (snippets: ISnippet[]) => {
       return;
     }
 
-    message = localize(
-      "deleteMsg",
+    message = vscode.l10n.t(
       "Do you want to delete snippet {0}?",
       snippets[0].name
     );

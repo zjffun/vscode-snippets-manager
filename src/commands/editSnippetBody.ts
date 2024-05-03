@@ -1,12 +1,9 @@
 import { Buffer } from "buffer";
 import * as vscode from "vscode";
-import * as nls from "vscode-nls";
 import { ISnippet } from "..";
 import { CodeSnippetsService } from "../CodeSnippetsService";
 import { context } from "../share";
 import logger from "../utils/logger";
-
-const localize = nls.loadMessageBundle();
 
 const sha1 = require("sha1");
 
@@ -112,8 +109,7 @@ async function askTurnOffAutoCloseSnippetBodyEditor() {
   }
 
   const answer = await vscode.window.showInformationMessage(
-    localize(
-      "askTurnOffAutoCloseSnippetBodyMsg",
+    vscode.l10n.t(
       "Detected that `files.autoSave` is `afterDelay` or `onWindowChange`, whether to turn off automatically close the code snippet body editor after saving?"
     ),
     ...["Yes", "No", "No, and don't ask me again"]

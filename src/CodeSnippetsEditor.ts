@@ -1,6 +1,5 @@
 import { Buffer } from "buffer";
 import * as vscode from "vscode";
-import * as nls from "vscode-nls";
 import { CodeSnippetsService } from "./CodeSnippetsService";
 import editSnippetBody from "./commands/editSnippetBody";
 import showSource from "./commands/showSource";
@@ -8,22 +7,20 @@ import { getNonce } from "./util";
 import refreshAllView from "./views/refreshAllView";
 import logger from "./utils/logger";
 
-const localize = nls.loadMessageBundle();
-
 const i18nText = {
-  addSnippet: localize("addSnippet", "Add Snippet"),
-  name: localize("name", "Name"),
-  prefix: localize("prefix", "Prefix"),
-  scope: localize("scope", "Scope"),
-  description: localize("description", "Description"),
-  body: localize("body", "Body"),
-  editItem: localize("editItem", "Edit Item"),
-  editBody: localize("editItem", "Edit Body"),
-  duplicateItem: localize("duplicateItem", "Duplicate Item"),
-  deleteItem: localize("deleteItem", "Delete Item"),
-  save: localize("save", "Save"),
-  cancel: localize("cancel", "Cancel"),
-  noSnippets: localize("noSnippets", "No snippets."),
+  addSnippet: vscode.l10n.t("Add Snippet"),
+  name: vscode.l10n.t("Name"),
+  prefix: vscode.l10n.t("Prefix"),
+  scope: vscode.l10n.t("Scope"),
+  description: vscode.l10n.t("Description"),
+  body: vscode.l10n.t("Body"),
+  editItem: vscode.l10n.t("Edit Item"),
+  editBody: vscode.l10n.t("Edit Body"),
+  duplicateItem: vscode.l10n.t("Duplicate Item"),
+  deleteItem: vscode.l10n.t("Delete Item"),
+  save: vscode.l10n.t("Save"),
+  cancel: vscode.l10n.t("Cancel"),
+  noSnippets: vscode.l10n.t("No snippets."),
 };
 
 export let currentWebviewPanel: vscode.WebviewPanel | null = null;
