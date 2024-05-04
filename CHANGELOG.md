@@ -2,6 +2,11 @@
 
 # [Unreleased]
 
+# v0.3.3
+
+- Update dependencies.
+- Add demo images.
+
 # v0.3.2
 
 - Added features drag and drop snippets.
