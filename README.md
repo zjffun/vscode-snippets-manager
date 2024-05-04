@@ -58,9 +58,13 @@ Search workspace, user or extension snippets.
 
 Copy&Paste snippets across workspace, user or extension.
 
-## Darg & Drop snippets
+![copy paste](images/copy-paste.webp)
+
+### Darg & Drop snippets
 
 Drag&Drop snippets across workspace, user or extension.
+
+![drag and drop](images/dnd.webp)
 
 ## Settings
 
