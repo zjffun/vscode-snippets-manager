@@ -2,6 +2,10 @@
 
 # [Unreleased]
 
+# v0.3.4
+
+Update the video in the document.
+
 # v0.3.3
 
 - Update dependencies.
