@@ -1,9 +1,11 @@
 import { useRef } from "react";
-import { getState } from "../common";
+import Tags from "@yaireo/tagify/dist/react.tagify.jsx";
+import { getState, langIds } from "../common";
 import getVsCode from "../getVsCode";
 import { EDIT, NAME, NEW_ITEM } from "../symbols";
 import { ISnippet } from "../typings";
 
+import "@yaireo/tagify/dist/tagify.css";
 import "./SnippetItem.scss";
 
 interface Props {
@@ -191,15 +193,6 @@ const SnippetItem = ({
               >
                 {window.i18nText.prefix}
               </vscode-text-field>
-              <vscode-text-field
-                name="scope"
-                value={snippet.scope}
-                onInput={handleChange}
-                tab-goto-key={`${keyName}-scope-input`}
-                tab-goto={`[tab-goto-key="${keyName}-description-input"]`}
-              >
-                {window.i18nText.scope}
-              </vscode-text-field>
             </div>
             <div style={{ flex: "1 1 0" }}></div>
             <div className="code-snippets-editor-operation">
@@ -222,6 +215,29 @@ const SnippetItem = ({
               </vscode-button>
             </div>
           </div>
+
+          {/* <vscode-text-field
+                name="scope"
+                value={snippet.scope}
+                onInput={handleChange}
+                tab-goto-key={`${keyName}-scope-input`}
+                tab-goto={`[tab-goto-key="${keyName}-description-input"]`}
+              >
+                {window.i18nText.scope}
+              </vscode-text-field> */}
+          <div
+            className="code-snippets-editor-snippet__scope"
+            tab-goto-key={`${keyName}-scope-input`}
+            tab-goto={`[tab-goto-key="${keyName}-description-input"]`}
+          >
+            <Tags
+              name="scope"
+              whitelist={langIds}
+              placeholder="Add Scopes"
+              defaultValue={snippet.scope} // initial value
+            />
+          </div>
+
           <div className="code-snippets-editor-snippet__desc">
             <vscode-text-field
               name="description"

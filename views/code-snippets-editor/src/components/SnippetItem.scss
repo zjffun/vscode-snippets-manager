@@ -36,6 +36,30 @@
         color: var(--badge-foreground);
         padding: calc(var(--design-unit) * 0.5px) calc(var(--design-unit) * 1px);
       }
+
+      .tags-input {
+        background: var(--input-background);
+        .tagify {
+          --tags-border-color: none;
+          --tags-hover-border-color: none;
+          --tags-focus-border-color: none;
+          --tag-bg: var(--badge-background);
+          --tag-hover: var(--badge-background);
+          --tag-text-color: var(--badge-foreground);
+          --tag-text-color--edit: var(--badge-foreground);
+          --tag-invalid-bg: var(--badge-background);
+          --tag-invalid-color: var(--vscode-errorForeground);
+          --tag-remove-bg: var(--badge-background);
+          --tag-remove-btn-color: var(--badge-foreground);
+          --tag-remove-btn-bg: none;
+          --tag-remove-btn-bg--hover: none;
+          --input-color: var(--input-foreground);
+          --placeholder-color: rgba(0, 0, 0, 0.4);
+          --placeholder-color-focus: rgba(0, 0, 0, 0.25);
+          --loader-size: 0.8em;
+          --readonly-striped: 1;
+        }
+      }
     }
 
     &__desc {
