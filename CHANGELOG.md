@@ -1,6 +1,6 @@
-# [TODO]
+# v0.3.5
 
-# [Unreleased]
+- [@zjffun (Jufeng Zhang)](https://github.com/zjffun): Support languages scope tag input in editor. [PR #24](https://github.com/zjffun/vscode-snippets-manager/pull/24)
 
 # v0.3.4
 
