@@ -1,9 +1,11 @@
 import { useRef } from "react";
-import { getState } from "../common";
+import Tags from "@yaireo/tagify/dist/react.tagify.jsx";
+import { getState, langIds } from "../common";
 import getVsCode from "../getVsCode";
 import { EDIT, NAME, NEW_ITEM } from "../symbols";
 import { ISnippet } from "../typings";
 
+import "@yaireo/tagify/dist/tagify.css";
 import "./SnippetItem.scss";
 
 interface Props {
@@ -12,6 +14,14 @@ interface Props {
   clickEdit(): void;
   saveEdit(): void;
   cancelEdit(): void;
+}
+
+function originalInputValueFormat(
+  values: {
+    value: string;
+  }[]
+) {
+  return values.map((item) => item.value).join(",");
 }
 
 const SnippetItem = ({
@@ -179,8 +189,6 @@ const SnippetItem = ({
                 name="name"
                 value={snippet.name}
                 onInput={handleChange}
-                tab-goto-key={`${keyName}-name-input`}
-                shift-tab-goto={`[tab-goto-key="${keyName}-cancel-button"]`}
               >
                 {window.i18nText.name}
               </vscode-text-field>
@@ -191,44 +199,45 @@ const SnippetItem = ({
               >
                 {window.i18nText.prefix}
               </vscode-text-field>
-              <vscode-text-field
-                name="scope"
-                value={snippet.scope}
-                onInput={handleChange}
-                tab-goto-key={`${keyName}-scope-input`}
-                tab-goto={`[tab-goto-key="${keyName}-description-input"]`}
-              >
-                {window.i18nText.scope}
-              </vscode-text-field>
             </div>
             <div style={{ flex: "1 1 0" }}></div>
             <div className="code-snippets-editor-operation">
-              <vscode-button
-                ref={saveBtnRef}
-                onClick={saveEdit}
-                tab-goto-key={`${keyName}-save-button`}
-                shift-tab-goto={`[tab-goto-key="${keyName}-body-input"]`}
-              >
+              <vscode-button ref={saveBtnRef} onClick={saveEdit}>
                 {window.i18nText.save}
               </vscode-button>
               <vscode-button
                 ref={cancelBtnRef}
                 appearance="secondary"
                 onClick={cancelEdit}
-                tab-goto-key={`${keyName}-cancel-button`}
-                tab-goto={`[tab-goto-key="${keyName}-name-input"]`}
               >
                 {window.i18nText.cancel}
               </vscode-button>
             </div>
           </div>
+          <div className="code-snippets-editor-snippet__scope-edit">
+            <div className="code-snippets-editor-snippet__scope-edit__label">
+              Scope
+            </div>
+            <Tags
+              name="scope"
+              whitelist={langIds}
+              placeholder="Add Scopes"
+              defaultValue={snippet.scope} // initial value
+              onChange={handleChange}
+              settings={{
+                dropdown: {
+                  enabled: 1,
+                },
+                originalInputValueFormat,
+              }}
+            />
+          </div>
+
           <div className="code-snippets-editor-snippet__desc">
             <vscode-text-field
               name="description"
               value={snippet.description}
               onInput={handleChange}
-              tab-goto-key={`${keyName}-description-input`}
-              shift-tab-goto={`[tab-goto-key="${keyName}-scope-input"]`}
             >
               {window.i18nText.description}
             </vscode-text-field>
@@ -240,8 +249,6 @@ const SnippetItem = ({
               rows={10}
               value={snippet.body}
               onInput={handleChange}
-              tab-goto-key={`${keyName}-body-input`}
-              tab-goto={`[tab-goto-key="${keyName}-save-button"]`}
             >
               {window.i18nText.body}
             </vscode-text-area>

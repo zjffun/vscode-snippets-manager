@@ -50,6 +50,15 @@ const config = {
           "sass-loader",
         ],
       },
+      {
+        test: /\.css$/i,
+        use: [
+          // Creates `style` nodes from JS strings
+          MiniCssExtractPlugin.loader,
+          // Translates CSS into CommonJS
+          "css-loader",
+        ],
+      },
     ],
   },
   resolve: {

@@ -18,8 +18,6 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 16.x
-      - name: Fix npm registry
-        run: yarn change-registry
       - run: yarn install
       - run: xvfb-run -a yarn test
         if: runner.os == 'Linux'

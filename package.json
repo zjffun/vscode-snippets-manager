@@ -361,7 +361,6 @@
     "compile-web": "webpack --mode production --devtool hidden-source-map",
     "pretest-web": "yarn run compile-web",
     "test-web": "vscode-test-web ./test.temp --browserType=chromium --extensionDevelopmentPath=. --extensionTestsPath=dist/web/test/suite/index.js",
-    "change-registry": "node ./yarn.lock.change-registry.mjs",
     "_vscode:pack": "vsce package",
     "_vscode:install": "ls snippetsmanager-*.vsix | xargs code --install-extension",
     "_vscode:uninstall": "code --uninstall-extension zjffun.snippetsmanager"
@@ -381,6 +380,7 @@
     "@vscode/test-electron": "^2.3.9",
     "@vscode/test-web": "^0.0.34",
     "@vscode/vsce": "^2.26.0",
+    "@yaireo/tagify": "^4.26.5",
     "assert": "^2.0.0",
     "concurrently": "^8.2.2",
     "css-loader": "^6.4.0",
@@ -395,6 +395,7 @@
     "mocha": "^8.4.0",
     "nanoid": "^4.0.0",
     "process": "^0.11.10",
+    "prop-types": "^15.8.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "sass": "^1.62.0",
@@ -413,7 +414,6 @@
     "jsonc-parser": "^3.0.0",
     "lodash": "^4.17.21",
     "sha1": "^1.1.1",
-    "tab-goto": "^0.1.1",
     "vscode-ext-codicons": "^1.4.0",
     "vscode-ext-help-and-feedback-view": "^1.0.1"
   },

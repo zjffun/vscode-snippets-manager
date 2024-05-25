@@ -24,6 +24,7 @@
       flex-wrap: wrap;
       gap: 0.2rem;
       padding-bottom: 0.5rem;
+
       &__item {
         overflow: hidden;
         text-overflow: ellipsis;
@@ -38,20 +39,101 @@
       }
     }
 
+    &__scope-edit {
+      padding-bottom: 0.5rem;
+
+      &__label {
+        display: block;
+        color: var(--foreground);
+        cursor: pointer;
+        font-size: var(--type-ramp-base-font-size);
+        line-height: var(--type-ramp-base-line-height);
+        margin-bottom: calc(var(--design-unit) * 1px);
+      }
+
+      .tags-input {
+        .tagify {
+          width: 100%;
+          background: var(--input-background);
+          border-radius: calc(var(--corner-radius) * 1px);
+          border: calc(var(--border-width) * 1px) solid var(--dropdown-border);
+          padding: 0 calc(var(--design-unit) * 2px + 1px);
+
+          &__tag {
+            font-family: var(--font-family);
+            font-size: var(--type-ramp-minus1-font-size);
+            line-height: var(--type-ramp-minus1-line-height);
+            background-color: var(--badge-background);
+            border: calc(var(--border-width) * 1px) solid var(--button-border);
+            border-radius: var(--tag-corner-radius);
+            padding: calc(var(--design-unit) * 0.5px)
+              calc(var(--design-unit) * 1px);
+            margin: calc(var(--design-unit) * 1px)
+              calc(var(--design-unit) * 1px) calc(var(--design-unit) * 1px) 0;
+
+            &-text {
+              width: 100%;
+              text-overflow: ellipsis;
+              overflow: hidden;
+              color: var(--badge-foreground);
+            }
+
+            &__removeBtn {
+              margin: 0;
+              color: var(--badge-foreground);
+
+              &:hover + div > span {
+                opacity: initial;
+              }
+            }
+
+            & > div {
+              max-width: calc(100% - 14px);
+              padding: 0 4px 0 0;
+
+              &::before {
+                display: none;
+              }
+            }
+          }
+
+          &__input {
+            font-size: var(--type-ramp-base-font-size);
+            padding: calc(var(--design-unit) * 0.5px)
+              calc(var(--design-unit) * 1px);
+            margin: calc(var(--design-unit) * 1px)
+              calc(var(--design-unit) * 1px) calc(var(--design-unit) * 1px) 0;
+
+            &::before {
+              color: var(--input-placeholder-foreground);
+            }
+          }
+
+          &--focus {
+            border-color: var(--focus-border);
+          }
+        }
+      }
+    }
+
     &__desc {
       padding-bottom: 0.5rem;
       overflow: hidden;
       text-overflow: ellipsis;
+
       vscode-text-field {
         width: 100%;
       }
     }
+
     &__body {
       position: relative;
       color: var(--vscode-textPreformat-foreground);
 
       pre {
         margin: 0;
+        width: 100%;
+        overflow: auto;
       }
 
       vscode-text-area {
@@ -93,5 +175,40 @@
     display: flex;
     justify-content: flex-end;
     gap: 0.5em;
+  }
+}
+
+.tagify__dropdown {
+  &__wrapper {
+    background: var(--dropdown-background);
+    border: calc(var(--border-width) * 1px) solid var(--focus-border);
+    border-radius: calc(var(--corner-radius) * 1px);
+  }
+
+  &__item {
+    margin: 0;
+    border-radius: var(--corner-radius);
+    border: calc(var(--border-width) * 1px) solid transparent;
+    color: var(--foreground);
+    font-size: var(--type-ramp-base-font-size);
+    line-height: var(--type-ramp-base-line-height);
+    padding: 0 calc((var(--design-unit) / 2) * 1px)
+      calc((var(--design-unit) / 4) * 1px);
+
+    &--active,
+    &:active {
+      filter: none;
+      background: var(--list-active-selection-background);
+      border: calc(var(--border-width) * 1px) solid var(--focus-border);
+      color: var(--list-active-selection-foreground);
+    }
+  }
+
+  &__footer {
+    margin: 0;
+    border: calc(var(--border-width) * 1px) solid transparent;
+    padding: 0 calc((var(--design-unit) / 2) * 1px)
+      calc((var(--design-unit) / 4) * 1px);
+    color: var(--input-placeholder-foreground);
   }
 }
