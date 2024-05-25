@@ -16,6 +16,14 @@ interface Props {
   cancelEdit(): void;
 }
 
+function originalInputValueFormat(
+  values: {
+    value: string;
+  }[]
+) {
+  return values.map((item) => item.value).join(",");
+}
+
 const SnippetItem = ({
   snippet,
   readonly,
@@ -181,8 +189,6 @@ const SnippetItem = ({
                 name="name"
                 value={snippet.name}
                 onInput={handleChange}
-                tab-goto-key={`${keyName}-name-input`}
-                shift-tab-goto={`[tab-goto-key="${keyName}-cancel-button"]`}
               >
                 {window.i18nText.name}
               </vscode-text-field>
@@ -196,45 +202,34 @@ const SnippetItem = ({
             </div>
             <div style={{ flex: "1 1 0" }}></div>
             <div className="code-snippets-editor-operation">
-              <vscode-button
-                ref={saveBtnRef}
-                onClick={saveEdit}
-                tab-goto-key={`${keyName}-save-button`}
-                shift-tab-goto={`[tab-goto-key="${keyName}-body-input"]`}
-              >
+              <vscode-button ref={saveBtnRef} onClick={saveEdit}>
                 {window.i18nText.save}
               </vscode-button>
               <vscode-button
                 ref={cancelBtnRef}
                 appearance="secondary"
                 onClick={cancelEdit}
-                tab-goto-key={`${keyName}-cancel-button`}
-                tab-goto={`[tab-goto-key="${keyName}-name-input"]`}
               >
                 {window.i18nText.cancel}
               </vscode-button>
             </div>
           </div>
-
-          {/* <vscode-text-field
-                name="scope"
-                value={snippet.scope}
-                onInput={handleChange}
-                tab-goto-key={`${keyName}-scope-input`}
-                tab-goto={`[tab-goto-key="${keyName}-description-input"]`}
-              >
-                {window.i18nText.scope}
-              </vscode-text-field> */}
-          <div
-            className="code-snippets-editor-snippet__scope"
-            tab-goto-key={`${keyName}-scope-input`}
-            tab-goto={`[tab-goto-key="${keyName}-description-input"]`}
-          >
+          <div className="code-snippets-editor-snippet__scope-edit">
+            <div className="code-snippets-editor-snippet__scope-edit__label">
+              Scope
+            </div>
             <Tags
               name="scope"
               whitelist={langIds}
               placeholder="Add Scopes"
               defaultValue={snippet.scope} // initial value
+              onChange={handleChange}
+              settings={{
+                dropdown: {
+                  enabled: 1,
+                },
+                originalInputValueFormat,
+              }}
             />
           </div>
 
@@ -243,8 +238,6 @@ const SnippetItem = ({
               name="description"
               value={snippet.description}
               onInput={handleChange}
-              tab-goto-key={`${keyName}-description-input`}
-              shift-tab-goto={`[tab-goto-key="${keyName}-scope-input"]`}
             >
               {window.i18nText.description}
             </vscode-text-field>
@@ -256,8 +249,6 @@ const SnippetItem = ({
               rows={10}
               value={snippet.body}
               onInput={handleChange}
-              tab-goto-key={`${keyName}-body-input`}
-              tab-goto={`[tab-goto-key="${keyName}-save-button"]`}
             >
               {window.i18nText.body}
             </vscode-text-area>

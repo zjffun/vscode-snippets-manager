@@ -414,7 +414,6 @@
     "jsonc-parser": "^3.0.0",
     "lodash": "^4.17.21",
     "sha1": "^1.1.1",
-    "tab-goto": "^0.1.1",
     "vscode-ext-codicons": "^1.4.0",
     "vscode-ext-help-and-feedback-view": "^1.0.1"
   },
