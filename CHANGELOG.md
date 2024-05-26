@@ -1,3 +1,7 @@
+# v0.3.6
+
+Fix edit multiple props isn't work properly.
+
 # v0.3.5
 
 - [@zjffun (Jufeng Zhang)](https://github.com/zjffun): Support languages scope tag input in editor. [PR #24](https://github.com/zjffun/vscode-snippets-manager/pull/24)
