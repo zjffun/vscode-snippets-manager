@@ -253,19 +253,19 @@ export class CodeSnippetsService {
       const oldVal = (<any>oldVSnippet)[key];
 
       if (val !== oldVal && val !== undefined) {
-        const [edit] = setProperty(content, [name, key], val, {});
+        const [edit] = setProperty(_content, [name, key], val, {});
 
         if (edit) {
-          _content = applyEdit(content, edit);
+          _content = applyEdit(_content, edit);
         }
       }
     }
 
     if (snippet.body !== oldSnippet.body) {
-      const [edit] = setProperty(content, [name, "body"], vSnippet.body, {});
+      const [edit] = setProperty(_content, [name, "body"], vSnippet.body, {});
 
       if (edit) {
-        _content = applyEdit(content, edit);
+        _content = applyEdit(_content, edit);
       }
     }
 

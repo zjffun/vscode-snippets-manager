@@ -69,4 +69,36 @@ suite("CodeSnippetsService", () => {
     assert.deepStrictEqual(textDocument.getText(), `{"a":{}}`);
     assert.ok(codeSnippetsService.getMap() instanceof Map);
   });
+
+  test("update multiple props should work", async () => {
+    const uri = await createTestFile("{}");
+    const textDocument = await vscode.workspace.openTextDocument(uri);
+    const codeSnippetsService = new CodeSnippetsService(textDocument);
+
+    await codeSnippetsService.insert({
+      name: "test",
+      body: "body",
+      description: "description",
+      prefix: "prefix",
+      scope: "scope",
+    });
+
+    await codeSnippetsService.update(
+      {
+        name: "test",
+        body: "bodyNew",
+        description: "descriptionNew",
+        prefix: "prefixNew",
+        scope: "scopeNew",
+      },
+      "test"
+    );
+
+    const newSnippet = await codeSnippetsService.getSnippetByName("test");
+
+    assert.equal(newSnippet?.body, "bodyNew");
+    assert.equal(newSnippet?.description, "descriptionNew");
+    assert.equal(newSnippet?.prefix, "prefixNew");
+    assert.equal(newSnippet?.scope, "scopeNew");
+  });
 });
