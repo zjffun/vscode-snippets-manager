@@ -18,6 +18,7 @@ const i18nText = {
   editBody: vscode.l10n.t("Edit Body"),
   duplicateItem: vscode.l10n.t("Duplicate Item"),
   deleteItem: vscode.l10n.t("Delete Item"),
+  snippetSyntax: vscode.l10n.t("Snippet Syntax"),
   save: vscode.l10n.t("Save"),
   cancel: vscode.l10n.t("Cancel"),
   noSnippets: vscode.l10n.t("No snippets."),
@@ -204,6 +205,10 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 
         case "openInDefaultEditor":
           showSource();
+          return;
+
+        case "help":
+          vscode.env.openExternal(vscode.Uri.parse("https://code.visualstudio.com/docs/editor/userdefinedsnippets#_snippet-syntax"));
           return;
 
         case "error":

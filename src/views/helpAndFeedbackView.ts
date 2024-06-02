@@ -3,7 +3,6 @@ import {
   HelpAndFeedbackView,
   Link,
   StandardLinksProvider,
-  ProvideFeedbackLink,
   Command,
 } from "vscode-ext-help-and-feedback-view";
 
@@ -13,7 +12,11 @@ export function registerHelpAndFeedbackView(context: ExtensionContext) {
     "zjffun.snippetsmanager"
   );
   items.push(predefinedProvider.getGetStartedLink());
-  items.push(new ProvideFeedbackLink("snippetsmanager"));
+  items.push({
+    url: "https://code.visualstudio.com/docs/editor/userdefinedsnippets",
+    title: "Snippets in VS Code",
+    icon: "question",
+  });
   items.push(predefinedProvider.getReviewIssuesLink());
   items.push(predefinedProvider.getReportIssueLink());
   new HelpAndFeedbackView(

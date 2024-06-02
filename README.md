@@ -4,7 +4,7 @@ English | [简体中文](./README.zh-CN.md)
 
 Create and edit snippets easily.
 
-This extension is built over the default [VS Code snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets) system, wrapping it into a nice and intuitive UI, improving usability, and making snippets easy to create, edit, delete and search. It supports user-custom snippets, global snippets and snippets from installed extensions.
+This extension is built over the default [VS Code Snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets) system, wrapping it into a nice and intuitive UI, improving usability, and making snippets easy to create, edit, delete and search. It supports user-custom snippets, global snippets and snippets from installed extensions.
 
 [![video](./images/video.webp)](https://www.youtube.com/embed/U8Z9pnmfzOE)
 

@@ -108,6 +108,19 @@ const SnippetItem = ({
               </vscode-button>
               <vscode-button
                 appearance="icon"
+                aria-label={window.i18nText.editBody}
+                title={window.i18nText.editBody}
+                onClick={() => {
+                  vscode.postMessage({
+                    type: "editBody",
+                    payload: { keyName },
+                  });
+                }}
+              >
+                <span className="codicon codicon-file-code"></span>
+              </vscode-button>
+              <vscode-button
+                appearance="icon"
                 aria-label={window.i18nText.duplicateItem}
                 title={window.i18nText.duplicateItem}
                 onClick={() => {
@@ -132,7 +145,19 @@ const SnippetItem = ({
                   });
                 }}
               >
-                <span className="codicon codicon-close"></span>
+                <span className="codicon codicon-trash"></span>
+              </vscode-button>
+              <vscode-button
+                appearance="icon"
+                aria-label={window.i18nText.snippetSyntax}
+                title={window.i18nText.snippetSyntax}
+                onClick={() => {
+                  vscode.postMessage({
+                    type: "help",
+                  });
+                }}
+              >
+                <span className="codicon codicon-question"></span>
               </vscode-button>
             </div>
           )}
@@ -161,23 +186,6 @@ const SnippetItem = ({
 
         <div className="code-snippets-editor-snippet__body">
           <pre>{snippet.body}</pre>
-          {!readonly && (
-            <span className="code-snippets-editor-snippet__body__edit-button">
-              <vscode-button
-                appearance="icon"
-                aria-label={window.i18nText.editBody}
-                title={window.i18nText.editBody}
-                onClick={() => {
-                  vscode.postMessage({
-                    type: "editBody",
-                    payload: { keyName },
-                  });
-                }}
-              >
-                <span className="codicon codicon-edit"></span> Edit Body
-              </vscode-button>
-            </span>
-          )}
         </div>
       </div>
       {editing && (

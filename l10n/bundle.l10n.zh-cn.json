@@ -12,6 +12,7 @@
   "Save": "保存",
   "Cancel": "取消",
   "No snippets.": "无代码片段",
+  "Snippet Syntax": "代码片段语法",
   "Can't find workspace folder, do you want to add the snippet to user snippets?": "没有找到工作区，创建代码片段到用户代码片段？",
   "Detected that `files.autoSave` is `afterDelay` or `onWindowChange`, whether to turn off automatically close the code snippet body editor after saving?": "检测到开启了自动保存，是否关闭保存后自动关闭代码片段主体编辑器？",
   "Do you want to delete selected {0} snippets?": "是否删除选中的 {0} 个代码片段？",

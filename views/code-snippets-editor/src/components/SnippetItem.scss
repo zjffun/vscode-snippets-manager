@@ -139,21 +139,6 @@
       vscode-text-area {
         width: 100%;
       }
-
-      &__edit-button {
-        display: none;
-        position: absolute;
-        top: -24px;
-        left: 0;
-        width: 100%;
-        background: var(--code-snippets-editor-snippet-item-background);
-      }
-
-      &:hover {
-        .code-snippets-editor-snippet__body__edit-button {
-          display: block;
-        }
-      }
     }
   }
 
