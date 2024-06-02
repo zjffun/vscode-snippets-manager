@@ -1,3 +1,7 @@
+# v0.3.7
+
+Add help buttons and update interface.
+
 # v0.3.6
 
 Fix edit multiple props isn't work properly.
