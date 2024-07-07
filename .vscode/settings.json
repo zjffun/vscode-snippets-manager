@@ -3,8 +3,6 @@
   "files.exclude": {
     ".vscode-test": true,
     ".vscode-test-web": true,
-    "out": true,
-    "out-view": true
   },
   "search.exclude": {
     ".vscode-test": true,
