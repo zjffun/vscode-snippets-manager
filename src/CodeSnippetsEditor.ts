@@ -3,9 +3,10 @@ import * as vscode from "vscode";
 import { CodeSnippetsService } from "./CodeSnippetsService";
 import editSnippetBody from "./commands/editSnippetBody";
 import showSource from "./commands/showSource";
+import { no, yes } from "./common/l10n";
 import { getNonce } from "./util";
-import refreshAllView from "./views/refreshAllView";
 import logger from "./utils/logger";
+import refreshAllView from "./views/refreshAllView";
 
 const i18nText = {
   addSnippet: vscode.l10n.t("Add Snippet"),
@@ -208,7 +209,11 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
           return;
 
         case "help":
-          vscode.env.openExternal(vscode.Uri.parse("https://code.visualstudio.com/docs/editor/userdefinedsnippets#_snippet-syntax"));
+          vscode.env.openExternal(
+            vscode.Uri.parse(
+              "https://code.visualstudio.com/docs/editor/userdefinedsnippets#_snippet-syntax"
+            )
+          );
           return;
 
         case "error":
@@ -222,12 +227,15 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 
   private async showErrorMessage(errMsg: string) {
     const answer = await vscode.window.showErrorMessage(
-      `It seems an error occurred in the code snippets editor, do you want to open in default editor? (Error Message: ${errMsg})`,
-      "Yes",
-      "No"
+      vscode.l10n.t(
+        `It seems an error occurred in the code snippets editor, do you want to open in default editor? (Error Message: {0})`,
+        errMsg
+      ),
+      yes,
+      no
     );
 
-    if (answer === "Yes") {
+    if (answer === yes) {
       showSource();
       return;
     }

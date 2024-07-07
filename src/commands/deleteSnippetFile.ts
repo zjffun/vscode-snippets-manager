@@ -1,5 +1,6 @@
 import * as vscode from "vscode";
 import { ISnippetExtra } from "..";
+import { l10nDelete } from "../common/l10n";
 import { isBrowser } from "../share";
 import refreshAllView from "../views/refreshAllView";
 
@@ -9,14 +10,14 @@ export default async (snippet: ISnippetExtra) => {
   }
 
   const answer = await vscode.window.showWarningMessage(
-    `Do you want to delete ${snippet.name}?`,
+    vscode.l10n.t(`Do you want to delete {0}?`, snippet.name || ""),
     {
       modal: true,
     },
-    "Delete"
+    l10nDelete
   );
 
-  if (answer !== "Delete") {
+  if (answer !== l10nDelete) {
     return;
   }
 

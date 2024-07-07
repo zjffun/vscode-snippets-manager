@@ -1,7 +1,8 @@
 import * as vscode from "vscode";
 import { ISnippet } from "..";
 import { CodeSnippetsService } from "../CodeSnippetsService";
-import { SnippetType } from "../share";
+import { no, yes } from "../common/l10n";
+import { SnippetType, snippetTypeNameMap } from "../share";
 
 interface ISnippetQuickPickItem extends vscode.QuickPickItem {
   snippet: ISnippet;
@@ -45,6 +46,37 @@ export default async (type?: SnippetType) => {
       detail: snippet.body ?? "",
       snippet: snippet,
     });
+  }
+
+  if (!quickPickItems.length) {
+    const allName = vscode.l10n.t("workspace, user and extension");
+
+    if (type) {
+      const answer = await vscode.window.showWarningMessage(
+        vscode.l10n.t(
+          "No {0} snippets found. Do you want to search from all ({1}) snippets?",
+          snippetTypeNameMap.get(type) || "",
+          allName
+        ),
+        {
+          modal: true,
+        },
+        yes,
+        no
+      );
+
+      if (answer !== yes) {
+        return;
+      }
+
+      vscode.commands.executeCommand("snippetsmanager.search");
+      return;
+    }
+
+    vscode.window.showWarningMessage(
+      vscode.l10n.t("No {0} snippets found.", allName)
+    );
+    return;
   }
 
   const result = await vscode.window.showQuickPick(quickPickItems, {

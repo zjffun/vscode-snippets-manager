@@ -16,5 +16,18 @@
   "Can't find workspace folder, do you want to add the snippet to user snippets?": "没有找到工作区，创建代码片段到用户代码片段？",
   "Detected that `files.autoSave` is `afterDelay` or `onWindowChange`, whether to turn off automatically close the code snippet body editor after saving?": "检测到开启了自动保存，是否关闭保存后自动关闭代码片段主体编辑器？",
   "Do you want to delete selected {0} snippets?": "是否删除选中的 {0} 个代码片段？",
-  "Do you want to delete snippet {0}?": "是否删除代码片段 {0} ？"
+  "Do you want to delete snippet {0}?": "是否删除代码片段 {0} ？",
+  "workspace": "工作区",
+  "user": "用户",
+  "extension": "拓展程序",
+  "workspace, user and extension": "工作区、用户和拓展程序",
+  "It seems an error occurred in the code snippets editor, do you want to open in default editor? (Error Message: {0})": "打开代码片段编辑器失败，是否使用默认编辑器打开？(错误信息: {0})",
+  "Yes, and don't ask me again": "是，不再提醒",
+  "Yes": "是",
+  "No": "否",
+  "Delete": "删除",
+  "No {0} snippets found. Do you want to search from all ({1}) snippets?": "未找到{0}代码片段。是否搜索全部（{1}）代码片段？",
+  "No {0} snippets found.": "未找到{0}代码片段。",
+  "Do you want to delete {0}?": "是否删除 {0}？",
+  "No snippets to copy.": "没有正在复制的代码片段"
 }

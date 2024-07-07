@@ -1,4 +1,5 @@
 import * as vscode from "vscode";
+import { no, yes } from "../common/l10n";
 import { context, getUserFolderUri } from "../share";
 
 export default async function getSnippetUri() {
@@ -55,18 +56,20 @@ export default async function getSnippetUri() {
   );
 
   if (askAddUserSnippets) {
+    const yesAndDoNotAsk = vscode.l10n.t("Yes, and don't ask me again");
+
     const answer = await vscode.window.showInformationMessage(
       vscode.l10n.t(
         "Can't find workspace folder, do you want to add the snippet to user snippets?"
       ),
-      ...["Yes, and don't ask me again", "Yes", "No"]
+      ...[yesAndDoNotAsk, yes, no]
     );
 
-    if (answer === "No") {
+    if (answer === no) {
       return;
     }
 
-    if (answer === "Yes, and don't ask me again") {
+    if (answer === yesAndDoNotAsk) {
       context.globalState.update("askAddUserSnippets", false);
     }
 
