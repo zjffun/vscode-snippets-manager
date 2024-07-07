@@ -378,7 +378,7 @@
     "@typescript-eslint/eslint-plugin": "^4.26.0",
     "@typescript-eslint/parser": "^4.26.0",
     "@vscode/test-electron": "^2.3.9",
-    "@vscode/test-web": "^0.0.34",
+    "@vscode/test-web": "^0.0.56",
     "@vscode/vsce": "^2.26.0",
     "@yaireo/tagify": "^4.26.5",
     "assert": "^2.0.0",
