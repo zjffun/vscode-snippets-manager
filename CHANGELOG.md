@@ -1,3 +1,8 @@
+# v0.3.8
+
+- Add showing messages when there are no snippets found.
+- Improve l10n.
+
 # v0.3.7
 
 Add help buttons and update interface.
