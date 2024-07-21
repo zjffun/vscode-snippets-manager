@@ -1,3 +1,8 @@
+# v0.3.9
+
+- Add Snippets submenu to editor context.
+- Add open Snippets Manager command.
+
 # v0.3.8
 
 - Add showing messages when there are no snippets found.
