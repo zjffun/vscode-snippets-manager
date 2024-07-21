@@ -173,13 +173,6 @@
       ],
       "commandPalette": [
         {
-          "command": "snippetsmanager.createSnippetTo"
-        },
-        {
-          "command": "snippetsmanager.createSnippet",
-          "when": "editorHasSelection"
-        },
-        {
           "command": "snippetsmanager.showSource",
           "when": "resourceExtname == '.code-snippets'"
         },
@@ -217,23 +210,23 @@
       "snippetsmanager.snippets": [
         {
           "command": "snippetsmanager.createSnippet",
-          "when": "editorHasSelection",
-          "group": "snippets@1"
+          "group": "snippetsGroup1@1"
         },
         {
           "command": "snippetsmanager.createSnippetTo",
-          "when": "editorHasSelection",
-          "group": "snippets@2"
+          "group": "snippetsGroup1@2"
         },
         {
           "command": "snippetsmanager.createSnippetWithoutEscape",
-          "when": "editorHasSelection",
-          "group": "snippets@3"
+          "group": "snippetsGroup1@3"
         },
         {
           "command": "snippetsmanager.createSnippetWithoutEscapeTo",
-          "when": "editorHasSelection",
-          "group": "snippets@4"
+          "group": "snippetsGroup1@4"
+        },
+        {
+          "command": "snippetsmanager.openSnippetsManger",
+          "group": "snippetsGroup2@1"
         }
       ]
     },
@@ -262,6 +255,11 @@
       {
         "command": "snippetsmanager.createSnippetWithoutEscapeTo",
         "title": "%extension.createSnippetWithoutEscapeTo.title%",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.openSnippetsManger",
+        "title": "%extension.openSnippetsManger.title%",
         "category": "Snippets Manager"
       },
       {

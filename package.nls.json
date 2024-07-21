@@ -1,4 +1,5 @@
 {
+  "extension.openSnippetsManger.title": "Open Snippets Manager",
   "extension.submenus.snippets.label": "Snippets",
   "extension.snippetsView.title": "Snippets",
   "extension.WorkspaceSnippetsExplorerView.name": "Workspace Snippets",

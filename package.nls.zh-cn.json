@@ -1,4 +1,5 @@
 {
+	"extension.openSnippetsManger.title": "打开代码片段管理",
 	"extension.submenus.snippets.label": "代码片段",
 	"extension.snippetsView.title": "代码片段",
 	"extension.WorkspaceSnippetsExplorerView.name": "工作区代码片段",
