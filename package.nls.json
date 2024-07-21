@@ -1,4 +1,5 @@
 {
+  "extension.submenus.snippets.label": "Snippets",
   "extension.snippetsView.title": "Snippets",
   "extension.WorkspaceSnippetsExplorerView.name": "Workspace Snippets",
   "extension.UserSnippetsExplorerView.name": "User Snippets",
@@ -24,7 +25,6 @@
   "extension.showSource.title": "Show Source",
   "extension.showEditor.title": "Show Editor",
   "extension.codeSnippetsEditorView.displayName": "Code Snippets Editor",
-
   "extension.configuration.title": "Snippets Manager",
   "extension.configuration.autoCloseSnippetBodyEditor.desc": "Controls whether to automatically close the code snippet body editor after saving."
 }

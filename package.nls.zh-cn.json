@@ -1,4 +1,5 @@
 {
+	"extension.submenus.snippets.label": "代码片段",
 	"extension.snippetsView.title": "代码片段",
 	"extension.WorkspaceSnippetsExplorerView.name": "工作区代码片段",
 	"extension.UserSnippetsExplorerView.name": "用户代码片段",

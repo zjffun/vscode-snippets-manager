@@ -210,6 +210,12 @@
       ],
       "editor/context": [
         {
+          "submenu": "snippetsmanager.snippets",
+          "group": "A_snippets@1"
+        }
+      ],
+      "snippetsmanager.snippets": [
+        {
           "command": "snippetsmanager.createSnippet",
           "when": "editorHasSelection",
           "group": "snippets@1"
@@ -231,6 +237,12 @@
         }
       ]
     },
+    "submenus": [
+      {
+        "id": "snippetsmanager.snippets",
+        "label": "%extension.submenus.snippets.label%"
+      }
+    ],
     "commands": [
       {
         "command": "snippetsmanager.createSnippet",
