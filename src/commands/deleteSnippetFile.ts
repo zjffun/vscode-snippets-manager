@@ -14,7 +14,7 @@ export default async (snippet: ISnippetExtra) => {
     {
       modal: true,
     },
-    l10nDelete
+    l10nDelete,
   );
 
   if (answer !== l10nDelete) {

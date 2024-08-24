@@ -24,7 +24,7 @@ export default async (type?: SnippetType) => {
     default:
       snippets = (await CodeSnippetsService.getWorkspaceSnippetsList()).concat(
         await CodeSnippetsService.getUserSnippetsList(),
-        await CodeSnippetsService.getExtensionSnippetsList()
+        await CodeSnippetsService.getExtensionSnippetsList(),
       );
       break;
   }
@@ -56,13 +56,13 @@ export default async (type?: SnippetType) => {
         vscode.l10n.t(
           "No {0} snippets found. Do you want to search from all ({1}) snippets?",
           snippetTypeNameMap.get(type) || "",
-          allName
+          allName,
         ),
         {
           modal: true,
         },
         yes,
-        no
+        no,
       );
 
       if (answer !== yes) {
@@ -74,7 +74,7 @@ export default async (type?: SnippetType) => {
     }
 
     vscode.window.showWarningMessage(
-      vscode.l10n.t("No {0} snippets found.", allName)
+      vscode.l10n.t("No {0} snippets found.", allName),
     );
     return;
   }
@@ -87,7 +87,7 @@ export default async (type?: SnippetType) => {
   if (result) {
     vscode.commands.executeCommand(
       "_snippetsmanager.showSnippet",
-      result.snippet
+      result.snippet,
     );
   }
 };

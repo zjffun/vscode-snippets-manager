@@ -15,7 +15,7 @@ const vscode = getVsCode();
 function getSnippets(): ISnippet[] {
   const state = getState();
 
-  let result: ISnippet[] = [...state.addingSnippets];
+  const result: ISnippet[] = [...state.addingSnippets];
 
   for (const [name, vscodeSnippet] of state.vscodeSnippetEntries) {
     const editingSnippet = state.editingSnippetObjMap[name];
@@ -62,7 +62,7 @@ const CodeSnippetsEditor = () => {
     removeAdd(keyName: string) {
       const state = getState();
       state.addingSnippets = state.addingSnippets.filter(
-        (d) => d[NAME] !== keyName
+        (d) => d[NAME] !== keyName,
       );
       vscode.setState(state);
       commonRef.current.updateSnippets();
@@ -117,7 +117,7 @@ const CodeSnippetsEditor = () => {
     const listener = (event: any) => {
       const message = event.data;
       switch (message.type) {
-        case "update":
+        case "update": {
           const vscodeSnippetEntries = message.vscodeSnippetEntries;
 
           vscode.setState({
@@ -128,6 +128,7 @@ const CodeSnippetsEditor = () => {
           commonRef.current.updateSnippets();
           commonRef.current.setReadonly(message.readonly);
           return;
+        }
 
         case "show":
           // wait for scroll state apply
@@ -215,7 +216,7 @@ const CodeSnippetsEditor = () => {
                     const state = getState();
                     if (snippet[NEW_ITEM]) {
                       const currentSnippet = state.addingSnippets.find(
-                        (d) => d[NAME] === keyName
+                        (d) => d[NAME] === keyName,
                       );
                       if (!currentSnippet) {
                         return;

@@ -11,7 +11,7 @@ export default async (snippets: ISnippet[]) => {
 
   let message = vscode.l10n.t(
     "Do you want to delete selected {0} snippets?",
-    snippets.length
+    snippets.length,
   );
 
   if (snippets.length === 1) {
@@ -21,7 +21,7 @@ export default async (snippets: ISnippet[]) => {
 
     message = vscode.l10n.t(
       "Do you want to delete snippet {0}?",
-      snippets[0].name
+      snippets[0].name,
     );
   }
 
@@ -30,7 +30,7 @@ export default async (snippets: ISnippet[]) => {
     {
       modal: true,
     },
-    "Delete"
+    "Delete",
   );
 
   if (answer !== "Delete") {

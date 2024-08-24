@@ -20,9 +20,7 @@ suite("Extension", () => {
   const extensionID = "zjffun.snippetsmanager";
   const extensionShortName = "snippetsmanager";
 
-  let extension: vscode.Extension<any> | undefined;
-
-  extension = vscode.extensions.getExtension(extensionID);
+  const extension = vscode.extensions.getExtension(extensionID);
 
   setup(async () => {
     await closeAllEditors();
@@ -42,7 +40,7 @@ suite("Extension", () => {
 
     const res = await vscode.commands.executeCommand(
       "snippetsmanager.createSnippet",
-      "test"
+      "test",
     );
 
     assert.ok(res);
@@ -61,7 +59,7 @@ suite("Extension", () => {
 
     const res = await vscode.commands.executeCommand(
       "snippetsmanager.createSnippetWithoutEscape",
-      "test"
+      "test",
     );
 
     assert.ok(res);
@@ -75,7 +73,7 @@ suite("Extension", () => {
   test("createSnippet command should work when has no selection", async () => {
     const res = await vscode.commands.executeCommand(
       "snippetsmanager.createSnippet",
-      "test"
+      "test",
     );
 
     assert.ok(res);
@@ -84,7 +82,7 @@ suite("Extension", () => {
   test("createSnippetWithoutEscape command should work when has no selection", async () => {
     const res = await vscode.commands.executeCommand(
       "snippetsmanager.createSnippetWithoutEscape",
-      "test"
+      "test",
     );
 
     assert.ok(res);

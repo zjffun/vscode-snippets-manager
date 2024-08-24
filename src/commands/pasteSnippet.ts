@@ -10,7 +10,7 @@ export default async (targetSnippet: ISnippetExtra) => {
   }
 
   const snippetsTextDoc = await vscode.workspace.openTextDocument(
-    targetSnippet.uri
+    targetSnippet.uri,
   );
 
   const codeSnippetsService = new CodeSnippetsService(snippetsTextDoc);

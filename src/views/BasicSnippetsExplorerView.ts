@@ -39,7 +39,7 @@ export default abstract class BasicSnippetsExplorerView
           handleDrag(
             source: (ISnippet | ISnippetContainer)[],
             dataTransfer,
-            token
+            token,
           ) {
             const snippets = getSnippets(undefined, source);
 
@@ -50,13 +50,13 @@ export default abstract class BasicSnippetsExplorerView
 
             dataTransfer.set(
               movingSnippetsMimeType,
-              new vscode.DataTransferItem(snippets)
+              new vscode.DataTransferItem(snippets),
             );
           },
           async handleDrop(
             target: ISnippet | ISnippetContainer,
             dataTransfer,
-            token
+            token,
           ) {
             if (
               (target as ISnippetContainer)?.isWorkspace ||
@@ -105,7 +105,7 @@ export default abstract class BasicSnippetsExplorerView
 
     const item = new SnippetTreeItem(
       element.name || "",
-      element.children ? vscode.TreeItemCollapsibleState.Collapsed : undefined
+      element.children ? vscode.TreeItemCollapsibleState.Collapsed : undefined,
     );
     item.command = !element.children ? showSnippetCommand : undefined;
     item.contextValue = contextValue;
@@ -114,7 +114,7 @@ export default abstract class BasicSnippetsExplorerView
   }
 
   public getChildren(
-    element?: SnippetTreeItem
+    element?: SnippetTreeItem,
   ): SnippetTreeItem[] | Thenable<SnippetTreeItem[]> {
     if (element) {
       if (!element.children) {

@@ -11,17 +11,17 @@ const testWorkspaceRoot = <vscode.Uri>(
 
 export const testWorkspaceFolder = vscode.Uri.joinPath(
   testWorkspaceRoot,
-  "test"
+  "test",
 );
 
 let fileIndex = 0;
 export async function createTestFile(
   content: string = "",
-  { filename }: { filename?: string } = {}
+  { filename }: { filename?: string } = {},
 ) {
   const uri = vscode.Uri.joinPath(
     testWorkspaceRoot,
-    filename === undefined ? `${fileIndex++}.temp` : filename
+    filename === undefined ? `${fileIndex++}.temp` : filename,
   );
   await writeFile(uri, content);
   return uri;
@@ -33,14 +33,14 @@ export async function writeFile(uri: vscode.Uri, content: string) {
 
 export async function writeTextDocument(
   textDocument: vscode.TextDocument,
-  content: string
+  content: string,
 ) {
   const workspaceEdit = new vscode.WorkspaceEdit();
 
   workspaceEdit.replace(
     textDocument.uri,
     new vscode.Range(0, 0, textDocument.lineCount, 0),
-    content
+    content,
   );
 
   const res = await vscode.workspace.applyEdit(workspaceEdit);
@@ -69,8 +69,8 @@ export async function resetTestWorkspace() {
       vscode.Uri.joinPath(
         testWorkspaceRoot,
         ".vscode",
-        "default-snippets-manager.code-snippets"
-      )
+        "default-snippets-manager.code-snippets",
+      ),
     );
   } catch {
     // ok if file doesn't exist

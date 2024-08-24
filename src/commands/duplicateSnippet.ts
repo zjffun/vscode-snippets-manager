@@ -20,7 +20,7 @@ export default async (snippet: ISnippet) => {
   await vscode.commands.executeCommand(
     "vscode.openWith",
     snippet.uri,
-    CodeSnippetsEditor.viewType
+    CodeSnippetsEditor.viewType,
   );
 
   await currentWebviewPanel?.webview?.postMessage?.({

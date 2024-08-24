@@ -15,7 +15,7 @@ export default tseslint.config(
   ...tseslint.configs.recommended,
   prettierConfig,
   {
-    files: ['**/*.{ts,tsx,js}'],
+    files: ["**/*.{ts,tsx,js}"],
     rules: {
       "@typescript-eslint/no-unused-vars": "off",
       "@typescript-eslint/no-explicit-any": "off",
@@ -24,7 +24,7 @@ export default tseslint.config(
     },
   },
   {
-    files: ['**/*.js'],
+    files: ["**/*.js"],
     rules: {
       "@typescript-eslint/no-require-imports": "off",
     },

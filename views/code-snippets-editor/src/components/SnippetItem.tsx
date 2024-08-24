@@ -19,7 +19,7 @@ interface Props {
 function originalInputValueFormat(
   values: {
     value: string;
-  }[]
+  }[],
 ) {
   return values.map((item) => item.value).join(",");
 }

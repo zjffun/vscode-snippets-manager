@@ -36,17 +36,19 @@ export function activate(context: vscode.ExtensionContext) {
 
   new ExtensionSnippetsExplorerView(context);
 
-
   context.subscriptions.push(
-    vscode.commands.registerCommand("snippetsmanager.openSnippetsManger", () => {
-      return openSnippetsManger();
-    })
+    vscode.commands.registerCommand(
+      "snippetsmanager.openSnippetsManger",
+      () => {
+        return openSnippetsManger();
+      },
+    ),
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("snippetsmanager.search", (type) => {
       return searchSnippet(type);
-    })
+    }),
   );
 
   context.subscriptions.push(
@@ -55,10 +57,10 @@ export function activate(context: vscode.ExtensionContext) {
       async () => {
         await vscode.commands.executeCommand(
           "snippetsmanager.search",
-          SnippetType.WORKSPACE
+          SnippetType.WORKSPACE,
         );
-      }
-    )
+      },
+    ),
   );
 
   context.subscriptions.push(
@@ -67,10 +69,10 @@ export function activate(context: vscode.ExtensionContext) {
       async () => {
         await vscode.commands.executeCommand(
           "snippetsmanager.search",
-          SnippetType.USER
+          SnippetType.USER,
         );
-      }
-    )
+      },
+    ),
   );
 
   context.subscriptions.push(
@@ -79,10 +81,10 @@ export function activate(context: vscode.ExtensionContext) {
       async () => {
         await vscode.commands.executeCommand(
           "snippetsmanager.search",
-          SnippetType.EXTENSION
+          SnippetType.EXTENSION,
         );
-      }
-    )
+      },
+    ),
   );
 
   context.subscriptions.push(
@@ -90,8 +92,8 @@ export function activate(context: vscode.ExtensionContext) {
       "snippetsmanager.createSnippet",
       async (prefix?: string) => {
         return createSnippet({ prefix, escape: true });
-      }
-    )
+      },
+    ),
   );
 
   context.subscriptions.push(
@@ -99,8 +101,8 @@ export function activate(context: vscode.ExtensionContext) {
       "snippetsmanager.createSnippetTo",
       async (prefix?: string, uri?: vscode.Uri) => {
         return createSnippetTo({ prefix, uri, escape: true });
-      }
-    )
+      },
+    ),
   );
 
   context.subscriptions.push(
@@ -108,8 +110,8 @@ export function activate(context: vscode.ExtensionContext) {
       "snippetsmanager.createSnippetWithoutEscape",
       async (prefix?: string) => {
         return createSnippet({ prefix });
-      }
-    )
+      },
+    ),
   );
 
   context.subscriptions.push(
@@ -117,15 +119,15 @@ export function activate(context: vscode.ExtensionContext) {
       "snippetsmanager.createSnippetWithoutEscapeTo",
       async (prefix?: string, uri?: vscode.Uri) => {
         return createSnippetTo({ prefix, uri });
-      }
-    )
+      },
+    ),
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand(
       workbenchActionOpenSnippetsId,
-      workbenchActionOpenSnippets
-    )
+      workbenchActionOpenSnippets,
+    ),
   );
 
   context.subscriptions.push(
@@ -133,8 +135,8 @@ export function activate(context: vscode.ExtensionContext) {
       "_snippetsmanager.deleteSnippetFile",
       (snippet) => {
         deleteSnippetFile(snippet);
-      }
-    )
+      },
+    ),
   );
 
   context.subscriptions.push(
@@ -143,8 +145,8 @@ export function activate(context: vscode.ExtensionContext) {
       (snippet, snippets) => {
         const _snippets = getSnippets(snippet, snippets);
         copySnippet(_snippets);
-      }
-    )
+      },
+    ),
   );
 
   context.subscriptions.push(
@@ -152,8 +154,8 @@ export function activate(context: vscode.ExtensionContext) {
       "_snippetsmanager.pasteSnippet",
       (snippet) => {
         pasteSnippet(snippet);
-      }
-    )
+      },
+    ),
   );
 
   context.subscriptions.push(
@@ -161,8 +163,8 @@ export function activate(context: vscode.ExtensionContext) {
       "_snippetsmanager.duplicateSnippet",
       (snippet) => {
         duplicateSnippet(snippet);
-      }
-    )
+      },
+    ),
   );
 
   context.subscriptions.push(
@@ -171,8 +173,8 @@ export function activate(context: vscode.ExtensionContext) {
       (snippet, snippets) => {
         const _snippets = getSnippets(snippet, snippets);
         deleteSnippet(_snippets);
-      }
-    )
+      },
+    ),
   );
 
   context.subscriptions.push(
@@ -180,8 +182,8 @@ export function activate(context: vscode.ExtensionContext) {
       "_snippetsmanager.editSnippet",
       (snippet) => {
         editSnippet(snippet);
-      }
-    )
+      },
+    ),
   );
 
   context.subscriptions.push(
@@ -189,26 +191,26 @@ export function activate(context: vscode.ExtensionContext) {
       "_snippetsmanager.showSnippet",
       (snippet) => {
         showSnippet(snippet);
-      }
-    )
+      },
+    ),
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("snippetsmanager.refresh", () => {
       refreshAllView();
-    })
+    }),
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("snippetsmanager.showSource", async () => {
       return showSource();
-    })
+    }),
   );
 
   context.subscriptions.push(
     vscode.commands.registerCommand("snippetsmanager.showEditor", async () => {
       return showEditor();
-    })
+    }),
   );
 
   context.subscriptions.push(CodeSnippetsEditor.register(context));

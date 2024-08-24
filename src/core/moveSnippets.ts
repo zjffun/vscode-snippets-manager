@@ -7,7 +7,7 @@ export const movingSnippetsMimeType =
 
 export default async (
   targetSnippet: ISnippetExtra,
-  sourceSnippets: ISnippet[]
+  sourceSnippets: ISnippet[],
 ) => {
   if (!targetSnippet.uri) {
     return;
@@ -18,7 +18,7 @@ export default async (
   }
 
   const snippetsTextDoc = await vscode.workspace.openTextDocument(
-    targetSnippet.uri
+    targetSnippet.uri,
   );
 
   const codeSnippetsService = new CodeSnippetsService(snippetsTextDoc);
@@ -75,11 +75,11 @@ export default async (
         });
 
         const sourceSnippetsTextDoc = await vscode.workspace.openTextDocument(
-          snippet.uri
+          snippet.uri,
         );
 
         const sourceCodeSnippetsService = new CodeSnippetsService(
-          sourceSnippetsTextDoc
+          sourceSnippetsTextDoc,
         );
 
         await sourceCodeSnippetsService.delete(snippet.name);

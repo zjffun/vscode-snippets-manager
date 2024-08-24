@@ -43,7 +43,7 @@ export default async ({
             label: name,
             uri,
           };
-        })
+        }),
       );
     }, []),
   ];

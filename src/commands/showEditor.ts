@@ -11,6 +11,6 @@ export default async () => {
   await vscode.commands.executeCommand(
     "vscode.openWith",
     activeTextEditor.document.uri,
-    CodeSnippetsEditor.viewType
+    CodeSnippetsEditor.viewType,
   );
 };

@@ -1,5 +1,5 @@
 // imports mocha for the browser, defining the `mocha` global.
-require("mocha/mocha");
+import "mocha/mocha";
 
 export function run(): Promise<void> {
   return new Promise((c, e) => {

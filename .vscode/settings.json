@@ -2,7 +2,7 @@
 {
   "files.exclude": {
     ".vscode-test": true,
-    ".vscode-test-web": true,
+    ".vscode-test-web": true
   },
   "search.exclude": {
     ".vscode-test": true,

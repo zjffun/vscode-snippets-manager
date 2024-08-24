@@ -44,7 +44,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     const provider = new CodeSnippetsEditor(context);
     const providerRegistration = vscode.window.registerCustomEditorProvider(
       CodeSnippetsEditor.viewType,
-      provider
+      provider,
     );
     return providerRegistration;
   }
@@ -62,7 +62,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
   public async resolveCustomTextEditor(
     document: vscode.TextDocument,
     webviewPanel: vscode.WebviewPanel,
-    _token: vscode.CancellationToken
+    _token: vscode.CancellationToken,
   ): Promise<void> {
     currentWebviewPanel = webviewPanel;
 
@@ -133,7 +133,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
         if (e.document.uri.toString() === document.uri.toString()) {
           updateWebview();
         }
-      }
+      },
     );
 
     webviewPanel.onDidChangeViewState(() => {
@@ -195,14 +195,16 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
           refreshAllView();
           return;
 
-        case "editBody":
+        case "editBody": {
           const snippets = codeSnippetsService.getSnippetByName(
-            payload.keyName
+            payload.keyName,
           );
+
           if (snippets) {
             editSnippetBody(snippets);
           }
           return;
+        }
 
         case "openInDefaultEditor":
           showSource();
@@ -211,8 +213,8 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
         case "help":
           vscode.env.openExternal(
             vscode.Uri.parse(
-              "https://code.visualstudio.com/docs/editor/userdefinedsnippets#_snippet-syntax"
-            )
+              "https://code.visualstudio.com/docs/editor/userdefinedsnippets#_snippet-syntax",
+            ),
           );
           return;
 
@@ -229,10 +231,10 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     const answer = await vscode.window.showErrorMessage(
       vscode.l10n.t(
         `It seems an error occurred in the code snippets editor, do you want to open in default editor? (Error Message: {0})`,
-        errMsg
+        errMsg,
       ),
       yes,
-      no
+      no,
     );
 
     if (answer === yes) {
@@ -247,11 +249,11 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
   private getHtmlForWebview(webview: vscode.Webview): string {
     // Local path to script and css for the webview
     const scriptUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this.context.extensionUri, "out-view", "main.js")
+      vscode.Uri.joinPath(this.context.extensionUri, "out-view", "main.js"),
     );
 
     const styleUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this.context.extensionUri, "out-view", "main.css")
+      vscode.Uri.joinPath(this.context.extensionUri, "out-view", "main.css"),
     );
 
     const codiconsUri = webview.asWebviewUri(
@@ -260,24 +262,24 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
         "node_modules",
         "@vscode/codicons",
         "dist",
-        "codicon.css"
-      )
+        "codicon.css",
+      ),
     );
 
     const styleResetUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this.context.extensionUri, "media", "reset.css")
+      vscode.Uri.joinPath(this.context.extensionUri, "media", "reset.css"),
     );
 
     const styleVSCodeUri = webview.asWebviewUri(
-      vscode.Uri.joinPath(this.context.extensionUri, "media", "vscode.css")
+      vscode.Uri.joinPath(this.context.extensionUri, "media", "vscode.css"),
     );
 
     const globalErrorHandlerUri = webview.asWebviewUri(
       vscode.Uri.joinPath(
         this.context.extensionUri,
         "media",
-        "globalErrorHandler.js"
-      )
+        "globalErrorHandler.js",
+      ),
     );
 
     const toolkitUri = webview.asWebviewUri(
@@ -287,8 +289,8 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
         "@vscode",
         "webview-ui-toolkit",
         "dist",
-        "toolkit.js"
-      )
+        "toolkit.js",
+      ),
     );
 
     // Use a nonce to whitelist which scripts can be run
@@ -309,9 +311,9 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
           style-src ${webview.cspSource} 'nonce-${nonce}';
           font-src ${webview.cspSource}; script-src 'nonce-${nonce}';">
         <meta property="csp-nonce" content="${nonce}" />
-       
+
 				<meta name="viewport" content="width=device-width, initial-scale=1.0">
-        
+
 				<link href="${codiconsUri}" rel="stylesheet" />
 				<link href="${styleResetUri}" rel="stylesheet" />
 				<link href="${styleVSCodeUri}" rel="stylesheet" />

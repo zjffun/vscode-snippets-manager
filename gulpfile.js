@@ -18,10 +18,7 @@ const cleanTask = function () {
 };
 
 const compileTask = function () {
-  var r = tsProject
-    .src()
-    .pipe(sourcemaps.init())
-    .pipe(tsProject());
+  var r = tsProject.src().pipe(sourcemaps.init()).pipe(tsProject());
 
   if (inlineMap && inlineSource) {
     r = r.pipe(sourcemaps.write());
@@ -32,7 +29,7 @@ const compileTask = function () {
         includeContent: inlineSource,
         // Return relative source map root directories per file.
         sourceRoot: "../src",
-      })
+      }),
     );
   }
 

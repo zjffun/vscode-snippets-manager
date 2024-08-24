@@ -15,14 +15,13 @@ export default async () => {
     for (const workspaceFolder of workspaceFolders) {
       const dotVSCodeFolderUri = vscode.Uri.joinPath(
         workspaceFolder.uri,
-        ".vscode"
+        ".vscode",
       );
 
       let workspaceDotVSCodeFiles: [string, vscode.FileType][] = [];
       try {
-        workspaceDotVSCodeFiles = await vscode.workspace.fs.readDirectory(
-          dotVSCodeFolderUri
-        );
+        workspaceDotVSCodeFiles =
+          await vscode.workspace.fs.readDirectory(dotVSCodeFolderUri);
       } catch (error) {
         // have no .vscode folder, do noting
       }

@@ -9,7 +9,7 @@ import {
 export function registerHelpAndFeedbackView(context: ExtensionContext) {
   const items = new Array<Link | Command>();
   const predefinedProvider = new StandardLinksProvider(
-    "zjffun.snippetsmanager"
+    "zjffun.snippetsmanager",
   );
   items.push(predefinedProvider.getGetStartedLink());
   items.push({
@@ -22,6 +22,6 @@ export function registerHelpAndFeedbackView(context: ExtensionContext) {
   new HelpAndFeedbackView(
     context,
     "snippetsmanager-snippetsView-HelpAndFeedback",
-    items
+    items,
   );
 }

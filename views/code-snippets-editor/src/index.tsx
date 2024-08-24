@@ -6,5 +6,5 @@ ReactDOM.render(
   <ErrorBoundary>
     <CodeSnippetsEditor />
   </ErrorBoundary>,
-  document.getElementById("root")
+  document.getElementById("root"),
 );

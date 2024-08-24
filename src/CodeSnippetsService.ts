@@ -33,7 +33,7 @@ export class CodeSnippetsService {
   }
 
   getMap(): IVSCodeSnippetMap {
-    let currentFilename = this.textDocument.uri.path.split("/").pop();
+    const currentFilename = this.textDocument.uri.path.split("/").pop();
     let currentProperty: string | null = null;
     let currentParent: any = [];
     const initCurrentParent = currentParent;
@@ -81,7 +81,7 @@ export class CodeSnippetsService {
         offset: number,
         length: number,
         startLine: number,
-        startCharacter: number
+        startCharacter: number,
       ) => {
         if (
           currentParent === initCurrentParent &&
@@ -93,9 +93,9 @@ export class CodeSnippetsService {
         let errorType = "Unknown";
 
         try {
-          // @ts-ignore
+          // @ts-expect-error enum
           if (ParseErrorCode[e]) {
-            // @ts-ignore
+            // @ts-expect-error enum
             errorType = ParseErrorCode[e];
           }
         } catch (error) {
@@ -106,7 +106,7 @@ export class CodeSnippetsService {
           `Parse Error: ${errorType} in ${currentFilename} (Line: ${
             startLine + 1
           }, Char: ${startCharacter + 1}).\n` +
-            `Tip: Check if the file conforms to the JSONC specification, example trailing commas or quotes.`
+            `Tip: Check if the file conforms to the JSONC specification, example trailing commas or quotes.`,
         );
       },
     };
@@ -184,14 +184,14 @@ export class CodeSnippetsService {
     const newContent = this.insertProp(
       content,
       snippet,
-      index ? { index } : {}
+      index ? { index } : {},
     );
 
     return newContent;
   }
 
   getUpdateContent(snippet: ISnippet, name: string) {
-    let oldSnippet = this.getSnippetByName(name);
+    const oldSnippet = this.getSnippetByName(name);
 
     if (!oldSnippet) {
       throw Error(`Snippet '${name}' not found`);
@@ -218,7 +218,7 @@ export class CodeSnippetsService {
       [getKey(snippet.name || "", this.getObj())],
       vSnippet,
       {},
-      () => index
+      () => index,
     );
 
     const newContent = applyEdit(content, edit);
@@ -286,7 +286,7 @@ export class CodeSnippetsService {
     workspaceEdit.replace(
       this.textDocument.uri,
       new vscode.Range(0, 0, this.textDocument.lineCount, 0),
-      content
+      content,
     );
 
     const result = await vscode.workspace.applyEdit(workspaceEdit);
@@ -344,7 +344,7 @@ export class CodeSnippetsService {
 
   static createSnippet(
     vscodeSnippet: IVscodeSnippet,
-    { name, uri, index }: ISnippetExtra = {}
+    { name, uri, index }: ISnippetExtra = {},
   ): ISnippet {
     let body: any = vscodeSnippet.body;
     if (Array.isArray(body)) {
@@ -364,7 +364,7 @@ export class CodeSnippetsService {
 
   static getSnippetList(
     vscodeSnippets: Map<string, IVscodeSnippet>,
-    { uri }: ISnippetExtra = {}
+    { uri }: ISnippetExtra = {},
   ) {
     const list = Array.from(vscodeSnippets).map(([name, snippet], index) => {
       return CodeSnippetsService.createSnippet(snippet, {
@@ -378,7 +378,7 @@ export class CodeSnippetsService {
   }
 
   static async getSnippetsByUri(uri: vscode.Uri) {
-    let snippetsTextDoc = await vscode.workspace.openTextDocument(uri);
+    const snippetsTextDoc = await vscode.workspace.openTextDocument(uri);
 
     const codeSnippetsService = new CodeSnippetsService(snippetsTextDoc);
 
@@ -454,7 +454,7 @@ export class CodeSnippetsService {
     const tree: ISnippetContainer[] = [];
 
     for (const extension of vscode.extensions.all) {
-      let { packageJSON } = extension;
+      const { packageJSON } = extension;
       if (
         packageJSON &&
         packageJSON.isBuiltin === false &&
@@ -463,7 +463,7 @@ export class CodeSnippetsService {
         const snippetFiles = [];
 
         const snippetPaths = this.getExtensionSnippetPaths(
-          packageJSON.contributes.snippets
+          packageJSON.contributes.snippets,
         );
 
         for (const snippetPath of snippetPaths) {
@@ -514,7 +514,7 @@ export class CodeSnippetsService {
         }
 
         list = list.concat(
-          CodeSnippetsService.getSnippetList(snippets, { uri })
+          CodeSnippetsService.getSnippetList(snippets, { uri }),
         );
       }
     }
@@ -546,14 +546,14 @@ export class CodeSnippetsService {
     let list: ISnippet[] = [];
 
     for (const extension of vscode.extensions.all) {
-      let { packageJSON } = extension;
+      const { packageJSON } = extension;
       if (
         packageJSON &&
         packageJSON.isBuiltin === false &&
         packageJSON?.contributes?.snippets
       ) {
         const snippetPaths = this.getExtensionSnippetPaths(
-          packageJSON.contributes.snippets
+          packageJSON.contributes.snippets,
         );
 
         for (const snippetPath of snippetPaths) {
@@ -563,7 +563,7 @@ export class CodeSnippetsService {
 
           const uri = vscode.Uri.joinPath(
             vscode.Uri.file(extension.extensionPath),
-            snippetPath
+            snippetPath,
           );
 
           let snippets;
@@ -575,7 +575,7 @@ export class CodeSnippetsService {
           }
 
           list = list.concat(
-            CodeSnippetsService.getSnippetList(snippets, { uri })
+            CodeSnippetsService.getSnippetList(snippets, { uri }),
           );
         }
       }
@@ -585,7 +585,7 @@ export class CodeSnippetsService {
   }
 
   private static getExtensionSnippetPaths(
-    snippets: IPackageJSONContributesSnippet[]
+    snippets: IPackageJSONContributesSnippet[],
   ) {
     // remove duplicate snippet paths
     return new Set<string | undefined>(snippets.map((snippet) => snippet.path));

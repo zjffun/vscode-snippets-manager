@@ -36,7 +36,7 @@ suite("CodeSnippetsService", () => {
 
   test("getMap should return error when parse fails", async () => {
     const uri = await createTestFile();
-    let textDocument = await vscode.workspace.openTextDocument(uri);
+    const textDocument = await vscode.workspace.openTextDocument(uri);
     const codeSnippetsService = new CodeSnippetsService(textDocument);
     await writeTextDocument(textDocument, "[]");
 
@@ -91,7 +91,7 @@ suite("CodeSnippetsService", () => {
         prefix: "prefixNew",
         scope: "scopeNew",
       },
-      "test"
+      "test",
     );
 
     const newSnippet = await codeSnippetsService.getSnippetByName("test");

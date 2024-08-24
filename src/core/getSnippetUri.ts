@@ -14,7 +14,7 @@ export default async function getSnippetUri() {
     return vscode.Uri.joinPath(
       activeWorkspaceFolder.uri,
       ".vscode",
-      "default-snippets-manager.code-snippets"
+      "default-snippets-manager.code-snippets",
     );
   }
 
@@ -22,7 +22,7 @@ export default async function getSnippetUri() {
     return vscode.Uri.joinPath(
       vscode.workspace.workspaceFolders[0].uri,
       ".vscode",
-      "default-snippets-manager.code-snippets"
+      "default-snippets-manager.code-snippets",
     );
   }
 
@@ -46,13 +46,13 @@ export default async function getSnippetUri() {
     return vscode.Uri.joinPath(
       workspaceFolder.uri,
       ".vscode",
-      "default-snippets-manager.code-snippets"
+      "default-snippets-manager.code-snippets",
     );
   }
 
   const askAddUserSnippets = context.globalState.get(
     "askAddUserSnippets",
-    true
+    true,
   );
 
   if (askAddUserSnippets) {
@@ -60,9 +60,9 @@ export default async function getSnippetUri() {
 
     const answer = await vscode.window.showInformationMessage(
       vscode.l10n.t(
-        "Can't find workspace folder, do you want to add the snippet to user snippets?"
+        "Can't find workspace folder, do you want to add the snippet to user snippets?",
       ),
-      ...[yesAndDoNotAsk, yes, no]
+      ...[yesAndDoNotAsk, yes, no],
     );
 
     if (answer === no) {
@@ -75,7 +75,7 @@ export default async function getSnippetUri() {
 
     return vscode.Uri.joinPath(
       getUserFolderUri(),
-      "default-snippets-manager.code-snippets"
+      "default-snippets-manager.code-snippets",
     );
   }
 }

@@ -11,7 +11,7 @@ export default async (snippets: ISnippet[]) => {
   vscode.commands.executeCommand(
     "setContext",
     "snippetsmanager.copyingSnippets",
-    true
+    true,
   );
 
   setClipboard(snippets);

@@ -1,7 +1,9 @@
 .code-snippets-editor {
   padding-bottom: calc(100vh - 6em);
 
-  --code-snippets-editor-snippet-item-background: var(--vscode-editor-background);
+  --code-snippets-editor-snippet-item-background: var(
+    --vscode-editor-background
+  );
 
   &-snippets {
     padding: 0;
@@ -17,7 +19,9 @@
       }
 
       &:hover {
-        --code-snippets-editor-snippet-item-background: var(--vscode-list-hoverBackground);
+        --code-snippets-editor-snippet-item-background: var(
+          --vscode-list-hoverBackground
+        );
       }
     }
   }

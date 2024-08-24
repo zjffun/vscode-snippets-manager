@@ -64,7 +64,7 @@ suite("editSnippetBody", () => {
     assert.equal(
       codeSnippetsService.getSnippetByName(name)?.body,
       "new body",
-      "body should be updated"
+      "body should be updated",
     );
   });
 });
