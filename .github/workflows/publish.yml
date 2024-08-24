@@ -18,9 +18,14 @@ jobs:
         with:
           node-version: 16.x
       - run: yarn install
-      - run: xvfb-run -a yarn test
+      - name: Compile
+        run: |
+          yarn run compile
+          yarn run compile-web
+      - name: Test
+        run: xvfb-run -a yarn test
       - name: Publish
-        run: yarn run deploy
+        run: npx vsce publish --yarn
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
       - name: Publish to Open VSX Registry

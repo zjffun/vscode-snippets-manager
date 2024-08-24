@@ -19,7 +19,17 @@ jobs:
         with:
           node-version: 16.x
       - run: yarn install
-      - run: xvfb-run -a yarn test
+      - name: Eslint & Prettier
+        run: |
+          npx eslint
+          npx prettier --check .
+      - name: Compile
+        run: |
+          yarn run compile
+          yarn run compile-web
+      - name: Test
+        run: xvfb-run -a yarn run test
         if: runner.os == 'Linux'
-      - run: yarn test
+      - name: Test
+        run: yarn run test
         if: runner.os != 'Linux'
