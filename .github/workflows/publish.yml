@@ -24,11 +24,4 @@ jobs:
           yarn run compile-web
       - name: Test
         run: xvfb-run -a yarn test
-      - name: Publish
-        run: npx vsce publish --yarn
-        env:
-          VSCE_PAT: ${{ secrets.VSCE_PAT }}
-      - name: Publish to Open VSX Registry
-        uses: HaaLeo/publish-vscode-extension@v1
-        with:
-          pat: ${{ secrets.OPEN_VSX_TOKEN }}
+
