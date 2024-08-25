@@ -38,6 +38,6 @@ jobs:
         if: runner.os == 'Linux'
       - name: Test
         run: |
-          xvfb-run -a yarn run test
+          yarn run test
           yarn run test-web
         if: runner.os != 'Linux'
