@@ -23,7 +23,9 @@ jobs:
           yarn run compile
           yarn run compile-web
       - name: Test
-        run: xvfb-run -a yarn test
+        run: |
+          xvfb-run -a yarn run test
+          yarn run test-web
       - name: Publish
         run: npx vsce publish --yarn
         env:

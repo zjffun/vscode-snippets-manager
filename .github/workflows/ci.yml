@@ -32,8 +32,12 @@ jobs:
           yarn run compile
           yarn run compile-web
       - name: Test
-        run: xvfb-run -a yarn run test
+        run: |
+          xvfb-run -a yarn run test
+          yarn run test-web
         if: runner.os == 'Linux'
       - name: Test
-        run: yarn run test
+        run: |
+          xvfb-run -a yarn run test
+          yarn run test-web
         if: runner.os != 'Linux'
