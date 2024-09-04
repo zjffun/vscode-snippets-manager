@@ -134,10 +134,12 @@
         margin: 0;
         width: 100%;
         overflow: auto;
+        font-family: monospace;
       }
 
       vscode-text-area {
         width: 100%;
+        font-family: monospace;
       }
     }
   }
