@@ -1,3 +1,7 @@
+# v0.3.10
+
+- Using monospace font.
+
 # v0.3.9
 
 - Add Snippets submenu to editor context.
