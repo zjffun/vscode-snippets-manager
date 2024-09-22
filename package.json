@@ -39,7 +39,8 @@
     "test": "node ./out/test/runTest.js",
     "test-web": "vscode-test-web --extensionDevelopmentPath=. --extensionTestsPath=./dist/web/test/suite/index.js ./test.temp",
     "watch": "concurrently \"yarn run editor-view:watch\" \"gulp watch\"",
-    "watch-web": "webpack --watch"
+    "watch-web": "webpack --watch",
+    "sort-package-json": "sort-package-json"
   },
   "contributes": {
     "commands": [
