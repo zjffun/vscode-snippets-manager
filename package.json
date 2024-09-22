@@ -421,7 +421,7 @@
   },
   "packageManager": "yarn@1.22.22",
   "engines": {
-    "node": ">18",
+    "node": ">=18",
     "vscode": "^1.73.0"
   },
   "icon": "images/icon.png",
