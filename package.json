@@ -1,7 +1,12 @@
 {
   "name": "snippetsmanager",
   "displayName": "Snippets Manager",
+  "version": "0.3.9",
   "description": "Create and edit snippets easily.",
+  "categories": [
+    "Programming Languages",
+    "Snippets"
+  ],
   "keywords": [
     "snippet editor",
     "edit snippet",
@@ -9,37 +14,141 @@
     "snippet manager",
     "snippets"
   ],
-  "version": "0.3.9",
-  "publisher": "zjffun",
-  "engines": {
-    "node": ">18",
-    "vscode": "^1.73.0"
+  "homepage": "https://github.com/zjffun/vscode-snippets-manager#readme",
+  "bugs": {
+    "url": "https://github.com/zjffun/vscode-snippets-manager/issues"
   },
-  "packageManager": "yarn@1.22.22",
-  "categories": [
-    "Programming Languages",
-    "Snippets"
-  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/zjffun/vscode-snippets-manager.git"
   },
-  "bugs": {
-    "url": "https://github.com/zjffun/vscode-snippets-manager/issues"
-  },
-  "homepage": "https://github.com/zjffun/vscode-snippets-manager#readme",
-  "activationEvents": [
-    "onStartupFinished",
-    "onView:snippetsmanager-snippetsView"
-  ],
+  "publisher": "zjffun",
   "main": "./out/extension.js",
   "browser": "./dist/web/extension.js",
-  "extensionKind": [
-    "ui",
-    "workspace"
-  ],
-  "l10n": "./l10n",
+  "scripts": {
+    "_vscode:install": "ls snippetsmanager-*.vsix | xargs code --install-extension",
+    "_vscode:pack": "vsce package",
+    "_vscode:uninstall": "code --uninstall-extension zjffun.snippetsmanager",
+    "compile": "yarn run editor-view:build && gulp build",
+    "compile-web": "webpack --mode production --devtool hidden-source-map",
+    "editor-view:build": "webpack --config ./views/code-snippets-editor/webpack.config.js --mode=production --node-env=production",
+    "editor-view:build:dev": "webpack --config ./views/code-snippets-editor/webpack.config.js --mode=development",
+    "editor-view:watch": "webpack --config ./views/code-snippets-editor/webpack.config.js --watch",
+    "eslint-fix": "eslint --fix .",
+    "prettier-fix": "prettier --write .",
+    "test": "node ./out/test/runTest.js",
+    "test-web": "vscode-test-web --extensionDevelopmentPath=. --extensionTestsPath=./dist/web/test/suite/index.js ./test.temp",
+    "watch": "concurrently \"yarn run editor-view:watch\" \"gulp watch\"",
+    "watch-web": "webpack --watch"
+  },
   "contributes": {
+    "commands": [
+      {
+        "command": "snippetsmanager.createSnippet",
+        "title": "%extension.createSnippet.title%",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.createSnippetTo",
+        "title": "%extension.createSnippetTo.title%",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.createSnippetWithoutEscape",
+        "title": "%extension.createSnippetWithoutEscape.title%",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.createSnippetWithoutEscapeTo",
+        "title": "%extension.createSnippetWithoutEscapeTo.title%",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.openSnippetsManger",
+        "title": "%extension.openSnippetsManger.title%",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "_snippetsmanager.workbenchActionOpenSnippets",
+        "title": "%extension.workbenchActionOpenSnippets.title%",
+        "icon": "$(add)"
+      },
+      {
+        "command": "_snippetsmanager.copySnippet",
+        "title": "%extension.copySnippet.title%"
+      },
+      {
+        "command": "_snippetsmanager.pasteSnippet",
+        "title": "%extension.pasteSnippet.title%"
+      },
+      {
+        "command": "_snippetsmanager.duplicateSnippet",
+        "title": "%extension.duplicateSnippet.title%",
+        "icon": "$(files)"
+      },
+      {
+        "command": "_snippetsmanager.deleteSnippet",
+        "title": "%extension.deleteSnippet.title%",
+        "icon": "$(close)"
+      },
+      {
+        "command": "_snippetsmanager.editSnippet",
+        "title": "%extension.editSnippet.title%",
+        "icon": "$(edit)"
+      },
+      {
+        "command": "_snippetsmanager.showSnippet",
+        "title": "%extension.showSnippet.title%",
+        "icon": "$(book)"
+      },
+      {
+        "command": "_snippetsmanager.deleteSnippetFile",
+        "title": "%extension.deleteSnippetFile.title%",
+        "icon": "$(close)"
+      },
+      {
+        "command": "snippetsmanager.refresh",
+        "title": "%extension.refresh.title%",
+        "icon": "$(refresh)",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.search",
+        "title": "%extension.search.title%",
+        "icon": "$(search)",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.searchWorkspaceSnippets",
+        "title": "%extension.searchWorkspaceSnippets.title%",
+        "icon": "$(search)",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.searchUserSnippets",
+        "title": "%extension.searchUserSnippets.title%",
+        "icon": "$(search)",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.searchExtensionSnippets",
+        "title": "%extension.searchExtensionSnippets.title%",
+        "icon": "$(search)",
+        "category": "Snippets Manager"
+      },
+      {
+        "command": "snippetsmanager.showSource",
+        "title": "%extension.showSource.title%",
+        "category": "Snippets Manager",
+        "icon": "$(go-to-file)"
+      },
+      {
+        "command": "snippetsmanager.showEditor",
+        "title": "%extension.showEditor.title%",
+        "category": "Snippets Manager",
+        "icon": "$(book)"
+      }
+    ],
     "configuration": {
       "title": "%extension.configuration.title%",
       "properties": {
@@ -57,35 +166,18 @@
         "gitlens:/**/*.code-snippets": "default"
       }
     },
-    "viewsContainers": {
-      "activitybar": [
-        {
-          "id": "snippetsmanager-snippetsView",
-          "title": "%extension.snippetsView.title%",
-          "icon": "$(symbol-snippet)"
-        }
-      ]
-    },
-    "views": {
-      "snippetsmanager-snippetsView": [
-        {
-          "id": "snippetsmanager-snippetsView-WorkspaceSnippetsExplorerView",
-          "name": "%extension.WorkspaceSnippetsExplorerView.name%"
-        },
-        {
-          "id": "snippetsmanager-snippetsView-UserSnippetsExplorerView",
-          "name": "%extension.UserSnippetsExplorerView.name%"
-        },
-        {
-          "id": "snippetsmanager-snippetsView-ExtensionSnippetsExplorerView",
-          "name": "%extension.ExtensionSnippetsExplorerView.name%"
-        },
-        {
-          "id": "snippetsmanager-snippetsView-HelpAndFeedback",
-          "name": "%extension.HelpAndFeedback.name%"
-        }
-      ]
-    },
+    "customEditors": [
+      {
+        "viewType": "snippetsmanager.codeSnippetsEditorView",
+        "displayName": "%extension.codeSnippetsEditorView.displayName%",
+        "selector": [
+          {
+            "filenamePattern": "*.code-snippets"
+          }
+        ],
+        "priority": "default"
+      }
+    ],
     "menus": {
       "editor/title": [
         {
@@ -238,141 +330,49 @@
         "label": "%extension.submenus.snippets.label%"
       }
     ],
-    "commands": [
-      {
-        "command": "snippetsmanager.createSnippet",
-        "title": "%extension.createSnippet.title%",
-        "category": "Snippets Manager"
-      },
-      {
-        "command": "snippetsmanager.createSnippetTo",
-        "title": "%extension.createSnippetTo.title%",
-        "category": "Snippets Manager"
-      },
-      {
-        "command": "snippetsmanager.createSnippetWithoutEscape",
-        "title": "%extension.createSnippetWithoutEscape.title%",
-        "category": "Snippets Manager"
-      },
-      {
-        "command": "snippetsmanager.createSnippetWithoutEscapeTo",
-        "title": "%extension.createSnippetWithoutEscapeTo.title%",
-        "category": "Snippets Manager"
-      },
-      {
-        "command": "snippetsmanager.openSnippetsManger",
-        "title": "%extension.openSnippetsManger.title%",
-        "category": "Snippets Manager"
-      },
-      {
-        "command": "_snippetsmanager.workbenchActionOpenSnippets",
-        "title": "%extension.workbenchActionOpenSnippets.title%",
-        "icon": "$(add)"
-      },
-      {
-        "command": "_snippetsmanager.copySnippet",
-        "title": "%extension.copySnippet.title%"
-      },
-      {
-        "command": "_snippetsmanager.pasteSnippet",
-        "title": "%extension.pasteSnippet.title%"
-      },
-      {
-        "command": "_snippetsmanager.duplicateSnippet",
-        "title": "%extension.duplicateSnippet.title%",
-        "icon": "$(files)"
-      },
-      {
-        "command": "_snippetsmanager.deleteSnippet",
-        "title": "%extension.deleteSnippet.title%",
-        "icon": "$(close)"
-      },
-      {
-        "command": "_snippetsmanager.editSnippet",
-        "title": "%extension.editSnippet.title%",
-        "icon": "$(edit)"
-      },
-      {
-        "command": "_snippetsmanager.showSnippet",
-        "title": "%extension.showSnippet.title%",
-        "icon": "$(book)"
-      },
-      {
-        "command": "_snippetsmanager.deleteSnippetFile",
-        "title": "%extension.deleteSnippetFile.title%",
-        "icon": "$(close)"
-      },
-      {
-        "command": "snippetsmanager.refresh",
-        "title": "%extension.refresh.title%",
-        "icon": "$(refresh)",
-        "category": "Snippets Manager"
-      },
-      {
-        "command": "snippetsmanager.search",
-        "title": "%extension.search.title%",
-        "icon": "$(search)",
-        "category": "Snippets Manager"
-      },
-      {
-        "command": "snippetsmanager.searchWorkspaceSnippets",
-        "title": "%extension.searchWorkspaceSnippets.title%",
-        "icon": "$(search)",
-        "category": "Snippets Manager"
-      },
-      {
-        "command": "snippetsmanager.searchUserSnippets",
-        "title": "%extension.searchUserSnippets.title%",
-        "icon": "$(search)",
-        "category": "Snippets Manager"
-      },
-      {
-        "command": "snippetsmanager.searchExtensionSnippets",
-        "title": "%extension.searchExtensionSnippets.title%",
-        "icon": "$(search)",
-        "category": "Snippets Manager"
-      },
-      {
-        "command": "snippetsmanager.showSource",
-        "title": "%extension.showSource.title%",
-        "category": "Snippets Manager",
-        "icon": "$(go-to-file)"
-      },
-      {
-        "command": "snippetsmanager.showEditor",
-        "title": "%extension.showEditor.title%",
-        "category": "Snippets Manager",
-        "icon": "$(book)"
-      }
-    ],
-    "customEditors": [
-      {
-        "viewType": "snippetsmanager.codeSnippetsEditorView",
-        "displayName": "%extension.codeSnippetsEditorView.displayName%",
-        "selector": [
-          {
-            "filenamePattern": "*.code-snippets"
-          }
-        ],
-        "priority": "default"
-      }
-    ]
+    "views": {
+      "snippetsmanager-snippetsView": [
+        {
+          "id": "snippetsmanager-snippetsView-WorkspaceSnippetsExplorerView",
+          "name": "%extension.WorkspaceSnippetsExplorerView.name%"
+        },
+        {
+          "id": "snippetsmanager-snippetsView-UserSnippetsExplorerView",
+          "name": "%extension.UserSnippetsExplorerView.name%"
+        },
+        {
+          "id": "snippetsmanager-snippetsView-ExtensionSnippetsExplorerView",
+          "name": "%extension.ExtensionSnippetsExplorerView.name%"
+        },
+        {
+          "id": "snippetsmanager-snippetsView-HelpAndFeedback",
+          "name": "%extension.HelpAndFeedback.name%"
+        }
+      ]
+    },
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "snippetsmanager-snippetsView",
+          "title": "%extension.snippetsView.title%",
+          "icon": "$(symbol-snippet)"
+        }
+      ]
+    }
   },
-  "scripts": {
-    "compile": "yarn run editor-view:build && gulp build",
-    "watch": "concurrently \"yarn run editor-view:watch\" \"gulp watch\"",
-    "test": "node ./out/test/runTest.js",
-    "eslint-fix": "eslint --fix .",
-    "prettier-fix": "prettier --write .",
-    "editor-view:watch": "webpack --config ./views/code-snippets-editor/webpack.config.js --watch",
-    "editor-view:build": "webpack --config ./views/code-snippets-editor/webpack.config.js --mode=production --node-env=production",
-    "editor-view:build:dev": "webpack --config ./views/code-snippets-editor/webpack.config.js --mode=development",
-    "watch-web": "webpack --watch",
-    "compile-web": "webpack --mode production --devtool hidden-source-map",
-    "test-web": "vscode-test-web --extensionDevelopmentPath=. --extensionTestsPath=./dist/web/test/suite/index.js ./test.temp",
-    "_vscode:pack": "vsce package",
-    "_vscode:install": "ls snippetsmanager-*.vsix | xargs code --install-extension",
-    "_vscode:uninstall": "code --uninstall-extension zjffun.snippetsmanager"
+  "activationEvents": [
+    "onStartupFinished",
+    "onView:snippetsmanager-snippetsView"
+  ],
+  "dependencies": {
+    "@vscode/codicons": "^0.0.21",
+    "@vscode/webview-ui-toolkit": "^0.9.2",
+    "buffer": "^6.0.3",
+    "jsonc-parser": "^3.0.0",
+    "lodash": "^4.17.21",
+    "sha1": "^1.1.1",
+    "vscode-ext-codicons": "^1.4.0",
+    "vscode-ext-help-and-feedback-view": "^1.0.1"
   },
   "devDependencies": {
     "@eslint/compat": "^1.1.1",
@@ -418,15 +418,15 @@
     "webpack-cli": "^5.0.1",
     "webpack-dev-server": "^4.3.1"
   },
-  "dependencies": {
-    "@vscode/codicons": "^0.0.21",
-    "@vscode/webview-ui-toolkit": "^0.9.2",
-    "buffer": "^6.0.3",
-    "jsonc-parser": "^3.0.0",
-    "lodash": "^4.17.21",
-    "sha1": "^1.1.1",
-    "vscode-ext-codicons": "^1.4.0",
-    "vscode-ext-help-and-feedback-view": "^1.0.1"
+  "packageManager": "yarn@1.22.22",
+  "engines": {
+    "node": ">18",
+    "vscode": "^1.73.0"
   },
-  "icon": "images/icon.png"
+  "icon": "images/icon.png",
+  "extensionKind": [
+    "ui",
+    "workspace"
+  ],
+  "l10n": "./l10n"
 }
