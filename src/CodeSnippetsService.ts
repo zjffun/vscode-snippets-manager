@@ -1,4 +1,5 @@
 import { JSONVisitor, parse, ParseErrorCode, visit } from "jsonc-parser";
+import { isString } from "lodash";
 import * as vscode from "vscode";
 import {
   IPackageJSONContributesSnippet,
@@ -10,6 +11,7 @@ import {
 import getKey from "./core/getKey";
 import getUserSnippetsFilesInfo from "./core/getUserSnippetsFilesInfo";
 import getWorkspaceSnippetsFilesInfo from "./core/getWorkspaceSnippetsFilesInfo";
+import jsonStringify from "./utils/jsonStringify";
 import logger from "./utils/logger";
 import { refresh } from "./views/WorkspaceSnippetsExplorerView";
 import {
@@ -139,10 +141,12 @@ export class CodeSnippetsService {
     return currentParent[0];
   }
 
-  getVscodeSnippetEntries(): [string, IVscodeSnippet][] {
+  getSnippetList(): ISnippet[] {
     const map = this.getMap();
 
-    return Array.from(map.entries());
+    return CodeSnippetsService.getSnippetList(map, {
+      uri: this.textDocument.uri,
+    });
   }
 
   async insert(snippet: ISnippet, opts?: { index?: number }) {
@@ -311,11 +315,35 @@ export class CodeSnippetsService {
   }
 
   getVSCodeSnippet(snippet: ISnippet): IVscodeSnippet {
+    const { disabledInfo, vscodeSnippet } = snippet;
+
+    let _prefix: unknown = snippet.prefix;
+    if (disabledInfo?.prefix) {
+      _prefix = vscodeSnippet?.prefix;
+    }
+
+    let _description: unknown = snippet.description;
+    if (disabledInfo?.description) {
+      _description = vscodeSnippet?.description;
+    }
+
+    let _scope: unknown = snippet.scope;
+    if (disabledInfo?.scope) {
+      _scope = vscodeSnippet?.scope;
+    }
+
+    let _body: unknown = undefined;
+    if (disabledInfo?.body) {
+      _body = vscodeSnippet?.body;
+    } else {
+      _body = snippet.body.split("\n");
+    }
+
     const vSnippet: IVscodeSnippet = {
-      prefix: snippet.prefix,
-      description: snippet.description,
-      scope: snippet.scope,
-      body: snippet.body.split("\n"),
+      prefix: _prefix,
+      description: _description,
+      scope: _scope,
+      body: _body,
     };
 
     return vSnippet;
@@ -346,19 +374,79 @@ export class CodeSnippetsService {
     vscodeSnippet: IVscodeSnippet,
     { name, uri, index }: ISnippetExtra = {},
   ): ISnippet {
-    let body: any = vscodeSnippet.body;
-    if (Array.isArray(body)) {
-      body = body.join("\n");
+    const { prefix, body, description, scope } = vscodeSnippet;
+
+    const disabledInfo = {
+      prefix: true,
+      body: true,
+      description: true,
+      scope: true,
+    };
+
+    let _prefix = "";
+    if (isString(prefix)) {
+      disabledInfo.prefix = false;
+      _prefix = String(prefix);
+    } else {
+      _prefix = jsonStringify({
+        data: prefix,
+        error: function (error) {
+          logger.error(`JSON.stringify prefix error: ${error?.message}`);
+          return "";
+        },
+      });
+    }
+
+    let _body = "";
+    if (isString(body)) {
+      disabledInfo.body = false;
+      _body = String(body);
+    } else if (Array.isArray(body)) {
+      disabledInfo.body = false;
+      _body = body.join("\n");
+    } else {
+      _body = jsonStringify({
+        data: body,
+        error: function (error) {
+          logger.error(`JSON.stringify body error: ${error?.message}`);
+          return "";
+        },
+      });
+    }
+
+    let _description = description?.toString() || "";
+    if (isString(description)) {
+      disabledInfo.description = false;
+      _description = String(description);
+    } else if (Array.isArray(description)) {
+      disabledInfo.description = false;
+      _description = description.join("\n");
+    } else {
+      _description = jsonStringify({
+        data: body,
+        error: function (error) {
+          logger.error(`JSON.stringify description error: ${error?.message}`);
+          return "";
+        },
+      });
+    }
+
+    let _scope = "";
+    if (isString(scope)) {
+      disabledInfo.scope = false;
+      _scope = String(scope);
     }
 
     return {
       name,
       uri,
       index,
-      prefix: vscodeSnippet.prefix,
-      description: vscodeSnippet.description,
-      scope: vscodeSnippet.scope,
-      body,
+      prefix: _prefix,
+      description: _description,
+      scope: _scope,
+      body: _body,
+      disabledInfo,
+      vscodeSnippet,
     };
   }
 

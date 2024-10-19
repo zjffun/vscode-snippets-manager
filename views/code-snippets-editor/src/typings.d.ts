@@ -15,14 +15,29 @@ declare global {
   }
 }
 
-export interface IVscodeSnippet {
-  body: string[] | string;
-  description: string;
-  prefix: string;
-  scope: string;
+export interface IDisabledInfo {
+  body: boolean;
+  description: boolean;
+  prefix: boolean;
+  scope: boolean;
 }
 
-export interface ISnippet {
+export interface ISnippetExtra {
+  name?: string;
+  index?: number;
+  disabledInfo?: IDisabledInfo;
+  vscodeSnippet?: IVscodeSnippet;
+}
+
+// vscodeSnippet parse from JSON, so types are unknown
+export interface IVscodeSnippet {
+  body?: unknown;
+  description?: unknown;
+  prefix?: unknown;
+  scope?: unknown;
+}
+
+export interface ISnippet extends ISnippetExtra {
   name: string;
   body: string;
   description: string;
@@ -35,11 +50,9 @@ export interface ISnippet {
 
 export type SnippetObjMap = { [key: string]: ISnippet };
 
-export type VscodeSnippetEntries = [string, IVscodeSnippet][];
-
 export interface IVscodeState {
   addingSnippets?: ISnippet[];
   editingSnippetObjMap?: SnippetObjMap;
-  vscodeSnippetEntries?: VscodeSnippetEntries;
+  snippetList?: ISnippet[];
   scrollY?: number;
 }

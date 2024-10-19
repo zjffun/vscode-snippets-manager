@@ -17,24 +17,16 @@ function getSnippets(): ISnippet[] {
 
   const result: ISnippet[] = [...state.addingSnippets];
 
-  for (const [name, vscodeSnippet] of state.vscodeSnippetEntries) {
-    const editingSnippet = state.editingSnippetObjMap[name];
+  for (const snippet of state.snippetList) {
+    const editingSnippet = state.editingSnippetObjMap[snippet.name];
     if (editingSnippet) {
       result.push(editingSnippet);
       continue;
     }
 
-    let body = vscodeSnippet.body;
-
-    if (Array.isArray(body)) {
-      body = body.join("\n");
-    }
-
     result.push({
-      ...vscodeSnippet,
-      name,
-      body,
-      [NAME]: name,
+      ...snippet,
+      [NAME]: snippet.name,
     });
   }
 
@@ -118,11 +110,11 @@ const CodeSnippetsEditor = () => {
       const message = event.data;
       switch (message.type) {
         case "update": {
-          const vscodeSnippetEntries = message.vscodeSnippetEntries;
+          const snippetList = message.snippetList;
 
           vscode.setState({
             ...vscode.getState(),
-            vscodeSnippetEntries,
+            snippetList,
           });
 
           commonRef.current.updateSnippets();

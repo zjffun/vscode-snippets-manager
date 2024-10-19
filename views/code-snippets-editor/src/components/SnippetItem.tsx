@@ -110,6 +110,7 @@ const SnippetItem = ({
                 appearance="icon"
                 aria-label={window.i18nText.editBody}
                 title={window.i18nText.editBody}
+                disabled={snippet?.disabledInfo?.body}
                 onClick={() => {
                   vscode.postMessage({
                     type: "editBody",
@@ -204,6 +205,9 @@ const SnippetItem = ({
                 name="prefix"
                 value={snippet.prefix}
                 onInput={handleChange}
+                {...{
+                  disabled: snippet?.disabledInfo?.prefix || undefined,
+                }}
               >
                 {window.i18nText.prefix}
               </vscode-text-field>
@@ -222,7 +226,12 @@ const SnippetItem = ({
               </vscode-button>
             </div>
           </div>
-          <div className="code-snippets-editor-snippet__scope-edit">
+          <div
+            className="code-snippets-editor-snippet__scope-edit"
+            {...{
+              disabled: snippet?.disabledInfo?.scope || undefined,
+            }}
+          >
             <div className="code-snippets-editor-snippet__scope-edit__label">
               Scope
             </div>
@@ -238,6 +247,7 @@ const SnippetItem = ({
                 },
                 originalInputValueFormat,
               }}
+              disabled={snippet?.disabledInfo?.scope}
             />
           </div>
 
@@ -246,6 +256,9 @@ const SnippetItem = ({
               name="description"
               value={snippet.description}
               onInput={handleChange}
+              {...{
+                disabled: snippet?.disabledInfo?.description || undefined,
+              }}
             >
               {window.i18nText.description}
             </vscode-text-field>
@@ -257,6 +270,9 @@ const SnippetItem = ({
               rows={10}
               value={snippet.body}
               onInput={handleChange}
+              {...{
+                disabled: snippet?.disabledInfo?.body || undefined,
+              }}
             >
               {window.i18nText.body}
             </vscode-text-area>

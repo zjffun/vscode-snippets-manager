@@ -42,6 +42,10 @@
     &__scope-edit {
       padding-bottom: 0.5rem;
 
+      &[disabled] {
+        cursor: not-allowed;
+      }
+
       &__label {
         display: block;
         color: var(--foreground);
@@ -58,6 +62,11 @@
           border-radius: calc(var(--corner-radius) * 1px);
           border: calc(var(--border-width) * 1px) solid var(--dropdown-border);
           padding: 0 calc(var(--design-unit) * 2px + 1px);
+
+          &[disabled] {
+            cursor: not-allowed;
+            height: 29px;
+          }
 
           &__tag {
             font-family: var(--font-family);

@@ -5,10 +5,19 @@ export interface IPackageJSONContributesSnippet {
   path?: string;
 }
 
+export interface IDisabledInfo {
+  body: boolean;
+  description: boolean;
+  prefix: boolean;
+  scope: boolean;
+}
+
 export interface ISnippetExtra {
   name?: string;
   uri?: vscode.Uri;
   index?: number;
+  disabledInfo?: IDisabledInfo;
+  vscodeSnippet?: IVscodeSnippet;
 }
 
 export interface ISnippet extends ISnippetExtra {
@@ -18,11 +27,12 @@ export interface ISnippet extends ISnippetExtra {
   scope: string;
 }
 
+// vscodeSnippet parse from JSON, so types are unknown
 export interface IVscodeSnippet {
-  body: string[] | string;
-  description: string;
-  prefix: string;
-  scope: string;
+  body?: unknown;
+  description?: unknown;
+  prefix?: unknown;
+  scope?: unknown;
 }
 
 export interface ISnippets {
