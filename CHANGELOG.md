@@ -1,3 +1,8 @@
+# v0.3.10
+
+- Support multiple type of fields of snippet JSON. [Fix #25](https://github.com/zjffun/vscode-snippets-manager/issues/25)
+- Fix search not work after change a snippets file.
+
 # v0.3.9
 
 - Add Snippets submenu to editor context.
