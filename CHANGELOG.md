@@ -1,7 +1,11 @@
-# v0.3.10
+# v0.3.11
 
 - Support multiple type of fields of snippet JSON. [Fix #25](https://github.com/zjffun/vscode-snippets-manager/issues/25)
 - Fix search not work after change a snippets file.
+
+# v0.3.10
+
+- Using monospace font.
 
 # v0.3.9
 
