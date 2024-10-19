@@ -1,7 +1,7 @@
 {
   "name": "snippetsmanager",
   "displayName": "Snippets Manager",
-  "version": "0.3.9",
+  "version": "0.3.10",
   "description": "Create and edit snippets easily.",
   "categories": [
     "Programming Languages",
