@@ -64,6 +64,9 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     webviewPanel: vscode.WebviewPanel,
     _token: vscode.CancellationToken,
   ): Promise<void> {
+    logger.debug(
+      `Set currentWebviewPanel resolveCustomTextEditor: ${document.uri.toString()}`,
+    );
     currentWebviewPanel = webviewPanel;
 
     const codeSnippetsService = new CodeSnippetsService(document);
@@ -138,15 +141,24 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
 
     webviewPanel.onDidChangeViewState(() => {
       if (webviewPanel.visible) {
+        logger.debug(
+          `Set currentWebviewPanel onDidChangeViewState: ${document.uri.toString()}`,
+        );
         currentWebviewPanel = webviewPanel;
         updateWebview();
-      } else {
+      } else if (currentWebviewPanel === webviewPanel) {
+        logger.debug(
+          `Set currentWebviewPanel onDidChangeViewState: null, from ${document.uri.toString()}`,
+        );
         currentWebviewPanel = null;
       }
     });
 
     // Make sure we get rid of the listener when our editor is closed.
     webviewPanel.onDidDispose(() => {
+      logger.debug(
+        `Set currentWebviewPanel onDidDispose: null, from ${document.uri.toString()}`,
+      );
       currentWebviewPanel = null;
       changeDocumentSubscription.dispose();
     });

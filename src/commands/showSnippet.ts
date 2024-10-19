@@ -14,7 +14,7 @@ export default async (snippet: ISnippetExtra) => {
     CodeSnippetsEditor.viewType,
   );
 
-  currentWebviewPanel?.webview?.postMessage?.({
+  await currentWebviewPanel?.webview?.postMessage?.({
     type: "show",
     keyName: snippet.name,
   });

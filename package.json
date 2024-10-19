@@ -26,8 +26,9 @@
   "main": "./out/extension.js",
   "browser": "./dist/web/extension.js",
   "scripts": {
+    "_vscode:reinstall": "yarn run _vscode:uninstall; yarn run _vscode:pack && yarn run _vscode:install",
     "_vscode:install": "ls snippetsmanager-*.vsix | xargs code --install-extension",
-    "_vscode:pack": "vsce package",
+    "_vscode:pack": "rm snippetsmanager-*.vsix; vsce package --yarn",
     "_vscode:uninstall": "code --uninstall-extension zjffun.snippetsmanager",
     "compile": "yarn run editor-view:build && gulp build",
     "compile-web": "webpack --mode production --devtool hidden-source-map",
