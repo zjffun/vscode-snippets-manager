@@ -1,7 +1,7 @@
 # v0.3.12
 
 - Support symbolic link snippets files. [Fix #31](https://github.com/zjffun/vscode-snippets-manager/issues/31)
-- Allow trailing comma and edit undefined fields
+- Allow trailing comma and edit undefined fields.
 
 # v0.3.11
 
