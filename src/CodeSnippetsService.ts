@@ -108,11 +108,13 @@ export class CodeSnippetsService {
           `Parse Error: ${errorType} in ${currentFilename} (Line: ${
             startLine + 1
           }, Char: ${startCharacter + 1}).\n` +
-            `Tip: Check if the file conforms to the JSONC specification, example trailing commas or quotes.`,
+            `Tip: Check if the file conforms to the JSONC specification, example single quotes.`,
         );
       },
     };
-    visit(this.textDocument.getText(), visitor);
+    visit(this.textDocument.getText(), visitor, {
+      allowTrailingComma: true,
+    });
 
     if (currentParent[0] instanceof Map) {
       for (const [_, snippet] of currentParent[0]) {
@@ -384,7 +386,9 @@ export class CodeSnippetsService {
     };
 
     let _prefix = "";
-    if (isString(prefix)) {
+    if (prefix === undefined) {
+      disabledInfo.prefix = false;
+    } else if (isString(prefix)) {
       disabledInfo.prefix = false;
       _prefix = String(prefix);
     } else {
@@ -398,7 +402,9 @@ export class CodeSnippetsService {
     }
 
     let _body = "";
-    if (isString(body)) {
+    if (body === undefined) {
+      disabledInfo.body = false;
+    } else if (isString(body)) {
       disabledInfo.body = false;
       _body = String(body);
     } else if (Array.isArray(body)) {
@@ -414,8 +420,10 @@ export class CodeSnippetsService {
       });
     }
 
-    let _description = description?.toString() || "";
-    if (isString(description)) {
+    let _description = "";
+    if (description === undefined) {
+      disabledInfo.description = false;
+    } else if (isString(description)) {
       disabledInfo.description = false;
       _description = String(description);
     } else if (Array.isArray(description)) {
@@ -423,7 +431,7 @@ export class CodeSnippetsService {
       _description = description.join("\n");
     } else {
       _description = jsonStringify({
-        data: body,
+        data: description,
         error: function (error) {
           logger.error(`JSON.stringify description error: ${error?.message}`);
           return "";
@@ -432,7 +440,9 @@ export class CodeSnippetsService {
     }
 
     let _scope = "";
-    if (isString(scope)) {
+    if (scope === undefined) {
+      disabledInfo.scope = false;
+    } else if (isString(scope)) {
       disabledInfo.scope = false;
       _scope = String(scope);
     }
