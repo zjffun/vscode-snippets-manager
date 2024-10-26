@@ -14,7 +14,8 @@ export default async () => {
 
   for (const [fileName, fileType] of userSnippetFiles) {
     if (
-      fileType === vscode.FileType.File &&
+      // file or symbolic link file
+      fileType & vscode.FileType.File &&
       (fileName.endsWith(".code-snippets") || fileName.endsWith(".json"))
     ) {
       const snippetUri = vscode.Uri.joinPath(userFolderUri, fileName);

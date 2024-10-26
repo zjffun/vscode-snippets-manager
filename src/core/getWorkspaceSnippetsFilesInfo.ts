@@ -29,7 +29,8 @@ export default async () => {
       const snippetsFiles = [];
       for (const [fileName, fileType] of workspaceDotVSCodeFiles) {
         if (
-          fileType === vscode.FileType.File &&
+          // file or symbolic link file
+          fileType & vscode.FileType.File &&
           fileName.endsWith(".code-snippets")
         ) {
           const snippetsUri = vscode.Uri.joinPath(dotVSCodeFolderUri, fileName);
