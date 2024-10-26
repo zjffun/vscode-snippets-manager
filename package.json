@@ -99,8 +99,8 @@
         "icon": "$(edit)"
       },
       {
-        "command": "_snippetsmanager.showSnippet",
-        "title": "%extension.showSnippet.title%",
+        "command": "_snippetsmanager.viewSnippet",
+        "title": "%extension.viewSnippet.title%",
         "icon": "$(book)"
       },
       {
@@ -139,14 +139,14 @@
         "category": "Snippets Manager"
       },
       {
-        "command": "snippetsmanager.showSource",
-        "title": "%extension.showSource.title%",
+        "command": "snippetsmanager.openSource",
+        "title": "%extension.openSource.title%",
         "category": "Snippets Manager",
         "icon": "$(go-to-file)"
       },
       {
-        "command": "snippetsmanager.showEditor",
-        "title": "%extension.showEditor.title%",
+        "command": "snippetsmanager.openEditor",
+        "title": "%extension.openEditor.title%",
         "category": "Snippets Manager",
         "icon": "$(book)"
       }
@@ -183,7 +183,7 @@
     "menus": {
       "editor/title": [
         {
-          "command": "snippetsmanager.showEditor",
+          "command": "snippetsmanager.openEditor",
           "when": "resourceExtname == '.code-snippets'",
           "group": "navigation"
         }
@@ -252,7 +252,7 @@
           "group": "snippets@2"
         },
         {
-          "command": "_snippetsmanager.showSnippet",
+          "command": "_snippetsmanager.viewSnippet",
           "when": "viewItem == snippetsmanager-snippetsView-Explorer-FileItem && !listMultiSelection",
           "group": "inline@1"
         },
@@ -269,11 +269,11 @@
       ],
       "commandPalette": [
         {
-          "command": "snippetsmanager.showSource",
+          "command": "snippetsmanager.openSource",
           "when": "resourceExtname == '.code-snippets'"
         },
         {
-          "command": "snippetsmanager.showEditor",
+          "command": "snippetsmanager.openEditor",
           "when": "resourceExtname == '.code-snippets'"
         },
         {
@@ -289,7 +289,7 @@
           "when": "false"
         },
         {
-          "command": "_snippetsmanager.showSnippet",
+          "command": "_snippetsmanager.viewSnippet",
           "when": "false"
         },
         {

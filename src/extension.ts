@@ -8,12 +8,12 @@ import deleteSnippetFile from "./commands/deleteSnippetFile";
 import duplicateSnippet from "./commands/duplicateSnippet";
 import editSnippet from "./commands/editSnippet";
 import { initEditSnippetBody } from "./commands/editSnippetBody";
+import openEditor from "./commands/openEditor";
 import openSnippetsManger from "./commands/openSnippetsManger";
+import openSource from "./commands/openSource";
 import pasteSnippet from "./commands/pasteSnippet";
 import searchSnippet from "./commands/searchSnippet";
-import showEditor from "./commands/showEditor";
-import showSnippet from "./commands/showSnippet";
-import showSource from "./commands/showSource";
+import viewSnippet from "./commands/viewSnippet";
 import workbenchActionOpenSnippets, {
   workbenchActionOpenSnippetsId,
 } from "./commands/workbenchActionOpenSnippets";
@@ -188,9 +188,9 @@ export function activate(context: vscode.ExtensionContext) {
 
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "_snippetsmanager.showSnippet",
+      "_snippetsmanager.viewSnippet",
       (snippet) => {
-        showSnippet(snippet);
+        viewSnippet(snippet);
       },
     ),
   );
@@ -202,14 +202,14 @@ export function activate(context: vscode.ExtensionContext) {
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("snippetsmanager.showSource", async () => {
-      return showSource();
+    vscode.commands.registerCommand("snippetsmanager.openSource", async () => {
+      return openSource();
     }),
   );
 
   context.subscriptions.push(
-    vscode.commands.registerCommand("snippetsmanager.showEditor", async () => {
-      return showEditor();
+    vscode.commands.registerCommand("snippetsmanager.openEditor", async () => {
+      return openEditor();
     }),
   );
 

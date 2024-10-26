@@ -2,7 +2,7 @@ import { Buffer } from "buffer";
 import * as vscode from "vscode";
 import { CodeSnippetsService } from "./CodeSnippetsService";
 import editSnippetBody from "./commands/editSnippetBody";
-import showSource from "./commands/showSource";
+import openSource from "./commands/openSource";
 import { no, yes } from "./common/l10n";
 import { getNonce } from "./util";
 import logger from "./utils/logger";
@@ -219,7 +219,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
         }
 
         case "openInDefaultEditor":
-          showSource();
+          openSource();
           return;
 
         case "help":
@@ -250,7 +250,7 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
     );
 
     if (answer === yes) {
-      showSource();
+      openSource();
       return;
     }
   }

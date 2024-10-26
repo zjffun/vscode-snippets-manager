@@ -72,7 +72,7 @@ suite("Extension", () => {
     const uri = await createTestFile("");
 
     await vscode.commands.executeCommand("vscode.open", uri);
-    await vscode.commands.executeCommand("snippetsmanager.showEditor");
+    await vscode.commands.executeCommand("snippetsmanager.openEditor");
     assert.ok(currentWebviewPanel);
 
     await vscode.commands.executeCommand("workbench.action.splitEditorRight");
@@ -82,7 +82,7 @@ suite("Extension", () => {
     assert.strictEqual(currentWebviewPanel, null);
 
     await vscode.commands.executeCommand("vscode.open", uri);
-    await vscode.commands.executeCommand("snippetsmanager.showEditor");
+    await vscode.commands.executeCommand("snippetsmanager.openEditor");
     assert.ok(currentWebviewPanel);
   });
 
@@ -96,24 +96,24 @@ suite("Extension", () => {
     const uri3 = await createTestFile("");
 
     await vscode.commands.executeCommand("vscode.open", uri);
-    await vscode.commands.executeCommand("snippetsmanager.showEditor");
+    await vscode.commands.executeCommand("snippetsmanager.openEditor");
     assert.ok(currentWebviewPanel);
 
     await vscode.commands.executeCommand("vscode.open", uri2);
-    await vscode.commands.executeCommand("snippetsmanager.showEditor");
+    await vscode.commands.executeCommand("snippetsmanager.openEditor");
     assert.ok(currentWebviewPanel);
 
     await vscode.commands.executeCommand("vscode.open", uri3);
     assert.ok(!currentWebviewPanel);
 
     await vscode.commands.executeCommand("vscode.open", uri2);
-    await vscode.commands.executeCommand("snippetsmanager.showEditor");
+    await vscode.commands.executeCommand("snippetsmanager.openEditor");
     assert.ok(currentWebviewPanel);
 
-    await vscode.commands.executeCommand("snippetsmanager.showSource");
+    await vscode.commands.executeCommand("snippetsmanager.openSource");
     assert.ok(!currentWebviewPanel);
 
-    await vscode.commands.executeCommand("snippetsmanager.showEditor");
+    await vscode.commands.executeCommand("snippetsmanager.openEditor");
     assert.ok(currentWebviewPanel);
   });
 
@@ -125,7 +125,7 @@ suite("Extension", () => {
     const uri = await createTestFile(`[{"test": {}}]`);
 
     await vscode.commands.executeCommand("vscode.open", uri);
-    await vscode.commands.executeCommand("snippetsmanager.showEditor");
+    await vscode.commands.executeCommand("snippetsmanager.openEditor");
     assert.ok(currentWebviewPanel);
   });
 });

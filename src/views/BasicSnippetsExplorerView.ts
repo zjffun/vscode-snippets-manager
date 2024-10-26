@@ -90,9 +90,9 @@ export default abstract class BasicSnippetsExplorerView
   }
 
   public getTreeItem(element: SnippetTreeItem): SnippetTreeItem {
-    const showSnippetCommand = {
-      command: "_snippetsmanager.showSnippet",
-      title: "Show this snippet in editor.",
+    const viewSnippetCommand = {
+      command: "_snippetsmanager.viewSnippet",
+      title: "View this snippet in editor.",
       arguments: [element],
     };
 
@@ -107,7 +107,7 @@ export default abstract class BasicSnippetsExplorerView
       element.name || "",
       element.children ? vscode.TreeItemCollapsibleState.Collapsed : undefined,
     );
-    item.command = !element.children ? showSnippetCommand : undefined;
+    item.command = !element.children ? viewSnippetCommand : undefined;
     item.contextValue = contextValue;
 
     return item;
