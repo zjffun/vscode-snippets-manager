@@ -110,12 +110,14 @@ const SnippetItem = ({
                 appearance="icon"
                 aria-label={window.i18nText.editBody}
                 title={window.i18nText.editBody}
-                disabled={snippet?.disabledInfo?.body}
                 onClick={() => {
                   vscode.postMessage({
                     type: "editBody",
                     payload: { keyName },
                   });
+                }}
+                {...{
+                  disabled: snippet?.disabledInfo?.body || undefined,
                 }}
               >
                 <span className="codicon codicon-file-code"></span>

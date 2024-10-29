@@ -1,3 +1,7 @@
+# v0.3.13
+
+- Fix can not edit snippet body in editor.
+
 # v0.3.12
 
 - Support symbolic link snippets files. [Fix #31](https://github.com/zjffun/vscode-snippets-manager/issues/31)
