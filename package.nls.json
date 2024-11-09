@@ -23,8 +23,8 @@
   "extension.searchWorkspaceSnippets.title": "Search Workspace Snippets",
   "extension.searchUserSnippets.title": "Search User Snippets",
   "extension.searchExtensionSnippets.title": "Search Extension Snippets",
-  "extension.openSource.title": "Open Source",
-  "extension.openEditor.title": "Open Editor",
+  "extension.openSource.title": "Open With Text Editor",
+  "extension.openEditor.title": "Open With Snippets Editor",
   "extension.codeSnippetsEditorView.displayName": "Code Snippets Editor",
   "extension.configuration.title": "Snippets Manager",
   "extension.configuration.autoCloseSnippetBodyEditor.desc": "Controls whether to automatically close the code snippet body editor after saving."
