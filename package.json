@@ -270,11 +270,11 @@
       "commandPalette": [
         {
           "command": "snippetsmanager.openSource",
-          "when": "resourceExtname == '.code-snippets'"
+          "when": "resourceExtname == '.code-snippets' || resourceExtname == '.json'"
         },
         {
           "command": "snippetsmanager.openEditor",
-          "when": "resourceExtname == '.code-snippets'"
+          "when": "resourceExtname == '.code-snippets' || resourceExtname == '.json'"
         },
         {
           "command": "_snippetsmanager.duplicateSnippet",
