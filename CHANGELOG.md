@@ -1,3 +1,8 @@
+# v0.3.14
+
+- Support open text and snippets editor for a JSON file.
+- Change some command titles.
+
 # v0.3.13
 
 - Fix can not edit snippet body in editor.
