@@ -23,7 +23,7 @@ export interface ISnippetExtra {
 export interface ISnippet extends ISnippetExtra {
   body: string;
   description: string;
-  prefix: string;
+  prefix: string | string[];
   scope: string;
 }
 

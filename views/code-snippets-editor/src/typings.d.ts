@@ -41,7 +41,7 @@ export interface ISnippet extends ISnippetExtra {
   name: string;
   body: string;
   description: string;
-  prefix: string;
+  prefix: string | string[];
   scope: string;
   [NAME]: string;
   [EDIT]?: boolean;
