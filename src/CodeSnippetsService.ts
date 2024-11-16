@@ -320,8 +320,14 @@ export class CodeSnippetsService {
     const { disabledInfo, vscodeSnippet } = snippet;
 
     let _prefix: unknown = snippet.prefix;
-    if (disabledInfo?.prefix) {
+    if (disabledInfo?.prefix || !Array.isArray(_prefix)) {
       _prefix = vscodeSnippet?.prefix;
+    } else {
+      if (snippet.prefix.length < 2) {
+        _prefix = snippet.prefix?.[0] || "";
+      } else {
+        _prefix = snippet.prefix;
+      }
     }
 
     let _description: unknown = snippet.description;
@@ -385,12 +391,15 @@ export class CodeSnippetsService {
       scope: true,
     };
 
-    let _prefix = "";
+    let _prefix: string | string[] = [];
     if (prefix === undefined) {
       disabledInfo.prefix = false;
     } else if (isString(prefix)) {
       disabledInfo.prefix = false;
-      _prefix = String(prefix);
+      _prefix = [String(prefix)];
+    } else if (Array.isArray(prefix)) {
+      disabledInfo.prefix = false;
+      _prefix = prefix as string[];
     } else {
       _prefix = jsonStringify({
         data: prefix,

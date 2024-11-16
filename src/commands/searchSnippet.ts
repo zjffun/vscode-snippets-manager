@@ -8,6 +8,17 @@ interface ISnippetQuickPickItem extends vscode.QuickPickItem {
   snippet: ISnippet;
 }
 
+function getPrefixString(prefix: ISnippet["prefix"]): string {
+  if (Array.isArray(prefix)) {
+    if (prefix.length < 2) {
+      return prefix?.[0] || "";
+    }
+    return JSON.stringify(prefix);
+  }
+
+  return prefix;
+}
+
 export default async (type?: SnippetType) => {
   let snippets: ISnippet[];
 
@@ -41,7 +52,7 @@ export default async (type?: SnippetType) => {
     }
 
     quickPickItems.push({
-      label: snippet.prefix ?? "",
+      label: getPrefixString(snippet.prefix) ?? "",
       description: desc.join(" | "),
       detail: snippet.body ?? "",
       snippet: snippet,

@@ -1,3 +1,7 @@
+# v0.3.15
+
+Add feature edit multiple prefixes.
+
 # v0.3.14
 
 - Support open text and snippets editor for a JSON file.

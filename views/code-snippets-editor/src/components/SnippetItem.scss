@@ -1,3 +1,12 @@
+@mixin tag {
+  // vscode-webview-ui-toolkit tag will uppercase
+  background-color: var(--badge-background);
+  border: calc(var(--border-width) * 1px) solid var(--button-border);
+  border-radius: var(--tag-corner-radius);
+  color: var(--badge-foreground);
+  padding: calc(var(--design-unit) * 0.5px) calc(var(--design-unit) * 1px);
+}
+
 .code-snippets-editor {
   &-snippet {
     &__top {
@@ -11,11 +20,20 @@
       background: var(--code-snippets-editor-snippet-item-background);
       padding-bottom: 0.5rem;
       &__prefix {
-        overflow: hidden;
-        text-overflow: ellipsis;
-        padding-right: 0.5rem;
-        font-weight: 600;
-        color: var(--vscode-settings-headerForeground);
+        min-width: 6em;
+        flex: 0 1 auto;
+        display: flex;
+        gap: 0.5em;
+        flex-wrap: wrap;
+
+        &__item {
+          font-weight: 600;
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+
+          @include tag;
+        }
       }
     }
 
@@ -30,12 +48,7 @@
         text-overflow: ellipsis;
         font-size: 0.8em;
 
-        // vscode-webview-ui-toolkit tag will uppercase
-        background-color: var(--badge-background);
-        border: calc(var(--border-width) * 1px) solid var(--button-border);
-        border-radius: var(--tag-corner-radius);
-        color: var(--badge-foreground);
-        padding: calc(var(--design-unit) * 0.5px) calc(var(--design-unit) * 1px);
+        @include tag;
       }
     }
 

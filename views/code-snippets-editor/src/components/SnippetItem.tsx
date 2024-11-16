@@ -1,4 +1,4 @@
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Tags from "@yaireo/tagify/dist/react.tagify.jsx";
 import { getState, langIds } from "../common";
 import getVsCode from "../getVsCode";
@@ -24,13 +24,9 @@ function originalInputValueFormat(
   return values.map((item) => item.value).join(",");
 }
 
-const SnippetItem = ({
-  snippet,
-  readonly,
-  clickEdit,
-  saveEdit,
-  cancelEdit,
-}: Props) => {
+const SnippetItem = (props: Props) => {
+  const { readonly, clickEdit, saveEdit, cancelEdit } = props;
+  const [snippet, setSnippet] = useState<ISnippet>(props.snippet);
   const vscode = getVsCode();
   const keyName = snippet[NAME];
   const editing = snippet[EDIT];
@@ -39,19 +35,24 @@ const SnippetItem = ({
   const saveBtnRef = useRef<HTMLButtonElement | null>(null);
   const cancelBtnRef = useRef<HTMLButtonElement | null>(null);
 
-  const handleChange = () => {
+  const handleChange = (changedData?: { prefix?: string[] }) => {
     if (!formRef.current) {
       return;
     }
 
     const data = new FormData(formRef.current);
-    const newSnippet = {
+    const newRawSnippet = {
       name: data.get("name")?.toString() || "",
-      prefix: data.get("prefix")?.toString() || "",
+      prefix: data.getAll("prefix") as string[],
       scope: data.get("scope")?.toString() || "",
       description: data.get("description")?.toString() || "",
       body: data.get("body")?.toString() || "",
     };
+
+    if (changedData?.prefix) {
+      newRawSnippet.prefix = changedData?.prefix;
+    }
+
     const state = getState();
 
     if (snippet[NEW_ITEM]) {
@@ -63,12 +64,17 @@ const SnippetItem = ({
 
       const currentSnippet = state.addingSnippets[index];
 
-      state.addingSnippets.splice(index, 1, {
+      const newSnippet = {
         ...currentSnippet,
-        ...newSnippet,
-      });
+        ...newRawSnippet,
+      };
+
+      state.addingSnippets.splice(index, 1, newSnippet);
 
       vscode.setState(state);
+
+      setSnippet(newSnippet);
+
       return;
     }
 
@@ -78,22 +84,47 @@ const SnippetItem = ({
         return;
       }
 
-      state.editingSnippetObjMap[keyName] = {
+      const newSnippet = {
         ...snippet,
-        ...newSnippet,
+        ...newRawSnippet,
       };
+
+      state.editingSnippetObjMap[keyName] = newSnippet;
+
       vscode.setState(state);
+
+      setSnippet(newSnippet);
+
       return;
     }
   };
+
+  useEffect(() => {
+    setSnippet(props.snippet);
+  }, [props.snippet]);
 
   return (
     <section id={keyName} className="code-snippets-editor-snippet">
       <div hidden={editing}>
         <div className="code-snippets-editor-snippet__top">
-          <span className="code-snippets-editor-snippet__top__prefix">
-            {snippet.prefix}
-          </span>
+          <div className="code-snippets-editor-snippet__top__prefix">
+            {Array.isArray(snippet.prefix) ? (
+              snippet.prefix.map((prefix, index) => {
+                return (
+                  <div
+                    className="code-snippets-editor-snippet__top__prefix__item"
+                    key={index}
+                  >
+                    {prefix}
+                  </div>
+                );
+              })
+            ) : (
+              <div className="code-snippets-editor-snippet__top__prefix__item">
+                {snippet.prefix}
+              </div>
+            )}
+          </div>
 
           <div style={{ flex: "1 1 0" }}></div>
           {!readonly && (
@@ -203,16 +234,61 @@ const SnippetItem = ({
               >
                 {window.i18nText.name}
               </vscode-text-field>
-              <vscode-text-field
-                name="prefix"
-                value={snippet.prefix}
-                onInput={handleChange}
-                {...{
-                  disabled: snippet?.disabledInfo?.prefix || undefined,
-                }}
-              >
-                {window.i18nText.prefix}
-              </vscode-text-field>
+              {Array.isArray(snippet.prefix) ? (
+                snippet.prefix.map((prefix, index) => {
+                  return (
+                    <vscode-text-field
+                      key={index}
+                      name="prefix"
+                      value={prefix}
+                      onInput={handleChange}
+                      {...{
+                        disabled: snippet?.disabledInfo?.prefix || undefined,
+                      }}
+                    >
+                      {window.i18nText.prefix}
+                      {index === 0 ? (
+                        <vscode-button
+                          slot="end"
+                          appearance="icon"
+                          onClick={() => {
+                            handleChange({
+                              prefix: [...snippet.prefix, ""],
+                            });
+                          }}
+                        >
+                          <span className="codicon codicon-plus"></span>
+                        </vscode-button>
+                      ) : (
+                        <vscode-button
+                          slot="end"
+                          appearance="icon"
+                          onClick={() => {
+                            handleChange({
+                              prefix: (snippet.prefix as string[]).filter(
+                                (_, i) => i !== index,
+                              ),
+                            });
+                          }}
+                        >
+                          <span className="codicon codicon-trash"></span>
+                        </vscode-button>
+                      )}
+                    </vscode-text-field>
+                  );
+                })
+              ) : (
+                <vscode-text-field
+                  name="prefix"
+                  value={snippet.prefix}
+                  onInput={handleChange}
+                  {...{
+                    disabled: snippet?.disabledInfo?.prefix || undefined,
+                  }}
+                >
+                  {window.i18nText.prefix}
+                </vscode-text-field>
+              )}
             </div>
             <div style={{ flex: "1 1 0" }}></div>
             <div className="code-snippets-editor-operation">
