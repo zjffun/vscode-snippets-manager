@@ -235,48 +235,50 @@ const SnippetItem = (props: Props) => {
                 {window.i18nText.name}
               </vscode-text-field>
               {Array.isArray(snippet.prefix) ? (
-                snippet.prefix.map((prefix, index) => {
-                  return (
-                    <vscode-text-field
-                      key={index}
-                      name="prefix"
-                      value={prefix}
-                      onInput={handleChange}
-                      {...{
-                        disabled: snippet?.disabledInfo?.prefix || undefined,
-                      }}
-                    >
-                      {window.i18nText.prefix}
-                      {index === 0 ? (
-                        <vscode-button
-                          slot="end"
-                          appearance="icon"
-                          onClick={() => {
-                            handleChange({
-                              prefix: [...snippet.prefix, ""],
-                            });
-                          }}
-                        >
-                          <span className="codicon codicon-plus"></span>
-                        </vscode-button>
-                      ) : (
-                        <vscode-button
-                          slot="end"
-                          appearance="icon"
-                          onClick={() => {
-                            handleChange({
-                              prefix: (snippet.prefix as string[]).filter(
-                                (_, i) => i !== index,
-                              ),
-                            });
-                          }}
-                        >
-                          <span className="codicon codicon-trash"></span>
-                        </vscode-button>
-                      )}
-                    </vscode-text-field>
-                  );
-                })
+                (snippet.prefix.length > 0 ? snippet.prefix : [""]).map(
+                  (prefix, index) => {
+                    return (
+                      <vscode-text-field
+                        key={index}
+                        name="prefix"
+                        value={prefix}
+                        onInput={handleChange}
+                        {...{
+                          disabled: snippet?.disabledInfo?.prefix || undefined,
+                        }}
+                      >
+                        {window.i18nText.prefix}
+                        {index === 0 ? (
+                          <vscode-button
+                            slot="end"
+                            appearance="icon"
+                            onClick={() => {
+                              handleChange({
+                                prefix: [...snippet.prefix, ""],
+                              });
+                            }}
+                          >
+                            <span className="codicon codicon-plus"></span>
+                          </vscode-button>
+                        ) : (
+                          <vscode-button
+                            slot="end"
+                            appearance="icon"
+                            onClick={() => {
+                              handleChange({
+                                prefix: (snippet.prefix as string[]).filter(
+                                  (_, i) => i !== index,
+                                ),
+                              });
+                            }}
+                          >
+                            <span className="codicon codicon-trash"></span>
+                          </vscode-button>
+                        )}
+                      </vscode-text-field>
+                    );
+                  },
+                )
               ) : (
                 <vscode-text-field
                   name="prefix"

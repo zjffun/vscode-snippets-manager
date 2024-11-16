@@ -320,9 +320,9 @@ export class CodeSnippetsService {
     const { disabledInfo, vscodeSnippet } = snippet;
 
     let _prefix: unknown = snippet.prefix;
-    if (disabledInfo?.prefix || !Array.isArray(_prefix)) {
+    if (disabledInfo?.prefix) {
       _prefix = vscodeSnippet?.prefix;
-    } else {
+    } else if (Array.isArray(_prefix)) {
       if (snippet.prefix.length < 2) {
         _prefix = snippet.prefix?.[0] || "";
       } else {
