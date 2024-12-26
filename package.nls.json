@@ -12,6 +12,7 @@
   "extension.createSnippetWithoutEscapeTo.title": "Create Snippet (Without Escape) To...",
   "extension.workbenchActionOpenSnippets.title": "Create Snippet File",
   "extension.copySnippet.title": "Copy Snippet(s)",
+  "extension.copySnippetToClipboard.title": "Copy Snippet to Clipboard",
   "extension.pasteSnippet.title": "Paste Snippet(s)",
   "extension.deleteSnippet.title": "Delete Snippet(s)",
   "extension.editSnippet.title": "Edit Snippet",

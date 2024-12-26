@@ -75,9 +75,14 @@
         "title": "%extension.workbenchActionOpenSnippets.title%",
         "icon": "$(add)"
       },
-      {
+         {
         "command": "_snippetsmanager.copySnippet",
         "title": "%extension.copySnippet.title%"
+      },
+      {
+        "command": "_snippetsmanager.copySnippetToClipboard",
+        "title": "%extension.copySnippetToClipboard.title%",
+        "icon": "$(copy)"
       },
       {
         "command": "_snippetsmanager.pasteSnippet",
@@ -240,6 +245,11 @@
           "command": "_snippetsmanager.duplicateSnippet",
           "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item && !listMultiSelection",
           "group": "inline@2"
+        },
+        {
+          "command": "_snippetsmanager.copySnippetToClipboard",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item && !listMultiSelection",
+          "group": "inline@3"
         },
         {
           "command": "_snippetsmanager.copySnippet",

@@ -131,6 +131,21 @@ const SnippetItem = (props: Props) => {
             <div className="code-snippets-editor-operation">
               <vscode-button
                 appearance="icon"
+                aria-label={window.i18nText.copyItem}
+                title={window.i18nText.copyItem}
+                onClick={()=> {
+                  console.log(snippet,'This is the snippet!!');
+                  navigator.clipboard.writeText(snippet.body).then(() => {
+                    console.log('Snippet body copied to clipboard');
+                  }).catch(err => {
+                    console.error('Failed to copy snippet body: ', err);
+                  });
+                }}
+              >
+                <span className="codicon codicon-copy"></span>
+              </vscode-button>
+              <vscode-button
+                appearance="icon"
                 aria-label={window.i18nText.editItem}
                 title={window.i18nText.editItem}
                 onClick={clickEdit}
