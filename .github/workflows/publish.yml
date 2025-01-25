@@ -24,6 +24,7 @@ jobs:
           yarn run compile-web
       - name: Test
         run: |
+          yarn run compile-tests
           xvfb-run -a yarn run test
           xvfb-run -a yarn run test-web
       - name: Publish

@@ -1,8 +1,6 @@
 import * as path from "path";
+import * as Mocha from "mocha";
 import * as glob from "glob";
-
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const Mocha = require("mocha");
 
 export function run(): Promise<void> {
   // Create the mocha test
@@ -25,7 +23,7 @@ export function run(): Promise<void> {
 
       try {
         // Run the mocha test
-        mocha.run((failures: any) => {
+        mocha.run((failures) => {
           if (failures > 0) {
             e(new Error(`${failures} tests failed.`));
           } else {

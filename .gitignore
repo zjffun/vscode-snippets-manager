@@ -1,7 +1,7 @@
 test.temp
 .DS_Store
 
-/out
+out
 out-view
 dist
 node_modules
