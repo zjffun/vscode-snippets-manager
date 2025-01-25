@@ -1,6 +1,7 @@
 import * as vscode from "vscode";
 import { CodeSnippetsEditor } from "./CodeSnippetsEditor";
 import copySnippet from "./commands/copySnippet";
+import copySnippetToClipboard from "./commands/copySnippetToClipboard";
 import createSnippet from "./commands/createSnippet";
 import createSnippetTo from "./commands/createSnippetTo";
 import deleteSnippet from "./commands/deleteSnippet";
@@ -145,6 +146,16 @@ export function activate(context: vscode.ExtensionContext) {
       (snippet, snippets) => {
         const _snippets = getSnippets(snippet, snippets);
         copySnippet(_snippets);
+      },
+    ),
+  );
+
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "_snippetsmanager.copySnippetToClipboard",
+      (snippet, snippets) => {
+        const _snippets = getSnippets(snippet, snippets);
+        copySnippetToClipboard(_snippets);
       },
     ),
   );

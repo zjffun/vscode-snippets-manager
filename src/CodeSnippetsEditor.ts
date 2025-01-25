@@ -16,6 +16,7 @@ const i18nText = {
   description: vscode.l10n.t("Description"),
   body: vscode.l10n.t("Body"),
   editItem: vscode.l10n.t("Edit Item"),
+  copyItem: vscode.l10n.t("Copy Item"),
   editBody: vscode.l10n.t("Edit Body"),
   duplicateItem: vscode.l10n.t("Duplicate Item"),
   deleteItem: vscode.l10n.t("Delete Item"),
