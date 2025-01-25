@@ -39,7 +39,7 @@
     "prettier-fix": "prettier --write .",
     "compile-tests": "tsc -p . --outDir out",
     "test": "node ./out/test/runTest.js",
-    "test-web": "node ./test/runTestWeb.js",
+    "test-web": "node ./out/test/runTestWeb.js",
     "watch": "concurrently \"yarn run editor-view:watch\" \"node esbuild.js --watch\"",
     "watch-web": "webpack --watch",
     "sort-package-json": "sort-package-json"
