@@ -75,14 +75,13 @@
         "title": "%extension.workbenchActionOpenSnippets.title%",
         "icon": "$(add)"
       },
-         {
+      {
         "command": "_snippetsmanager.copySnippet",
         "title": "%extension.copySnippet.title%"
       },
       {
-        "command": "_snippetsmanager.copySnippetToClipboard",
-        "title": "%extension.copySnippetToClipboard.title%",
-        "icon": "$(copy)"
+        "command": "_snippetsmanager.copySnippetBodyToClipboard",
+        "title": "%extension.copySnippetBodyToClipboard.title%"
       },
       {
         "command": "_snippetsmanager.pasteSnippet",
@@ -247,11 +246,6 @@
           "group": "inline@2"
         },
         {
-          "command": "_snippetsmanager.copySnippetToClipboard",
-          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item && !listMultiSelection",
-          "group": "inline@3"
-        },
-        {
           "command": "_snippetsmanager.copySnippet",
           "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
           "group": "snippets@1"
@@ -260,6 +254,11 @@
           "command": "_snippetsmanager.deleteSnippet",
           "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
           "group": "snippets@2"
+        },
+        {
+          "command": "_snippetsmanager.copySnippetBodyToClipboard",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
+          "group": "snippets@3"
         },
         {
           "command": "_snippetsmanager.viewSnippet",

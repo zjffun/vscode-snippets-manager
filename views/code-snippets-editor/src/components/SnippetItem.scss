@@ -163,6 +163,19 @@
         width: 100%;
         font-family: monospace;
       }
+
+      &__copy {
+        display: none;
+        position: absolute;
+        right: 0;
+        top: 0;
+      }
+
+      &:hover {
+        .code-snippets-editor-snippet__body__copy {
+          display: block;
+        }
+      }
     }
   }
 

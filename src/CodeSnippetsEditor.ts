@@ -7,6 +7,7 @@ import { no, yes } from "./common/l10n";
 import { getNonce } from "./util";
 import logger from "./utils/logger";
 import refreshAllView from "./views/refreshAllView";
+import copySnippetBodyToClipboard from "./commands/copySnippetBodyToClipboard";
 
 const i18nText = {
   addSnippet: vscode.l10n.t("Add Snippet"),
@@ -16,7 +17,7 @@ const i18nText = {
   description: vscode.l10n.t("Description"),
   body: vscode.l10n.t("Body"),
   editItem: vscode.l10n.t("Edit Item"),
-  copyItem: vscode.l10n.t("Copy Item"),
+  copyBody: vscode.l10n.t("Copy Body To Clipboard"),
   editBody: vscode.l10n.t("Edit Body"),
   duplicateItem: vscode.l10n.t("Duplicate Item"),
   deleteItem: vscode.l10n.t("Delete Item"),
@@ -230,6 +231,16 @@ export class CodeSnippetsEditor implements vscode.CustomTextEditorProvider {
             ),
           );
           return;
+
+        case "copySnippetBody": {
+          const snippet = codeSnippetsService.getSnippetByName(payload.keyName);
+
+          if (snippet) {
+            copySnippetBodyToClipboard([snippet]);
+          }
+
+          return;
+        }
 
         case "error":
           this.showErrorMessage(payload.errMsg);
