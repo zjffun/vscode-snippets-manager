@@ -1,5 +1,5 @@
-import * as path from "path";
-import { runTests } from "@vscode/test-web";
+const path = require("path");
+const { runTests } = require("@vscode/test-web");
 
 async function main() {
   try {
