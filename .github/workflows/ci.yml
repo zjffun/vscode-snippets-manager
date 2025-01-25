@@ -31,6 +31,7 @@ jobs:
         run: |
           yarn run compile
           yarn run compile-web
+          yarn run compile-tests
       - name: Test
         run: |
           xvfb-run -a yarn run test
