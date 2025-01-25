@@ -23,7 +23,7 @@
     "url": "git+https://github.com/zjffun/vscode-snippets-manager.git"
   },
   "publisher": "zjffun",
-  "main": "./out/extension.js",
+  "main": "./dist/extension.js",
   "browser": "./dist/web/extension.js",
   "scripts": {
     "_vscode:reinstall": "yarn run _vscode:uninstall; yarn run _vscode:pack && yarn run _vscode:install",
