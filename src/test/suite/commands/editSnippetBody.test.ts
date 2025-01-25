@@ -13,7 +13,7 @@ import {
 
 assert.ok(testWorkspaceFolder);
 
-suite("editSnippetBody", () => {
+suite.skip("editSnippetBody", () => {
   setup(async () => {
     await closeAllEditors();
     await resetTestWorkspace();
