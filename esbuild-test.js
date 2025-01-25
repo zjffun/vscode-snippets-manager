@@ -13,7 +13,7 @@ async function main() {
     sourcesContent: false,
     platform: "node",
     outfile: "out/test/suite/index.js",
-    external: ["vscode", "jsonc-parser", "fsevents"],
+    external: ["vscode", "jsonc-parser", "fsevents", "mocha"],
     logLevel: "silent",
     plugins: [
       /* add to the end of plugins array */
