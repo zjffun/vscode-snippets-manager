@@ -14,8 +14,7 @@
       background-color: var(--code-snippets-editor-snippet-item-background);
 
       &:nth-child(odd) {
-        // TODO: use more appropriate color
-        --code-snippets-editor-snippet-item-background: #262626;
+        --code-snippets-editor-snippet-item-background: hsla(0,0%,51%,.04);
       }
 
       &:hover {
