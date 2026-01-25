@@ -50,7 +50,7 @@ const extensionMap = {
   vue: "vue",
   // Docs
   markdown: "md",
-  md: "md"
+  md: "md",
 };
 
 export class SnippetTreeItem extends vscode.TreeItem {
@@ -61,7 +61,8 @@ export class SnippetTreeItem extends vscode.TreeItem {
 }
 
 export default abstract class BasicSnippetsExplorerView
-  implements vscode.TreeDataProvider<SnippetTreeItem> {
+  implements vscode.TreeDataProvider<SnippetTreeItem>
+{
   public static viewId = "";
 
   protected abstract _onDidChangeTreeData: vscode.EventEmitter<any>;
@@ -158,12 +159,14 @@ export default abstract class BasicSnippetsExplorerView
         ? vscode.TreeItemCollapsibleState.Collapsed
         : element.children
           ? vscode.TreeItemCollapsibleState.Collapsed
-          : vscode.TreeItemCollapsibleState.None
+          : vscode.TreeItemCollapsibleState.None,
     );
     if (element.isFile) {
       item.iconPath = vscode.ThemeIcon.File;
       // Map filename → extension
-      const lang = (element.name ?? "").toLowerCase().replace(/\.(json|code-snippets)$/i, "");
+      const lang = (element.name ?? "")
+        .toLowerCase()
+        .replace(/\.(json|code-snippets)$/i, "");
       // Language-specific file icon
       const langKey = lang as keyof typeof extensionMap;
       item.resourceUri = vscode.Uri.file(`_.${extensionMap[langKey] ?? "txt"}`);
