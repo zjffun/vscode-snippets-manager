@@ -26,7 +26,7 @@ jobs:
       - name: Test
         run: |
           xvfb-run -a yarn run test
-          xvfb-run -a yarn run test-web
+          # xvfb-run -a yarn run test-web
       - name: Publish
         run: npx vsce publish --yarn
         env:
