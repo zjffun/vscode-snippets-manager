@@ -1,3 +1,7 @@
+# v0.3.18
+
+- [@njpaiva (Noel Paiva)](https://github.com/njpaiva): Use language-aware icons for snippet files. [PR #43](https://github.com/zjffun/vscode-snippets-manager/pull/43)
+
 # v0.3.17
 
 - Add feature manage user snippets of profiles. [PR #40](https://github.com/zjffun/vscode-snippets-manager/pull/40)
