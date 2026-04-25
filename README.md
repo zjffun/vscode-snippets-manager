@@ -2,6 +2,13 @@
 
 English | [简体中文](./README.zh-CN.md)
 
+[![Visual Studio Marketplace Version](https://vsmarketplacebadges.dev/version/zjffun.snippetsmanager.svg)](https://marketplace.visualstudio.com/items?itemName=zjffun.snippetsmanager)
+[![Visual Studio Marketplace Installs](https://vsmarketplacebadges.dev/installs/zjffun.snippetsmanager.svg)](https://marketplace.visualstudio.com/items?itemName=zjffun.snippetsmanager)
+[![Visual Studio Marketplace Downloads](https://vsmarketplacebadges.dev/downloads/zjffun.snippetsmanager.svg)](https://marketplace.visualstudio.com/items?itemName=zjffun.snippetsmanager)
+[![Visual Studio Marketplace Rating](https://vsmarketplacebadges.dev/rating/zjffun.snippetsmanager.svg)](https://marketplace.visualstudio.com/items?itemName=zjffun.snippetsmanager&ssr=false#review-details)
+[![Open VSX Version](https://img.shields.io/open-vsx/v/zjffun/snippetsmanager?label=Open%20VSX)](https://open-vsx.org/extension/zjffun/snippetsmanager)
+[![License](https://img.shields.io/github/license/zjffun/vscode-snippets-manager)](./LICENSE)
+
 Create and edit snippets easily.
 
 This extension is built over the default [VS Code Snippets](https://code.visualstudio.com/docs/editor/userdefinedsnippets) system, wrapping it into a nice and intuitive UI, improving usability, and making snippets easy to create, edit, delete and search. It supports user-custom snippets, global snippets and snippets from installed extensions.

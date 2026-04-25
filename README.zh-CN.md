@@ -2,6 +2,13 @@
 
 [English](./README.md) | 简体中文
 
+[![Visual Studio Marketplace Version](https://vsmarketplacebadges.dev/version/zjffun.snippetsmanager.svg)](https://marketplace.visualstudio.com/items?itemName=zjffun.snippetsmanager)
+[![Visual Studio Marketplace Installs](https://vsmarketplacebadges.dev/installs/zjffun.snippetsmanager.svg)](https://marketplace.visualstudio.com/items?itemName=zjffun.snippetsmanager)
+[![Visual Studio Marketplace Downloads](https://vsmarketplacebadges.dev/downloads/zjffun.snippetsmanager.svg)](https://marketplace.visualstudio.com/items?itemName=zjffun.snippetsmanager)
+[![Visual Studio Marketplace Rating](https://vsmarketplacebadges.dev/rating/zjffun.snippetsmanager.svg)](https://marketplace.visualstudio.com/items?itemName=zjffun.snippetsmanager&ssr=false#review-details)
+[![Open VSX Version](https://img.shields.io/open-vsx/v/zjffun/snippetsmanager?label=Open%20VSX)](https://open-vsx.org/extension/zjffun/snippetsmanager)
+[![License](https://img.shields.io/github/license/zjffun/vscode-snippets-manager)](./LICENSE)
+
 轻松地创建和修改代码片段。
 
 这个拓展程序基于 [VS Code 内置的代码片段功能](https://code.visualstudio.com/docs/editor/userdefinedsnippets)，使用简单的界面让代码片段的创建、修改、编辑、删除和查找更加容易。这个拓展程序支持用户自定义、全局和安装的拓展程序的代码片段。
