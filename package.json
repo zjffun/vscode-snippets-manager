@@ -154,6 +154,11 @@
         "title": "%extension.openEditor.title%",
         "category": "Snippets Manager",
         "icon": "$(book)"
+      },
+      {
+        "command": "_snippetsmanager.editSnippetBody",
+        "title": "%extension.editSnippetBody.title%",
+        "icon": "$(edit)"
       }
     ],
     "configuration": {
@@ -275,6 +280,11 @@
           "command": "_snippetsmanager.deleteSnippetFile",
           "when": "viewItem == snippetsmanager-snippetsView-Explorer-FileItem && !listMultiSelection",
           "group": "snippets@2"
+        },
+        {
+          "command": "_snippetsmanager.editSnippetBody",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item && !listMultiSelection",
+          "group": "snippets@4"
         }
       ],
       "commandPalette": [
@@ -304,6 +314,10 @@
         },
         {
           "command": "_snippetsmanager.deleteSnippetFile",
+          "when": "false"
+        },
+        {
+          "command": "_snippetsmanager.editSnippetBody",
           "when": "false"
         }
       ],
