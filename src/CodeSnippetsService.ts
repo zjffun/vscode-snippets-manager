@@ -289,11 +289,11 @@ export class CodeSnippetsService {
   async apply(content: string) {
     const workspaceEdit = new vscode.WorkspaceEdit();
 
-    const lastLine = this.textDocument.lineAt(this.textDocument.lineCount - 1);
-    const range = new vscode.Range(
-      new vscode.Position(0, 0),
-      lastLine.range.end,
+    const start = new vscode.Position(0, 0);
+     const end = this.textDocument.positionAt(
+      this.textDocument.getText().length,
     );
+    const range = new vscode.Range(start, end);
 
     workspaceEdit.replace(this.textDocument.uri, range, content);
 

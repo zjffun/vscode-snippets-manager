@@ -16,6 +16,7 @@
   "extension.pasteSnippet.title": "Paste Snippet(s)",
   "extension.deleteSnippet.title": "Delete Snippet(s)",
   "extension.editSnippet.title": "Edit Snippet",
+  "extension.editSnippetBody.title": "Edit Snippet Body",
   "extension.duplicateSnippet.title": "Duplicate Snippet",
   "extension.viewSnippet.title": "View Snippet",
   "extension.deleteSnippetFile.title": "Delete Snippet File",

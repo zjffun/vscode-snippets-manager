@@ -54,10 +54,9 @@ export function activate(context: vscode.ExtensionContext) {
     }),
   );
 
-  // Inside your activate function:
   context.subscriptions.push(
     vscode.commands.registerCommand(
-      "snippetsmanager.editSnippetBody",
+      "_snippetsmanager.editSnippetBody",
       (snippet, snippets) => {
         const _snippets = getSnippets(snippet, snippets);
         if (_snippets.length > 0) {

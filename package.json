@@ -156,8 +156,8 @@
         "icon": "$(book)"
       },
       {
-        "command": "snippetsmanager.editSnippetBody",
-        "title": "Edit Snippet Body",
+        "command": "_snippetsmanager.editSnippetBody",
+        "title": "%extension.editSnippetBody.title%",
         "icon": "$(edit)"
       }
     ],
@@ -282,8 +282,8 @@
           "group": "snippets@2"
         },
         {
-          "command": "snippetsmanager.editSnippetBody",
-          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
+          "command": "_snippetsmanager.editSnippetBody",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item && !listMultiSelection",
           "group": "snippets@4"
         }
       ],
@@ -314,6 +314,10 @@
         },
         {
           "command": "_snippetsmanager.deleteSnippetFile",
+          "when": "false"
+        },
+        {
+          "command": "_snippetsmanager.editSnippetBody",
           "when": "false"
         }
       ],
