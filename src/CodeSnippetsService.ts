@@ -290,7 +290,7 @@ export class CodeSnippetsService {
     const workspaceEdit = new vscode.WorkspaceEdit();
 
     const start = new vscode.Position(0, 0);
-     const end = this.textDocument.positionAt(
+    const end = this.textDocument.positionAt(
       this.textDocument.getText().length,
     );
     const range = new vscode.Range(start, end);
