@@ -534,6 +534,7 @@ export class CodeSnippetsService {
 
   static async getUserSnippetsTree() {
     const tree: ISnippetContainer[] = [];
+    const scopeGroups = new Map<string, ISnippetContainer>();
 
     const userSnippetInfo = await getUserSnippetsFilesInfo();
 
@@ -546,12 +547,47 @@ export class CodeSnippetsService {
         continue;
       }
 
-      tree.push({
-        name: fileName,
-        isFile: true,
-        uri,
-        children: CodeSnippetsService.getSnippetList(snippets, { uri }),
-      });
+      const snippetList = CodeSnippetsService.getSnippetList(snippets, { uri });
+
+      // Group snippets by scope, and merge file nodes
+      for (const snippet of snippetList) {
+        // 支持逗号分隔的多 scope
+        const scopes = (snippet.scope || "global")
+          .split(",")
+          .map((s) => s.trim())
+          .filter(Boolean);
+        for (const scope of scopes) {
+          if (!scopeGroups.has(scope)) {
+            scopeGroups.set(scope, {
+              name: scope,
+              isFile: false,
+              children: [],
+              isExtension: false,
+              isWorkspace: false,
+            });
+          }
+          const group = scopeGroups.get(scope)!;
+          // Try to find existing file node in this scope group
+          let fileNode = (group.children as ISnippetContainer[]).find(
+            (child) => child.uri?.toString() === uri.toString(),
+          );
+          if (!fileNode) {
+            fileNode = {
+              name: fileName,
+              isFile: true,
+              uri,
+              children: [],
+            };
+            (group.children as ISnippetContainer[]).push(fileNode);
+          }
+          (fileNode.children as ISnippet[]).push(snippet);
+        }
+      }
+    }
+
+    // Add all groups to the tree
+    for (const group of scopeGroups.values()) {
+      tree.push(group);
     }
 
     return tree;
