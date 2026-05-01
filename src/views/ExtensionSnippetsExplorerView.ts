@@ -25,5 +25,5 @@ export default class ExtensionSnippetsExplorerView extends BasicSnippetsExplorer
 }
 
 export function refresh() {
-  snippetsExplorerView.refresh();
+  snippetsExplorerView?.refresh();
 }
