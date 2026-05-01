@@ -13,7 +13,7 @@ import getUserSnippetsFilesInfo from "./core/getUserSnippetsFilesInfo";
 import getWorkspaceSnippetsFilesInfo from "./core/getWorkspaceSnippetsFilesInfo";
 import jsonStringify from "./utils/jsonStringify";
 import logger from "./utils/logger";
-import { refresh } from "./views/WorkspaceSnippetsExplorerView";
+import refreshAllView from "./views/refreshAllView";
 import {
   applyEdit,
   removeProperty,
@@ -289,11 +289,13 @@ export class CodeSnippetsService {
   async apply(content: string) {
     const workspaceEdit = new vscode.WorkspaceEdit();
 
-    workspaceEdit.replace(
-      this.textDocument.uri,
-      new vscode.Range(0, 0, this.textDocument.lineCount, 0),
-      content,
+    const lastLine = this.textDocument.lineAt(this.textDocument.lineCount - 1);
+    const range = new vscode.Range(
+      new vscode.Position(0, 0),
+      lastLine.range.end,
     );
+
+    workspaceEdit.replace(this.textDocument.uri, range, content);
 
     const result = await vscode.workspace.applyEdit(workspaceEdit);
 
@@ -310,7 +312,7 @@ export class CodeSnippetsService {
     const saveRes = await this.textDocument.save();
 
     if (saveRes && refreshExplorerView) {
-      refresh();
+      refreshAllView();
     }
 
     return saveRes;

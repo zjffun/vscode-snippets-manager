@@ -8,7 +8,9 @@ import deleteSnippet from "./commands/deleteSnippet";
 import deleteSnippetFile from "./commands/deleteSnippetFile";
 import duplicateSnippet from "./commands/duplicateSnippet";
 import editSnippet from "./commands/editSnippet";
-import { initEditSnippetBody } from "./commands/editSnippetBody";
+import editSnippetBody, {
+  initEditSnippetBody,
+} from "./commands/editSnippetBody";
 import openEditor from "./commands/openEditor";
 import openSnippetsManger from "./commands/openSnippetsManger";
 import openSource from "./commands/openSource";
@@ -50,6 +52,19 @@ export function activate(context: vscode.ExtensionContext) {
     vscode.commands.registerCommand("snippetsmanager.search", (type) => {
       return searchSnippet(type);
     }),
+  );
+
+  // Inside your activate function:
+  context.subscriptions.push(
+    vscode.commands.registerCommand(
+      "snippetsmanager.editSnippetBody",
+      (snippet, snippets) => {
+        const _snippets = getSnippets(snippet, snippets);
+        if (_snippets.length > 0) {
+          editSnippetBody(_snippets[0]);
+        }
+      },
+    ),
   );
 
   context.subscriptions.push(

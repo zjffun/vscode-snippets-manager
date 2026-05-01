@@ -154,6 +154,11 @@
         "title": "%extension.openEditor.title%",
         "category": "Snippets Manager",
         "icon": "$(book)"
+      },
+      {
+        "command": "snippetsmanager.editSnippetBody",
+        "title": "Edit Snippet Body",
+        "icon": "$(edit)"
       }
     ],
     "configuration": {
@@ -275,6 +280,11 @@
           "command": "_snippetsmanager.deleteSnippetFile",
           "when": "viewItem == snippetsmanager-snippetsView-Explorer-FileItem && !listMultiSelection",
           "group": "snippets@2"
+        },
+        {
+          "command": "snippetsmanager.editSnippetBody",
+          "when": "viewItem == snippetsmanager-snippetsView-Explorer-Item",
+          "group": "snippets@4"
         }
       ],
       "commandPalette": [
